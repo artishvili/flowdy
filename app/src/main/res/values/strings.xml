@@ -3,4 +3,8 @@
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="library">Library</string>
+    <string name="your_library">Your Library</string>
+    <string name="liked_songs">Liked Songs</string>
+    <string name="more_song_actions">More song actions</string>
+    <string name="favorite_song">Favorite song</string>
 </resources>
