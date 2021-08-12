@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.utils
+package com.devshish.internship.presentation.model
 
 import androidx.recyclerview.widget.DiffUtil
 import com.devshish.internship.domain.models.Song

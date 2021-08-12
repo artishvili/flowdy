@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui
+package com.devshish.internship.presentation.ui.search
 
 import androidx.fragment.app.Fragment
 import com.devshish.internship.R
