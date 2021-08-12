@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Internship</string>
-    <string name="home">Home</string>
-    <string name="search">Search</string>
-    <string name="library">Library</string>
+    <!-- Bottom navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_library">Library</string>
+    <!-- Music library -->
+    <string name="library_favorites">Liked Songs</string>
+    <string name="library_songs">12 songs</string>
 </resources>
