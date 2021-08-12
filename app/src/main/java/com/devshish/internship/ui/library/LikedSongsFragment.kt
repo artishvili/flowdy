@@ -12,12 +12,10 @@ import com.devshish.internship.databinding.FragmentLikedSongsBinding
 
 class LikedSongsFragment : Fragment(R.layout.fragment_liked_songs) {
 
-//    private lateinit var viewModel: LibraryViewModel
     private val viewModel: LibraryViewModel by viewModels()
 
     private val itemSongAdapter = ItemSongAdapter {
-        Toast.makeText(requireContext(),
-            "Selected ${it.title} to play.", Toast.LENGTH_LONG).show()
+        viewModel.songClicked(it)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
