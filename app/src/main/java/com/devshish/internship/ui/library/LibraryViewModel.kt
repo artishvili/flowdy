@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.devshish.internship.model.Song
+import timber.log.Timber
 
 class LibraryViewModel : ViewModel() {
 
@@ -31,6 +32,6 @@ class LibraryViewModel : ViewModel() {
 
     private val TAG = "song_clicked"
     fun songClicked(song: Song) {
-        Log.d(TAG, "Song clicked: $song")
+        Timber.d("Song clicked: $song")
     }
 }
