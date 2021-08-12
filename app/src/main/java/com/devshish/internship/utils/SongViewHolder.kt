@@ -8,16 +8,13 @@ import com.devshish.internship.model.Song
 
 class SongViewHolder(
     private val binding: ItemSongBinding,
-    private val listener: (Song) -> Unit
+    private val onClick: (Song) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(song: Song) {
         binding.apply {
             root.setOnClickListener {
-                val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
-                    listener(song)
-                }
+                onClick(song)
             }
 
             tvSongName.text = song.title

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/spacing_small"
     android:paddingStart="@dimen/spacing_default"
+    android:paddingTop="@dimen/spacing_small"
     android:paddingEnd="@dimen/spacing_default"
     android:paddingBottom="@dimen/spacing_small">
 
@@ -13,10 +13,10 @@
         android:id="@+id/ivSongCover"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:background="@color/purple_200"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundedCorners" />
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundedCorners"
+        tools:background="@color/purple_200" />
 
     <TextView
         android:id="@+id/tvSongName"
