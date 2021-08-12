@@ -1,10 +1,10 @@
-package com.devshish.internship.utils
+package com.devshish.internship.presentation.ui.likedsongs
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.ItemSongBinding
-import com.devshish.internship.model.Song
+import com.devshish.internship.domain.models.Song
 
 class SongViewHolder(
     private val binding: ItemSongBinding,

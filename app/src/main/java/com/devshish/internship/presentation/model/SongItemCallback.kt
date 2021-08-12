@@ -1,7 +1,7 @@
-package com.devshish.internship.utils
+package com.devshish.internship.presentation.model
 
 import androidx.recyclerview.widget.DiffUtil
-import com.devshish.internship.model.Song
+import com.devshish.internship.domain.models.Song
 
 class SongItemCallback : DiffUtil.ItemCallback<Song>() {
 

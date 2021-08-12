@@ -1,4 +1,4 @@
-package com.devshish.internship.ui
+package com.devshish.internship.presentation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
