@@ -17,6 +17,6 @@
     </style>
 
     <style name="ShapeAppearanceOverlay.App.RoundedCorners" parent="">
-        <item name="cornerSize">5dp</item>
+        <item name="cornerSize">4dp</item>
     </style>
 </resources>
