@@ -3,6 +3,7 @@
     package="com.devshish.internship">
 
     <application
+        android:name=".MusicServiceApplication"
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
