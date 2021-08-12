@@ -1,4 +1,4 @@
-package com.devshish.internship.ui
+package com.devshish.internship.ui.library
 
 import android.os.Bundle
 import android.view.View

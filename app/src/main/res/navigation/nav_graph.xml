@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.devshish.internship.ui.LibraryFragment"
+        android:name="com.devshish.internship.ui.library.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/likedSongsFragment"
-        android:name="com.devshish.internship.ui.LikedSongsFragment"
+        android:name="com.devshish.internship.ui.library.LikedSongsFragment"
         android:label="fragment_liked_songs"
         tools:layout="@layout/fragment_liked_songs" />
 </navigation>

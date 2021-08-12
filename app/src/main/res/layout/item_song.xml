@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="@dimen/spacing_small"
     android:paddingStart="@dimen/spacing_default"
-    android:paddingBottom="@dimen/spacing_small"
-    android:paddingTop="@dimen/spacing_micro"
-    android:paddingEnd="@dimen/spacing_default">
+    android:paddingEnd="@dimen/spacing_default"
+    android:paddingBottom="@dimen/spacing_small">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivSongCover"
@@ -27,7 +27,7 @@
         android:fontFamily="@font/rubik_medium"
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintBottom_toTopOf="@+id/tvArtist"
-        app:layout_constraintEnd_toStartOf="@+id/ivFavorite"
+        app:layout_constraintEnd_toStartOf="@id/tvDuration"
         app:layout_constraintStart_toEndOf="@id/ivSongCover"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
@@ -41,30 +41,18 @@
         android:layout_marginTop="@dimen/spacing_micro"
         android:layout_marginEnd="@dimen/spacing_small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ivFavorite"
+        app:layout_constraintEnd_toStartOf="@id/tvDuration"
         app:layout_constraintStart_toEndOf="@id/ivSongCover"
         app:layout_constraintTop_toBottomOf="@+id/tvSongName"
         tools:text="Kendrick Lamar" />
 
-    <ImageView
-        android:id="@+id/ivMore"
+    <TextView
+        android:id="@+id/tvDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_more"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/more_song_actions" />
-
-    <ImageView
-        android:id="@+id/ivFavorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/spacing_micro"
-        android:src="@drawable/ic_favorite"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ivMore"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/favorite_song" />
+        tools:text="4:12" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

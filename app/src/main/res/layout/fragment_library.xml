@@ -2,70 +2,42 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clPlaylist"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.LibraryFragment">
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_default"
+    tools:context=".ui.library.LibraryFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/ivLikedSongs"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/liked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSongName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:padding="@dimen/spacing_default"
-        app:elevation="0dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginStart="@dimen/spacing_default"
+        android:fontFamily="@font/rubik_medium"
+        android:text="@string/library_favorites"
+        android:textAppearance="?attr/textAppearanceBody2"
+        app:layout_constraintBottom_toTopOf="@+id/tvArtist"
+        app:layout_constraintStart_toEndOf="@id/ivLikedSongs"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-        <TextView
-            android:id="@+id/tvYourLibrary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/rubik_medium"
-            android:paddingTop="@dimen/spacing_default"
-            android:text="@string/your_library"
-            android:textAppearance="?attr/textAppearanceHeadline5"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clPlaylist"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvArtist"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_default"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout">
-
-        <ImageView
-            android:id="@+id/ivLikedSongs"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/liked"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvSongName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_default"
-            android:fontFamily="@font/rubik_medium"
-            android:text="@string/liked_songs"
-            android:textAppearance="?attr/textAppearanceBody2"
-            app:layout_constraintBottom_toTopOf="@+id/tvArtist"
-            app:layout_constraintStart_toEndOf="@id/ivLikedSongs"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-            android:id="@+id/tvArtist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_default"
-            android:layout_marginTop="@dimen/spacing_micro"
-            android:text="12 songs"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ivLikedSongs"
-            app:layout_constraintTop_toBottomOf="@+id/tvSongName" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginStart="@dimen/spacing_default"
+        android:layout_marginTop="@dimen/spacing_micro"
+        android:text="@string/library_songs"
+        app:layout_constraintBottom_toBottomOf="@id/ivLikedSongs"
+        app:layout_constraintStart_toEndOf="@id/ivLikedSongs"
+        app:layout_constraintTop_toBottomOf="@+id/tvSongName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

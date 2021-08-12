@@ -1,6 +1,8 @@
 package com.devshish.internship.model
 
 data class Song(
-    val name: String,
-    val artist: String
+    val title: String,
+    val artist: String,
+    val duration: Int,
+    val image: String = ""
 )
