@@ -1,12 +1,12 @@
-package com.devshish.internship.adapter
+package com.devshish.internship.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.devshish.internship.databinding.ItemSongBinding
-import com.devshish.internship.model.Song
-import com.devshish.internship.utils.SongItemCallback
-import com.devshish.internship.utils.SongViewHolder
+import com.devshish.internship.domain.models.Song
+import com.devshish.internship.presentation.utils.SongItemCallback
+import com.devshish.internship.presentation.utils.SongViewHolder
 
 class ItemSongAdapter(
     private val onClick: (Song) -> Unit

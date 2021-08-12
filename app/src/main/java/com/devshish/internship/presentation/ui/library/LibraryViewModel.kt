@@ -1,10 +1,9 @@
-package com.devshish.internship.ui.library
+package com.devshish.internship.presentation.ui.library
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.devshish.internship.model.Song
+import com.devshish.internship.domain.models.Song
 import timber.log.Timber
 
 class LibraryViewModel : ViewModel() {
