@@ -14,8 +14,12 @@ import com.devshish.internship.presentation.SongsRepository
 class LikedSongsFragment : Fragment(R.layout.fragment_liked_songs) {
 
     //private val viewModel: LikedSongsViewModel by viewModels()
-    private lateinit var viewModel: LikedSongsViewModel
-    private lateinit var factory: LikedSongsViewModelFactory
+    private val viewModel: LikedSongsViewModel by lazy {
+        ViewModelProvider(this, factory).get(LikedSongsViewModel::class.java)
+    }
+
+    private val repository = SongsRepository()
+    private val factory = LikedSongsViewModelFactory(repository)
 
     private val itemSongAdapter = ItemSongAdapter {
         viewModel.songClicked(it)
@@ -25,17 +29,13 @@ class LikedSongsFragment : Fragment(R.layout.fragment_liked_songs) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentLikedSongsBinding.bind(view)
 
-        val repository = SongsRepository()
-        factory = LikedSongsViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, factory).get(LikedSongsViewModel::class.java)
-
-
         binding.rvSongs.apply {
             adapter = itemSongAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.getLikedSongs().observe(viewLifecycleOwner) {
+        viewModel.getLikedSongs()
+        viewModel.songs.observe(viewLifecycleOwner) {
             itemSongAdapter.submitList(it)
         }
     }
