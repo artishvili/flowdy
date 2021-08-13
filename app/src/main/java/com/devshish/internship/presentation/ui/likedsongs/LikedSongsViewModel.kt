@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devshish.internship.domain.models.Song
-import com.devshish.internship.presentation.SongsRepository
+import com.devshish.internship.domain.model.Song
+import com.devshish.internship.data.repository.SongsRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

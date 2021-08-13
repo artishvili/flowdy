@@ -1,6 +1,7 @@
-package com.devshish.internship.presentation
+package com.devshish.internship.data.repository
 
-import com.devshish.internship.domain.models.Song
+import com.devshish.internship.domain.model.Song
+import com.devshish.internship.domain.repository.LikedSongsRepository
 
 class SongsRepository : LikedSongsRepository {
 

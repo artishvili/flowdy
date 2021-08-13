@@ -7,16 +7,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentLikedSongsBinding
-import com.devshish.internship.presentation.SongsRepository
+import com.devshish.internship.data.repository.SongsRepository
 
 class LikedSongsFragment : Fragment(R.layout.fragment_liked_songs) {
 
     private val viewModel: LikedSongsViewModel by lazy {
+        val repository = SongsRepository()
+        val factory = LikedSongsViewModelFactory(repository)
         ViewModelProvider(this, factory).get(LikedSongsViewModel::class.java)
     }
-
-    private val repository = SongsRepository()
-    private val factory = LikedSongsViewModelFactory(repository)
 
     private val itemSongAdapter = ItemSongAdapter {
         viewModel.songClicked(it)

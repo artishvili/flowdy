@@ -2,7 +2,7 @@ package com.devshish.internship.presentation.ui.likedsongs
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.devshish.internship.presentation.SongsRepository
+import com.devshish.internship.data.repository.SongsRepository
 
 class LikedSongsViewModelFactory(
     private val repository: SongsRepository
