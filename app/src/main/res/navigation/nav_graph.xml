@@ -33,4 +33,9 @@
         android:name="com.devshish.internship.presentation.ui.likedsongs.LikedSongsFragment"
         android:label="fragment_liked_songs"
         tools:layout="@layout/fragment_liked_songs" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.devshish.internship.presentation.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
