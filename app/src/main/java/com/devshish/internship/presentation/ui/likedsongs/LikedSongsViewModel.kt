@@ -17,8 +17,10 @@ class LikedSongsViewModel(
         get() = _songs
     private val _songs = MutableLiveData<List<Song>>()
 
-    fun getLikedSongs() = viewModelScope.launch {
-        _songs.value = repository.getLikedSongs()
+    init {
+        viewModelScope.launch {
+            _songs.value = repository.getLikedSongs()
+        }
     }
 
     fun songClicked(song: Song) {
