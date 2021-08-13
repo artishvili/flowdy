@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.ItemSongBinding
-import com.devshish.internship.domain.models.Song
+import com.devshish.internship.domain.model.Song
 
 class SongViewHolder(
     private val binding: ItemSongBinding,

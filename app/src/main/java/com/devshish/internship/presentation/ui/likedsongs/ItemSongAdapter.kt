@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.devshish.internship.databinding.ItemSongBinding
-import com.devshish.internship.domain.models.Song
+import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.model.SongItemCallback
 
 class ItemSongAdapter(

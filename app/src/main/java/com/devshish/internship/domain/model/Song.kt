@@ -1,4 +1,4 @@
-package com.devshish.internship.domain.models
+package com.devshish.internship.domain.model
 
 data class Song(
     val title: String,
