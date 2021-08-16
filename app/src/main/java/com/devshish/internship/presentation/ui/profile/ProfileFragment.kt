@@ -23,16 +23,16 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         viewModel.user.observe(viewLifecycleOwner) { user ->
             binding.apply {
-                tvNickname.text = user.nickname
-                tvCountry.text = user.country
-                tvCity.text = user.city
-                tvDescription.text = user.description
-                tvBackground.text = user.background
-
                 Glide.with(this@ProfileFragment)
                     .load(user.photo)
-                    .placeholder(R.drawable.liked)
+                    .placeholder(R.drawable.ic_profile)
                     .into(ivProfilePicture)
+
+                tvNickname.text = user.nickname
+                tvCountry.text = getString(R.string.profile_country, user.country)
+                tvCity.text = getString(R.string.profile_city, user.city)
+                tvDescription.text = getString(R.string.profile_description, user.description)
+                tvBackground.text = getString(R.string.profile_background, user.background)
             }
         }
     }
