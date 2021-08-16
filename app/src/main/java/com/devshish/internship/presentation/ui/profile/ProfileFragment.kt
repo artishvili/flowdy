@@ -2,6 +2,7 @@ package com.devshish.internship.presentation.ui.profile
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -29,15 +30,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     .into(ivProfilePicture)
 
                 tvNickname.text = user.nickname
-                tvCountry.text = getString(R.string.profile_country,
-                    user.country ?: "Not Chosen")
-                tvCity.text = getString(R.string.profile_city,
-                    user.city ?: "Not Chosen")
-                tvDescription.text = getString(R.string.profile_description,
-                    user.description ?: "Not Provided")
-                tvBackground.text = getString(R.string.profile_background,
-                    user.background ?: "Not Chosen")
+                tvDescription.text = getString(
+                    R.string.profile_user_description, user.description ?: "Not Provided")
+                tvCountry.checkAndSetText(user.country, R.string.profile_user_country)
+                tvCity.checkAndSetText(user.city, R.string.profile_user_city)
+                tvBackground.checkAndSetText(user.background, R.string.profile_user_background)
             }
         }
+    }
+
+    private fun TextView.checkAndSetText(data: String?, resourceId: Int) {
+        val checkedData = data ?: getString(R.string.data_not_chosen)
+        text = getString(resourceId, checkedData)
     }
 }
