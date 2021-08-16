@@ -17,9 +17,6 @@
     </style>
 
     <style name="TextAppearance.App.TextView" parent="">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">@dimen/spacing_small</item>
         <item name="android:textAppearance">?attr/textAppearanceBody1</item>
     </style>
 </resources>

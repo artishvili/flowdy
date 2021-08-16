@@ -29,10 +29,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     .into(ivProfilePicture)
 
                 tvNickname.text = user.nickname
-                tvCountry.text = getString(R.string.profile_country, user.country)
-                tvCity.text = getString(R.string.profile_city, user.city)
-                tvDescription.text = getString(R.string.profile_description, user.description)
-                tvBackground.text = getString(R.string.profile_background, user.background)
+                tvCountry.text = getString(R.string.profile_country,
+                    user.country ?: "Not Chosen")
+                tvCity.text = getString(R.string.profile_city,
+                    user.city ?: "Not Chosen")
+                tvDescription.text = getString(R.string.profile_description,
+                    user.description ?: "Not Provided")
+                tvBackground.text = getString(R.string.profile_background,
+                    user.background ?: "Not Chosen")
             }
         }
     }

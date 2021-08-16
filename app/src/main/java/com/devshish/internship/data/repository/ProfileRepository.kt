@@ -9,9 +9,9 @@ class ProfileRepository : IProfileRepository {
         "Arthas",
         "Belarus",
         "Minsk",
-        "Not Provided",
+        null,
         "https://news.cgtn.com/news/2021-01-21/Travelogue-Getting-to-know-endangered-Yunnan-snub-nosed-monkeys-XehOQcFLY4/img/44f91c3e427e46e3a01f3f693a0a11ff/44f91c3e427e46e3a01f3f693a0a11ff-1280.png",
-        "Not Chosen"
+        null
     )
 
     override suspend fun getUser() = user
