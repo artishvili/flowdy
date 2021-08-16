@@ -9,18 +9,20 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivProfilePicture"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:src="@drawable/ic_profile"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundedImage" />
 
     <TextView
         android:id="@+id/tvNickname"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_small"
-        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:layout_marginStart="@dimen/spacing_default"
+        android:fontFamily="@font/rubik_medium"
+        android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintBottom_toBottomOf="@id/ivProfilePicture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivProfilePicture"
@@ -33,9 +35,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
         android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintTop_toBottomOf="@id/ivProfilePicture"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivProfilePicture"
         tools:text="Country: Belarus" />
 
     <TextView
@@ -44,9 +46,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
         android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintTop_toBottomOf="@id/tvCountry"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCountry"
         tools:text="City: Minsk" />
 
     <TextView
@@ -55,9 +57,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
         android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintTop_toBottomOf="@id/tvCity"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCity"
         tools:text="Description: Not provided" />
 
     <TextView
@@ -66,9 +68,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
         android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintTop_toBottomOf="@id/tvDescription"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription"
         tools:text="Background: Not chosen" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
