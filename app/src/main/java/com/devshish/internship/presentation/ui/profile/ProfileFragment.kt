@@ -30,8 +30,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     .into(ivProfilePicture)
 
                 tvNickname.text = user.nickname
-                tvDescription.text = getString(
-                    R.string.profile_user_description, user.description ?: "Not Provided")
+                tvDescription.checkAndSetText(user.description, R.string.profile_user_description)
                 tvCountry.checkAndSetText(user.country, R.string.profile_user_country)
                 tvCity.checkAndSetText(user.city, R.string.profile_user_city)
                 tvBackground.checkAndSetText(user.background, R.string.profile_user_background)
