@@ -23,7 +23,7 @@ class LikedSongsViewModel(
         }
     }
 
-    fun songClicked(song: Song) {
+    fun onSongClick(song: Song) {
         Timber.d("Song clicked: $song")
     }
 }

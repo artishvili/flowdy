@@ -16,7 +16,7 @@
         <item name="android:fontFamily">@font/rubik</item>
     </style>
 
-    <style name="ShapeAppearanceOverlay.App.RoundedCorners" parent="">
-        <item name="cornerSize">4dp</item>
+    <style name="TextAppearance.App.TextView" parent="">
+        <item name="android:textAppearance">?attr/textAppearanceBody1</item>
     </style>
 </resources>

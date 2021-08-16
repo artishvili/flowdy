@@ -18,7 +18,7 @@ class LikedSongsFragment : Fragment(R.layout.fragment_liked_songs) {
     }
 
     private val itemSongAdapter = ItemSongAdapter {
-        viewModel.songClicked(it)
+        viewModel.onSongClick(it)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

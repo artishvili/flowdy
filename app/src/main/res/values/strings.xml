@@ -4,7 +4,15 @@
     <string name="nav_home">Home</string>
     <string name="nav_search">Search</string>
     <string name="nav_library">Library</string>
+    <string name="nav_profile">Profile</string>
     <!-- Music library -->
     <string name="library_favorites">Liked Songs</string>
     <string name="library_songs">12 songs</string>
+    <!-- Profile -->
+    <string name="profile_user_country">Country: %1$s</string>
+    <string name="profile_user_city">City: %1$s</string>
+    <string name="profile_user_description">Description: %1$s</string>
+    <string name="profile_user_background">Background: %1$s</string>
+    <!-- Data -->
+    <string name="data_not_chosen">Not Chosen</string>
 </resources>
