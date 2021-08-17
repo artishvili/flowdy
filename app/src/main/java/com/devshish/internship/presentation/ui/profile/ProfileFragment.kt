@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.data.repository.ProfileRepository
@@ -22,8 +23,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentProfileBinding.bind(view)
 
-        viewModel.user.observe(viewLifecycleOwner) { user ->
-            binding.apply {
+        binding.apply {
+            viewModel.user.observe(viewLifecycleOwner) { user ->
                 Glide.with(this@ProfileFragment)
                     .load(user.photo)
                     .placeholder(R.drawable.ic_profile)
@@ -34,6 +35,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 tvCountry.checkAndSetText(user.country, R.string.profile_user_country)
                 tvCity.checkAndSetText(user.city, R.string.profile_user_city)
                 tvBackground.checkAndSetText(user.background, R.string.profile_user_background)
+            }
+
+            ivEditProfile.setOnClickListener {
+                val action = ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment()
+                findNavController().navigate(action)
             }
         }
     }
