@@ -12,11 +12,20 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Font family. -->
-       <!-- <item name="fontFamily">@font/rubik</item>-->
+        <!-- <item name="fontFamily">@font/rubik</item>-->
         <item name="android:fontFamily">@font/rubik</item>
+        <!-- Small components -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
     </style>
 
     <style name="TextAppearance.App.TextView" parent="">
         <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent"
+        parent="ShapeAppearance.MaterialComponents.SmallComponent">
+
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
     </style>
 </resources>
