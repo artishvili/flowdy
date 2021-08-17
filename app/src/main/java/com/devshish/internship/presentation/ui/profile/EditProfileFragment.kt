@@ -13,20 +13,14 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentEditProfileBinding.bind(view)
 
-        val backgroundImageUrl = "https://cdn.vox-cdn.com/uploads/chorus_asset/file/22661965/img19.jpg"
-        val profilePhotoUrl = "https://api.time.com/wp-content/uploads/2014/09/macaca_nigra_self-portrait_rotated_and_cropped.jpg"
-        val glide = Glide.with(this)
+        Glide.with(this)
+            .load("https://cdn.vox-cdn.com/uploads/chorus_asset/file/22661965/img19.jpg")
+            .placeholder(R.drawable.liked)
+            .into(binding.ivBackgroundPicture)
 
-        binding.apply {
-            glide
-                .load(backgroundImageUrl)
-                .placeholder(R.drawable.liked)
-                .into(ivBackgroundPicture)
-
-            glide
-                .load(profilePhotoUrl)
-                .placeholder(R.drawable.liked)
-                .into(ivProfilePicture)
-        }
+        Glide.with(this)
+            .load("https://api.time.com/wp-content/uploads/2014/09/macaca_nigra_self-portrait_rotated_and_cropped.jpg")
+            .placeholder(R.drawable.liked)
+            .into(binding.ivProfilePicture)
     }
 }
