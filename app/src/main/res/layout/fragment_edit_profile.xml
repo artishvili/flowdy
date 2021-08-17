@@ -8,24 +8,26 @@
 
     <ImageView
         android:id="@+id/ivBackgroundPicture"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="120dp"
+        android:contentDescription="@string/profile_user_content_description_background_image"
         android:scaleType="centerCrop"
-        android:src="@drawable/music"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/profile_user_background_image" />
+        tools:src="@drawable/ic_launcher_background" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivProfilePicture"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="80dp"
         android:padding="@dimen/spacing_micro"
         android:scaleType="centerCrop"
-        android:src="@drawable/monkey"
         app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toTopOf="parent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundedImage" />
+        app:layout_constraintTop_toBottomOf="@id/ivBackgroundPicture"
+        app:layout_constraintBottom_toBottomOf="@id/ivBackgroundPicture"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundedImage"
+        tools:src="@drawable/ic_profile" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilNickname"
@@ -33,7 +35,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
-        app:boxStrokeWidth="2dp"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@+id/ivProfilePicture">
@@ -52,7 +53,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
-        app:boxStrokeWidth="2dp"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@+id/glStart"
         app:layout_constraintTop_toBottomOf="@+id/tilNickname">
@@ -71,7 +71,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
-        app:boxStrokeWidth="2dp"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@+id/tilCountry">
@@ -86,11 +85,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilDescription"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
-        app:boxStrokeWidth="2dp"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@+id/tilCity">
