@@ -13,7 +13,6 @@
     <string name="profile_user_city">City: %1$s</string>
     <string name="profile_user_description">Description: %1$s</string>
     <string name="profile_user_background">Background: %1$s</string>
-    <string name="profile_user_content_description_background_image">Background image</string>
     <string name="profile_user_nickname">Display name</string>
     <string name="profile_user_select_country">Select country</string>
     <string name="profile_user_select_city">Select city</string>
@@ -21,4 +20,6 @@
     <string name="profile_user_save_changes">Save</string>
     <!-- Data -->
     <string name="data_not_chosen">Not Chosen</string>
+    <!-- Content description -->
+    <string name="content_description_profile_user_background_image">Background image</string>
 </resources>
