@@ -27,17 +27,18 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             .placeholder(R.drawable.liked)
             .into(binding.ivProfilePicture)
 
-        binding.apply {
+        with(binding) {
             btnSaveChanges.setOnClickListener {
-                viewModel.onSaveButtonClick(
-                    nickname = etNickname.text.toString(),
-                    country = etCountry.text.toString(),
-                    city = etCity.text.toString(),
-                    description = etDescription.text.toString()
-                )
-                viewModel.navigateBack.observe(viewLifecycleOwner) {
-                    val action = EditProfileFragmentDirections.actionEditProfileFragmentToProfileFragment()
-                    findNavController().navigate(action)
+                with(viewModel) {
+                    onSaveButtonClick(
+                        nickname = etNickname.text.toString(),
+                        country = etCountry.text.toString(),
+                        city = etCity.text.toString(),
+                        description = etDescription.text.toString()
+                    )
+                    navigateBackEvent.observe(viewLifecycleOwner) {
+                        findNavController().navigateUp()
+                    }
                 }
             }
         }

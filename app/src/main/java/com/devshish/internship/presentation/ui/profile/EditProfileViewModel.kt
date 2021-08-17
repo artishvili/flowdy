@@ -11,9 +11,9 @@ import timber.log.Timber
 
 class EditProfileViewModel : ViewModel() {
 
-    val navigateBack: LiveData<Unit>
-        get() = _navigateBack
-    private val _navigateBack = MutableLiveData<Unit>()
+    val navigateBackEvent: LiveData<Unit>
+        get() = _navigateBackEvent
+    private val _navigateBackEvent = MutableLiveData<Unit>()
 
     fun onSaveButtonClick(
         nickname: String,
@@ -31,6 +31,6 @@ class EditProfileViewModel : ViewModel() {
         )
         Timber.d(user.toString())
         delay(1000)
-        _navigateBack.value = Unit
+        _navigateBackEvent.value = Unit
     }
 }
