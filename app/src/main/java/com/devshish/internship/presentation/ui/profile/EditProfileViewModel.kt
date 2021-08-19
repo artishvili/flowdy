@@ -1,19 +1,18 @@
 package com.devshish.internship.presentation.ui.profile
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.User
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class EditProfileViewModel : ViewModel() {
 
-    val navigateBackEvent: LiveData<Unit>
-        get() = _navigateBackEvent
-    private val _navigateBackEvent = MutableLiveData<Unit>()
+    private val _navigateBackEvent = MutableSharedFlow<Unit>(0)
+    val navigateBackEvent: SharedFlow<Unit> = _navigateBackEvent
 
     fun onSaveButtonClick(
         nickname: String,
@@ -32,7 +31,7 @@ class EditProfileViewModel : ViewModel() {
             )
             Timber.d(user.toString())
             delay(1000)
-            _navigateBackEvent.value = Unit
+            _navigateBackEvent.emit(Unit)
         }
     }
 }
