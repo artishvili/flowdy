@@ -20,17 +20,19 @@ class EditProfileViewModel : ViewModel() {
         country: String,
         city: String,
         description: String
-    ) = viewModelScope.launch {
-        val user = User(
-            nickname = nickname,
-            country = country,
-            city = city,
-            description = description,
-            photo = null,
-            background = null
-        )
-        Timber.d(user.toString())
-        delay(1000)
-        _navigateBackEvent.value = Unit
+    ) {
+        viewModelScope.launch {
+            val user = User(
+                nickname = nickname,
+                country = country,
+                city = city,
+                description = description,
+                photo = null,
+                background = null
+            )
+            Timber.d(user.toString())
+            delay(1000)
+            _navigateBackEvent.value = Unit
+        }
     }
 }

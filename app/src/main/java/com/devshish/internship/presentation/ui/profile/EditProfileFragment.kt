@@ -27,18 +27,18 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             .placeholder(R.drawable.liked)
             .into(binding.ivProfilePicture)
 
-        with(binding) {
-            btnSaveChanges.setOnClickListener {
-                with(viewModel) {
+        with(viewModel) {
+            navigateBackEvent.observe(viewLifecycleOwner) {
+                findNavController().navigateUp()
+            }
+            with(binding) {
+                btnSaveChanges.setOnClickListener {
                     onSaveButtonClick(
                         nickname = etNickname.text.toString(),
                         country = etCountry.text.toString(),
                         city = etCity.text.toString(),
                         description = etDescription.text.toString()
                     )
-                    navigateBackEvent.observe(viewLifecycleOwner) {
-                        findNavController().navigateUp()
-                    }
                 }
             }
         }
