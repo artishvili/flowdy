@@ -13,62 +13,61 @@ import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.data.repository.ProfileRepository
 import com.devshish.internship.databinding.FragmentProfileBinding
+import com.devshish.internship.domain.model.User
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
+    private lateinit var binding: FragmentProfileBinding
+
     private val viewModel: ProfileViewModel by lazy {
-        val repository = ProfileRepository
-        val factory = ProfileViewModelFactory(repository)
+        val factory = ProfileViewModelFactory(ProfileRepository)
         ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentProfileBinding.bind(view)
+        binding = FragmentProfileBinding.bind(view)
+
+        with(binding) {
+            ivEditProfile.setOnClickListener { viewModel.onEditButtonClick() }
+        }
 
         with(viewModel) {
-            with(binding) {
-                viewLifecycleOwner.lifecycleScope.launch {
-                    repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        user.collect { user ->
-                            Glide.with(this@ProfileFragment)
-                                .load(user.photo)
-                                .placeholder(R.drawable.ic_profile)
-                                .into(ivProfilePicture)
-
-                            tvNickname.text = user.nickname
-                            tvDescription.checkAndSetText(
-                                user.description,
-                                R.string.profile_user_description
-                            )
-                            tvCountry.checkAndSetText(user.country, R.string.profile_user_country)
-                            tvCity.checkAndSetText(user.city, R.string.profile_user_city)
-                            tvBackground.checkAndSetText(user.background, R.string.profile_user_background)
-                        }
-                    }
-                }
-
-                viewLifecycleOwner.lifecycleScope.launch {
-                    repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        navigateForwardEvent.collect {
-                            val action = ProfileFragmentDirections
-                                .actionProfileFragmentToEditProfileFragment()
-                            findNavController().navigate(action)
-                        }
-                    }
-                }
-
-                ivEditProfile.setOnClickListener {
-                    onEditButtonClick(
-                        nickname = tvNickname.text.toString(),
-                        country = tvCountry.text.toString(),
-                        city = tvCity.text.toString(),
-                        description = tvDescription.text.toString()
-                    )
+            viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.userFlow.collect { user -> showUser(user) }
                 }
             }
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    navigateForwardEvent.collect {
+                        val action = ProfileFragmentDirections
+                            .actionProfileFragmentToEditProfileFragment()
+                        findNavController().navigate(action)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showUser(user: User) {
+        binding.apply {
+            Glide.with(this@ProfileFragment)
+                .load(user.photo)
+                .placeholder(R.drawable.ic_profile)
+                .into(ivProfilePicture)
+
+            tvNickname.text = user.nickname
+            tvDescription.checkAndSetText(
+                user.description,
+                R.string.profile_user_description
+            )
+            tvCountry.checkAndSetText(user.country, R.string.profile_user_country)
+            tvCity.checkAndSetText(user.city, R.string.profile_user_city)
+            tvBackground.checkAndSetText(user.background, R.string.profile_user_background)
         }
     }
 

@@ -15,6 +15,8 @@ class EditProfileViewModel(
     private val repository: IProfileRepository
 ) : ViewModel() {
 
+    val userFlow = repository.getUser()
+
     private val _navigateBackEvent = MutableSharedFlow<Unit>()
     val navigateBackEvent: Flow<Unit> = _navigateBackEvent.asSharedFlow()
 
