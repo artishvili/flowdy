@@ -4,15 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.User
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class EditProfileViewModel : ViewModel() {
 
     private val _navigateBackEvent = MutableSharedFlow<Unit>(0)
-    val navigateBackEvent: SharedFlow<Unit> = _navigateBackEvent
+    val navigateBackEvent: Flow<Unit> = _navigateBackEvent.asSharedFlow()
 
     fun onSaveButtonClick(
         nickname: String,

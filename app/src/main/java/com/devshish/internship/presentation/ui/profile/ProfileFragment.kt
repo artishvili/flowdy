@@ -47,7 +47,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 }
 
                 viewLifecycleOwner.lifecycleScope.launch {
-                    viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    repeatOnLifecycle(Lifecycle.State.STARTED) {
                         navigateForwardEvent.collect {
                             val action = ProfileFragmentDirections
                                 .actionProfileFragmentToEditProfileFragment()

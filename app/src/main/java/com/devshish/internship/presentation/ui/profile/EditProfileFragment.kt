@@ -34,7 +34,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
         with(viewModel) {
             viewLifecycleOwner.lifecycleScope.launch {
-                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
                     navigateBackEvent.collect {
                         findNavController().navigateUp()
                     }
