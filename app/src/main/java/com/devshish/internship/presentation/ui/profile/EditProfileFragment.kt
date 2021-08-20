@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentEditProfileBinding
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
@@ -28,8 +33,12 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             .into(binding.ivProfilePicture)
 
         with(viewModel) {
-            navigateBackEvent.observe(viewLifecycleOwner) {
-                findNavController().navigateUp()
+            viewLifecycleOwner.lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    navigateBackEvent.collect {
+                        findNavController().navigateUp()
+                    }
+                }
             }
             with(binding) {
                 btnSaveChanges.setOnClickListener {
