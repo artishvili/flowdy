@@ -15,7 +15,7 @@ class EditProfileViewModel(
     private val repository: IProfileRepository
 ) : ViewModel() {
 
-    val userFlow = repository.getUser()
+    val userFlow: Flow<User> = repository.getUser()
 
     private val _navigateBackEvent = MutableSharedFlow<Unit>()
     val navigateBackEvent: Flow<Unit> = _navigateBackEvent.asSharedFlow()
@@ -36,8 +36,7 @@ class EditProfileViewModel(
                 background = null
             )
             repository.editUser(user)
-            Timber.d(user.toString())
-            delay(1000)
+            Timber.d(userFlow.toString())
             _navigateBackEvent.emit(Unit)
         }
     }

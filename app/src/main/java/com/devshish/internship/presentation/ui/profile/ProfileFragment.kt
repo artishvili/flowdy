@@ -37,16 +37,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         with(viewModel) {
             viewLifecycleOwner.lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.userFlow.collect { user -> showUser(user) }
-                }
-            }
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    navigateForwardEvent.collect {
-                        val action = ProfileFragmentDirections
-                            .actionProfileFragmentToEditProfileFragment()
-                        findNavController().navigate(action)
+                    launch { viewModel.userFlow.collect { user -> showUser(user) } }
+                    launch {
+                        navigateForwardEvent.collect {
+                            val action = ProfileFragmentDirections
+                                .actionProfileFragmentToEditProfileFragment()
+                            findNavController().navigate(action)
+                        }
                     }
                 }
             }
