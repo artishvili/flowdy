@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private val viewModel: ProfileViewModel by lazy {
-        val repository = ProfileRepository()
+        val repository = ProfileRepository
         val factory = ProfileViewModelFactory(repository)
         ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
     }
@@ -30,20 +30,24 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         with(viewModel) {
             with(binding) {
-                user.observe(viewLifecycleOwner) { user ->
-                    Glide.with(this@ProfileFragment)
-                        .load(user.photo)
-                        .placeholder(R.drawable.ic_profile)
-                        .into(ivProfilePicture)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        user.collect { user ->
+                            Glide.with(this@ProfileFragment)
+                                .load(user.photo)
+                                .placeholder(R.drawable.ic_profile)
+                                .into(ivProfilePicture)
 
-                    tvNickname.text = user.nickname
-                    tvDescription.checkAndSetText(
-                        user.description,
-                        R.string.profile_user_description
-                    )
-                    tvCountry.checkAndSetText(user.country, R.string.profile_user_country)
-                    tvCity.checkAndSetText(user.city, R.string.profile_user_city)
-                    tvBackground.checkAndSetText(user.background, R.string.profile_user_background)
+                            tvNickname.text = user.nickname
+                            tvDescription.checkAndSetText(
+                                user.description,
+                                R.string.profile_user_description
+                            )
+                            tvCountry.checkAndSetText(user.country, R.string.profile_user_country)
+                            tvCity.checkAndSetText(user.city, R.string.profile_user_city)
+                            tvBackground.checkAndSetText(user.background, R.string.profile_user_background)
+                        }
+                    }
                 }
 
                 viewLifecycleOwner.lifecycleScope.launch {
