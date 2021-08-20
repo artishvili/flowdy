@@ -25,7 +25,7 @@ class ProfileViewModel(
         }
     }
 
-    private val _navigateForwardEvent = MutableSharedFlow<Unit>(0)
+    private val _navigateForwardEvent = MutableSharedFlow<Unit>()
     val navigateForwardEvent: Flow<Unit> = _navigateForwardEvent.asSharedFlow()
 
     fun onEditButtonClick(

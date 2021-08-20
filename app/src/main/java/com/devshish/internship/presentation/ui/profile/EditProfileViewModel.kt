@@ -12,7 +12,7 @@ import timber.log.Timber
 
 class EditProfileViewModel : ViewModel() {
 
-    private val _navigateBackEvent = MutableSharedFlow<Unit>(0)
+    private val _navigateBackEvent = MutableSharedFlow<Unit>()
     val navigateBackEvent: Flow<Unit> = _navigateBackEvent.asSharedFlow()
 
     fun onSaveButtonClick(
