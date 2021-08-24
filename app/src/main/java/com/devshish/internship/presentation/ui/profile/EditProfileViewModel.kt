@@ -1,6 +1,7 @@
 package com.devshish.internship.presentation.ui.profile
 
 import android.net.Uri
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.User
@@ -18,25 +19,32 @@ class EditProfileViewModel(
     private val _navigateBackEvent = MutableSharedFlow<Unit>()
     val navigateBackEvent: Flow<Unit> = _navigateBackEvent.asSharedFlow()
 
-    private val _profileImageFlow = MutableStateFlow("")
-    val profileImageFlow: Flow<String> = _profileImageFlow.asStateFlow()
+    private val _profileImageFlow = MutableStateFlow(Uri.EMPTY)
+    val profileImageFlow: Flow<Uri?> = _profileImageFlow.asStateFlow()
 
-    private val _backgroundImageFlow = MutableStateFlow("")
-    val backgroundImageFlow: Flow<String> = _backgroundImageFlow.asStateFlow()
+    private val _backgroundImageFlow = MutableStateFlow(Uri.EMPTY)
+    val backgroundImageFlow: Flow<Uri?> = _backgroundImageFlow.asStateFlow()
 
-    fun onProfileImagePick(uri: Uri?) {
-        _profileImageFlow.value = uri.toString()
+    init {
+        viewModelScope.launch {
+            _profileImageFlow.value = userFlow.first().photo?.toUri()
+            _backgroundImageFlow.value = userFlow.first().background?.toUri()
+        }
     }
 
-    fun onBackgroundImagePick(uri: Uri?) {
-        _backgroundImageFlow.value = uri.toString()
+    fun onProfileImagePick(uri: Uri) {
+        _profileImageFlow.value = uri
+    }
+
+    fun onBackgroundImagePick(uri: Uri) {
+        _backgroundImageFlow.value = uri
     }
 
     fun onSaveButtonClick(
         nickname: String,
-        country: String?,
-        city: String?,
-        description: String?
+        country: String,
+        city: String,
+        description: String
     ) {
         viewModelScope.launch {
             val user = User(
@@ -44,8 +52,8 @@ class EditProfileViewModel(
                 country = country,
                 city = city,
                 description = description,
-                photo = profileImageFlow.first(),
-                background = backgroundImageFlow.first()
+                photo = _profileImageFlow.value.toString(),
+                background = _backgroundImageFlow.value.toString()
             )
             repository.editUser(user)
             Timber.d(userFlow.toString())

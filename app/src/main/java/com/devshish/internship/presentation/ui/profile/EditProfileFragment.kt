@@ -30,12 +30,12 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private val getProfileImage: ActivityResultLauncher<String> =
         registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri: Uri? ->
-            viewModel.onProfileImagePick(imageUri)
+            imageUri?.let { viewModel.onProfileImagePick(it) }
         }
 
     private val getBackgroundImage: ActivityResultLauncher<String> =
         registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri: Uri? ->
-            viewModel.onBackgroundImagePick(imageUri)
+            imageUri?.let { viewModel.onBackgroundImagePick(it) }
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,12 +59,15 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
         with(viewModel) {
             viewLifecycleOwner.lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.CREATED) {
+                    launch { userFlow.collect { user -> showUser(user) } }
                     launch {
-                        profileImageFlow.collect { uri ->
-                            Glide.with(this@EditProfileFragment)
-                                .load(uri)
-                                .placeholder(R.drawable.ic_profile)
-                                .into(binding.ivProfilePicture)
+                        profileImageFlow.collect { uri: Uri? ->
+                            uri?.let {
+                                Glide.with(this@EditProfileFragment)
+                                    .load(it)
+                                    .placeholder(R.drawable.ic_profile)
+                                    .into(binding.ivProfilePicture)
+                            }
                         }
                     }
                     launch {
@@ -75,7 +78,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                                 .into(binding.ivBackgroundPicture)
                         }
                     }
-                    launch { userFlow.collect { user -> showUser(user) } }
                     launch { navigateBackEvent.collect { findNavController().navigateUp() } }
                 }
             }
@@ -88,14 +90,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
             etCountry.setText(user.country)
             etCity.setText(user.city)
             etDescription.setText(user.description)
-            Glide.with(binding.ivProfilePicture)
-                .load(user.photo)
-                .placeholder(R.drawable.ic_profile)
-                .into(ivProfilePicture)
-            Glide.with(binding.ivBackgroundPicture)
-                .load(user.background)
-                .placeholder(R.drawable.ic_profile)
-                .into(ivBackgroundPicture)
         }
     }
 }

@@ -37,7 +37,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         with(viewModel) {
             viewLifecycleOwner.lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    launch { viewModel.userFlow.collect { user -> showUser(user) } }
+                    launch { userFlow.collect { user -> showUser(user) } }
                     launch {
                         navigateForwardEvent.collect {
                             val action = ProfileFragmentDirections
