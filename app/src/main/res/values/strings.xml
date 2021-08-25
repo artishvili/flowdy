@@ -22,4 +22,6 @@
     <string name="data_not_chosen">Not Chosen</string>
     <!-- Content description -->
     <string name="content_description_profile_user_background_image">Background image</string>
+    <!-- Fields -->
+    <string name="fields_not_filled">Fill in all the necessary fields!</string>
 </resources>

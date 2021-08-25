@@ -15,7 +15,8 @@
         android:theme="@style/Theme.Internship">
         <activity
             android:name="com.devshish.internship.presentation.ui.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

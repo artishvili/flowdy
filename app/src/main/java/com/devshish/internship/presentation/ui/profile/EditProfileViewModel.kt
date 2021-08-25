@@ -28,6 +28,10 @@ class EditProfileViewModel(
         get() = _backgroundPictureUri.asStateFlow()
     private val _backgroundPictureUri = MutableStateFlow<Uri?>(null)
 
+    val showSnackBarEvent: Flow<Unit>
+        get() = _showSnackBarEvent.asSharedFlow()
+    private val _showSnackBarEvent = MutableSharedFlow<Unit>()
+
     init {
         viewModelScope.launch {
             repository.getUser().collect {
@@ -53,17 +57,27 @@ class EditProfileViewModel(
         description: String
     ) {
         viewModelScope.launch {
-            val user = User(
-                nickname = nickname,
-                country = country,
-                city = city,
-                description = description,
-                photo = _profilePictureUri.value,
-                background = _backgroundPictureUri.value
-            )
-            repository.editUser(user)
-            Timber.d(userFlow.toString())
-            _navigateBackEvent.emit(Unit)
+            if (validate(nickname)) {
+                val user = User(
+                    nickname = nickname,
+                    country = country.validateMandatoryField(),
+                    city = city.validateMandatoryField(),
+                    description = description.validateMandatoryField(),
+                    photo = _profilePictureUri.value,
+                    background = _backgroundPictureUri.value
+                )
+
+                repository.editUser(user)
+                Timber.d(userFlow.toString())
+                _navigateBackEvent.emit(Unit)
+            } else {
+                _showSnackBarEvent.emit(Unit)
+            }
         }
     }
+
+    private fun validate(nickname: String): Boolean = nickname.isNotBlank()
+
+    private fun String.validateMandatoryField(): String? =
+        if (this.isNotBlank()) this else null
 }
