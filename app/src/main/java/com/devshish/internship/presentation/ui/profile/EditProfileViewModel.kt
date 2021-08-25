@@ -1,7 +1,6 @@
 package com.devshish.internship.presentation.ui.profile
 
 import android.net.Uri
-import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.User
@@ -14,30 +13,37 @@ class EditProfileViewModel(
     private val repository: IProfileRepository
 ) : ViewModel() {
 
-    val userFlow: Flow<User> = repository.getUser()
+    val userFlow: Flow<User>
+        get() = _userFlow.asSharedFlow()
+    private val _userFlow = MutableSharedFlow<User>(1)
 
     private val _navigateBackEvent = MutableSharedFlow<Unit>()
     val navigateBackEvent: Flow<Unit> = _navigateBackEvent.asSharedFlow()
 
-    private val _profileImageFlow = MutableStateFlow(Uri.EMPTY)
-    val profileImageFlow: Flow<Uri?> = _profileImageFlow.asStateFlow()
+    val profilePictureUri: Flow<Uri?>
+        get() = _profilePictureUri.asStateFlow()
+    private val _profilePictureUri = MutableStateFlow<Uri?>(null)
 
-    private val _backgroundImageFlow = MutableStateFlow(Uri.EMPTY)
-    val backgroundImageFlow: Flow<Uri?> = _backgroundImageFlow.asStateFlow()
+    val backgroundPictureUri: Flow<Uri?>
+        get() = _backgroundPictureUri.asStateFlow()
+    private val _backgroundPictureUri = MutableStateFlow<Uri?>(null)
 
     init {
         viewModelScope.launch {
-            _profileImageFlow.value = userFlow.first().photo?.toUri()
-            _backgroundImageFlow.value = userFlow.first().background?.toUri()
+            repository.getUser().collect {
+                _userFlow.emit(it)
+                _profilePictureUri.value = it.photo
+                _backgroundPictureUri.value = it.background
+            }
         }
     }
 
     fun onProfileImagePick(uri: Uri) {
-        _profileImageFlow.value = uri
+        _profilePictureUri.value = uri
     }
 
     fun onBackgroundImagePick(uri: Uri) {
-        _backgroundImageFlow.value = uri
+        _backgroundPictureUri.value = uri
     }
 
     fun onSaveButtonClick(
@@ -52,8 +58,8 @@ class EditProfileViewModel(
                 country = country,
                 city = city,
                 description = description,
-                photo = _profileImageFlow.value.toString(),
-                background = _backgroundImageFlow.value.toString()
+                photo = _profilePictureUri.value,
+                background = _backgroundPictureUri.value
             )
             repository.editUser(user)
             Timber.d(userFlow.toString())

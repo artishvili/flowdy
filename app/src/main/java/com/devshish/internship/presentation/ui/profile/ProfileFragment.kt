@@ -64,7 +64,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             )
             tvCountry.checkAndSetText(user.country, R.string.profile_user_country)
             tvCity.checkAndSetText(user.city, R.string.profile_user_city)
-            tvBackground.checkAndSetText(user.background, R.string.profile_user_background)
+            // TODO
+            /*tvBackground.checkAndSetText(user.background, R.string.profile_user_background)*/
         }
     }
 

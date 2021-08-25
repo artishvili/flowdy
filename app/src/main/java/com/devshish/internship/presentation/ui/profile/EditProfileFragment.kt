@@ -61,17 +61,15 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                 repeatOnLifecycle(Lifecycle.State.CREATED) {
                     launch { userFlow.collect { user -> showUser(user) } }
                     launch {
-                        profileImageFlow.collect { uri: Uri? ->
-                            uri?.let {
-                                Glide.with(this@EditProfileFragment)
-                                    .load(it)
-                                    .placeholder(R.drawable.ic_profile)
-                                    .into(binding.ivProfilePicture)
-                            }
+                        profilePictureUri.collect { uri ->
+                            Glide.with(this@EditProfileFragment)
+                                .load(uri)
+                                .placeholder(R.drawable.ic_profile)
+                                .into(binding.ivProfilePicture)
                         }
                     }
                     launch {
-                        backgroundImageFlow.collect { uri ->
+                        backgroundPictureUri.collect { uri ->
                             Glide.with(this@EditProfileFragment)
                                 .load(uri)
                                 .placeholder(R.drawable.ic_profile)
