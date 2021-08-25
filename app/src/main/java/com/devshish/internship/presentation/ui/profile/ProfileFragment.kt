@@ -56,16 +56,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 .load(user.photo)
                 .placeholder(R.drawable.ic_profile)
                 .into(ivProfilePicture)
+            Glide.with(this@ProfileFragment)
+                .load(user.background)
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(ivBackgroundPicture)
 
             tvNickname.text = user.nickname
-            tvDescription.checkAndSetText(
-                user.description,
-                R.string.profile_user_description
-            )
+            tvDescription.checkAndSetText(user.description, R.string.profile_user_description)
             tvCountry.checkAndSetText(user.country, R.string.profile_user_country)
             tvCity.checkAndSetText(user.city, R.string.profile_user_city)
-            // TODO
-            /*tvBackground.checkAndSetText(user.background, R.string.profile_user_background)*/
         }
     }
 
