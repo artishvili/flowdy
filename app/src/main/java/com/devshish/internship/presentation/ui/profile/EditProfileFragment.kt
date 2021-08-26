@@ -79,8 +79,11 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                     }
                     launch {
                         showSnackBarEvent.collect {
-                            Snackbar.make(requireView(),
-                                R.string.fields_not_filled, Snackbar.LENGTH_LONG).show()
+                            Snackbar.make(
+                                binding.root,
+                                R.string.fields_not_filled,
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                     }
                     launch { navigateBackEvent.collect { findNavController().navigateUp() } }
