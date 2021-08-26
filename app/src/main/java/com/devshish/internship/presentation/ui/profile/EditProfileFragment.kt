@@ -16,6 +16,7 @@ import com.devshish.internship.R
 import com.devshish.internship.data.repository.ProfileRepository
 import com.devshish.internship.databinding.FragmentEditProfileBinding
 import com.devshish.internship.domain.model.User
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -74,6 +75,15 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                                 .load(uri)
                                 .placeholder(R.drawable.ic_profile)
                                 .into(binding.ivBackgroundPicture)
+                        }
+                    }
+                    launch {
+                        showSnackBarEvent.collect {
+                            Snackbar.make(
+                                binding.root,
+                                R.string.fields_not_filled,
+                                Snackbar.LENGTH_LONG
+                            ).show()
                         }
                     }
                     launch { navigateBackEvent.collect { findNavController().navigateUp() } }
