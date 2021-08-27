@@ -72,7 +72,7 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
                         backgroundPictureUri.collect { uri ->
                             Glide.with(this@EditProfileFragment)
                                 .load(uri)
-                                .placeholder(R.drawable.ic_profile)
+                                .placeholder(R.color.purple_200)
                                 .into(binding.ivBackgroundPicture)
                         }
                     }

@@ -58,7 +58,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 .into(ivProfilePicture)
             Glide.with(this@ProfileFragment)
                 .load(user.background)
-                .placeholder(R.drawable.ic_launcher_foreground)
+                .placeholder(R.color.purple_200)
                 .into(ivBackgroundPicture)
 
             tvNickname.text = user.nickname
