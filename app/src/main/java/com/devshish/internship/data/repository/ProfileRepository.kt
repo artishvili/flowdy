@@ -5,7 +5,7 @@ import com.devshish.internship.domain.repository.IProfileRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-object ProfileRepository : IProfileRepository {
+class ProfileRepository : IProfileRepository {
 
     private val user = MutableStateFlow(
         User(

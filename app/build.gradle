@@ -64,4 +64,8 @@ dependencies {
 
     // Lifecycle
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+
+    // Koin
+    implementation "io.insert-koin:koin-android:$koinVersion"
+    //implementation "io.insert-koin:koin-android-viewmodel:$koinVersion"
 }

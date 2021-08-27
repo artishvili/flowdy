@@ -6,6 +6,7 @@ buildscript {
         timberVersion = "5.0.0"
         coroutinesVersion = "1.5.1"
         lifecycleVersion = "2.4.0-alpha03"
+        koinVersion = "3.1.2"
     }
     repositories {
         google()

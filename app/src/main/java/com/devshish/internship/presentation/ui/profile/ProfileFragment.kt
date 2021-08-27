@@ -16,15 +16,14 @@ import com.devshish.internship.databinding.FragmentProfileBinding
 import com.devshish.internship.domain.model.User
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var binding: FragmentProfileBinding
 
-    private val viewModel: ProfileViewModel by lazy {
-        val factory = ProfileViewModelFactory(ProfileRepository)
-        ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
-    }
+    private val viewModel: ProfileViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

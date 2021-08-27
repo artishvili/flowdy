@@ -19,15 +19,13 @@ import com.devshish.internship.domain.model.User
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     private lateinit var binding: FragmentEditProfileBinding
 
-    private val viewModel: EditProfileViewModel by lazy {
-        val factory = EditProfileViewModelFactory(ProfileRepository)
-        ViewModelProvider(this, factory).get(EditProfileViewModel::class.java)
-    }
+    private val viewModel: EditProfileViewModel by viewModel()
 
     private val getProfileImage: ActivityResultLauncher<String> =
         registerForActivityResult(ActivityResultContracts.GetContent()) { imageUri: Uri? ->
