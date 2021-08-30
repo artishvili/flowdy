@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui
+package com.devshish.internship.presentation.ui.utils
 
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
