@@ -8,15 +8,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.devshish.internship.R
 import com.devshish.internship.databinding.ActivityMainBinding
+import com.devshish.internship.presentation.ui.utils.viewBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private val binding by viewBinding(ActivityMainBinding::inflate)
     private lateinit var navController: NavController
-    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager

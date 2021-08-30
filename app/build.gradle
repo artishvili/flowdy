@@ -67,4 +67,6 @@ dependencies {
 
     // Koin
     implementation "io.insert-koin:koin-android:$koinVersion"
+
+    implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
 }
