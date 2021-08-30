@@ -15,14 +15,14 @@ import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentEditProfileBinding
 import com.devshish.internship.domain.model.User
 import com.google.android.material.snackbar.Snackbar
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
-    private lateinit var binding: FragmentEditProfileBinding
-
+    private val binding by viewBinding(FragmentEditProfileBinding::bind)
     private val viewModel: EditProfileViewModel by viewModel()
 
     private val getProfileImage: ActivityResultLauncher<String> =
@@ -37,7 +37,6 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentEditProfileBinding.bind(view)
 
         with(binding) {
             btnSaveChanges.setOnClickListener {
