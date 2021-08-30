@@ -15,9 +15,15 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.clPlaylist.setOnClickListener {
-            val action = LibraryFragmentDirections.actionLibraryFragmentToLikedSongsFragment()
-            findNavController().navigate(action)
+        with(binding) {
+            clLikedSongs.setOnClickListener {
+                val action = LibraryFragmentDirections.actionLibraryFragmentToLikedSongsFragment()
+                findNavController().navigate(action)
+            }
+            clLikedAlbums.setOnClickListener {
+                val action = LibraryFragmentDirections.actionLibraryFragmentToLikedAlbumsFragment()
+                findNavController().navigate(action)
+            }
         }
     }
 }
