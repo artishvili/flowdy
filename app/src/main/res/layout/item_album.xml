@@ -10,7 +10,7 @@
     android:paddingBottom="@dimen/spacing_small">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/ivSongCover"
+        android:id="@+id/ivAlbumCover"
         android:layout_width="@dimen/library_cover_image_size"
         android:layout_height="@dimen/library_cover_image_size"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
         tools:background="@color/purple_200" />
 
     <TextView
-        android:id="@+id/tvSongName"
+        android:id="@+id/tvAlbumTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_default"
@@ -27,11 +27,11 @@
         android:fontFamily="@font/rubik_medium"
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintBottom_toTopOf="@+id/tvArtist"
-        app:layout_constraintEnd_toStartOf="@id/tvDuration"
-        app:layout_constraintStart_toEndOf="@id/ivSongCover"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ivAlbumCover"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="HUMBLE." />
+        tools:text="Donda" />
 
     <TextView
         android:id="@+id/tvArtist"
@@ -41,18 +41,9 @@
         android:layout_marginTop="@dimen/spacing_micro"
         android:layout_marginEnd="@dimen/spacing_small"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/tvDuration"
-        app:layout_constraintStart_toEndOf="@id/ivSongCover"
-        app:layout_constraintTop_toBottomOf="@+id/tvSongName"
-        tools:text="Kendrick Lamar" />
-
-    <TextView
-        android:id="@+id/tvDuration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="4:12" />
+        app:layout_constraintStart_toEndOf="@id/ivAlbumCover"
+        app:layout_constraintTop_toBottomOf="@+id/tvAlbumTitle"
+        tools:text="Kanye West" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

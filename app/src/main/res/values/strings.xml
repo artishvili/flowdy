@@ -7,7 +7,9 @@
     <string name="nav_profile">Profile</string>
     <!-- Music library -->
     <string name="library_favorites">Liked Songs</string>
-    <string name="library_songs">12 songs</string>
+    <string name="library_songs_count">12 songs</string>
+    <string name="library_albums">Liked Albums</string>
+    <string name="library_albums_count">3 albums</string>
     <!-- Profile -->
     <string name="profile_user_country">Country: %1$s</string>
     <string name="profile_user_city">City: %1$s</string>
