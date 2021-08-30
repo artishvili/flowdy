@@ -15,7 +15,7 @@ import org.koin.dsl.module
 
 val appModule = module {
     single<IProfileRepository> { ProfileRepository() }
-    single<LikedSongsRepository> { SongsRepository() }
+    single { SongsRepository() }
     single<IAlbumsRepository> { AlbumsRepository() }
 }
 

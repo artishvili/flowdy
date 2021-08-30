@@ -11,8 +11,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivSongCover"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
+        android:layout_width="@dimen/library_cover_image_size"
+        android:layout_height="@dimen/library_cover_image_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.RoundedCorners"

@@ -7,4 +7,6 @@
     <dimen name="large_dp">100dp</dimen>
     <dimen name="profile_header_height">112dp</dimen>
     <dimen name="profile_image_size">88dp</dimen>
+    <dimen name="library_cover_image_size">56dp</dimen>
+    <dimen name="library_image_size">72dp</dimen>
 </resources>
