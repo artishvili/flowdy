@@ -67,5 +67,4 @@ dependencies {
 
     // Koin
     implementation "io.insert-koin:koin-android:$koinVersion"
-    //implementation "io.insert-koin:koin-android-viewmodel:$koinVersion"
 }

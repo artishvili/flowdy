@@ -7,13 +7,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
-import com.devshish.internship.data.repository.ProfileRepository
 import com.devshish.internship.databinding.FragmentEditProfileBinding
 import com.devshish.internship.domain.model.User
 import com.google.android.material.snackbar.Snackbar
