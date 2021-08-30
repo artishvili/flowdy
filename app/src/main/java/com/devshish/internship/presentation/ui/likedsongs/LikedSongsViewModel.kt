@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.Song
 import com.devshish.internship.data.repository.SongsRepository
+import com.devshish.internship.domain.repository.LikedSongsRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class LikedSongsViewModel(
-    private val repository: SongsRepository
+    private val repository: LikedSongsRepository
 ) : ViewModel() {
 
     val songs: LiveData<List<Song>>
