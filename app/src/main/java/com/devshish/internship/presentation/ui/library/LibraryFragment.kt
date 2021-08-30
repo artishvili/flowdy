@@ -2,11 +2,15 @@ package com.devshish.internship.presentation.ui.library
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentLibraryBinding
+import com.devshish.internship.databinding.ItemPlaylistBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 
 class LibraryFragment : Fragment(R.layout.fragment_library) {
@@ -17,37 +21,41 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            layoutLikedSongs.apply {
-                Glide.with(root)
-                    .load(R.drawable.liked)
-                    .placeholder(R.drawable.liked)
-                    .into(ivPlaylistCover)
-
-                tvPlaylistTitle.text = getString(R.string.library_favorites)
-                tvPlaylistItemCount.text = getString(R.string.library_songs_count)
-
-                root.setOnClickListener {
-                    val action = LibraryFragmentDirections
-                        .actionLibraryFragmentToLikedSongsFragment()
-                    findNavController().navigate(action)
-                }
+            layoutLikedSongs.setData(
+                playlistCover = R.drawable.liked,
+                playlistTitle = R.string.library_favorites,
+                playlistItemCount = R.string.library_songs_count
+            ) {
+                val action = LibraryFragmentDirections
+                    .actionLibraryFragmentToLikedSongsFragment()
+                findNavController().navigate(action)
             }
 
-            layoutLikedAlbums.apply {
-                Glide.with(root)
-                    .load(R.drawable.album)
-                    .placeholder(R.drawable.album)
-                    .into(ivPlaylistCover)
 
-                tvPlaylistTitle.text = getString(R.string.library_albums)
-                tvPlaylistItemCount.text = getString(R.string.library_albums_count)
-
-                root.setOnClickListener {
-                    val action = LibraryFragmentDirections
-                        .actionLibraryFragmentToLikedAlbumsFragment()
-                    findNavController().navigate(action)
-                }
+            layoutLikedAlbums.setData(
+                playlistCover = R.drawable.album,
+                playlistTitle = R.string.library_albums,
+                playlistItemCount = R.string.library_albums_count
+            ) {
+                val action = LibraryFragmentDirections
+                    .actionLibraryFragmentToLikedAlbumsFragment()
+                findNavController().navigate(action)
             }
         }
+    }
+
+    private fun ItemPlaylistBinding.setData(
+        @DrawableRes playlistCover: Int,
+        @StringRes playlistTitle: Int,
+        @StringRes playlistItemCount: Int,
+        navigateToPlaylist: () -> Unit
+    ) {
+        Glide.with(this@LibraryFragment)
+            .load(playlistCover)
+            .placeholder(playlistCover)
+            .into(ivPlaylistCover)
+        tvPlaylistTitle.text = getString(playlistTitle)
+        tvPlaylistItemCount.text = getString(playlistItemCount)
+        root.setOnClickListener { navigateToPlaylist() }
     }
 }
