@@ -7,7 +7,7 @@ class AlbumsRepository : IAlbumsRepository {
 
     private val albums = listOf(
         Album("Donda", "Kanye West", null),
-        Album("Lil Uzi Vert", "Eternal Atake", null),
+        Album("Eternal Atake", "Lil Uzi Vert", null),
         Album("DAMN.", "Kendrick Lamar", null)
     )
 
