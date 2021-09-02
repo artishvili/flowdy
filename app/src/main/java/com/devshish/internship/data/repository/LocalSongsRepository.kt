@@ -5,13 +5,13 @@ import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
 import com.devshish.internship.domain.model.Song
-import com.devshish.internship.domain.repository.ILocalSongsRepository
+import com.devshish.internship.domain.repository.ISongsRepository
 
 class LocalSongsRepository(
     private val applicationContext: Context
-) : ILocalSongsRepository {
+) : ISongsRepository {
 
-    override suspend fun getLocalSongs(): List<Song> {
+    override suspend fun getSongs(): List<Song> {
         val songList = mutableListOf<Song>()
 
         val projection = arrayOf(
@@ -20,12 +20,6 @@ class LocalSongsRepository(
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.DURATION
         )
-
-        // Show only songs that are at least 1 minutes in duration.
-        /*val selection = "${MediaStore.Audio.Media.DURATION} >= ?"
-        val selectionArgs = arrayOf(
-            TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTES).toString()
-        )*/
 
         // Display songs in alphabetical order based on their display name.
         val sortOrder = "${MediaStore.Audio.Media.DISPLAY_NAME} ASC"
@@ -48,7 +42,7 @@ class LocalSongsRepository(
                 val id = cursor.getLong(idColumn)
                 val name = cursor.getString(nameColumn)
                 val artist = cursor.getString(artistColumn)
-                val duration = cursor.getInt(durationColumn)
+                val duration = cursor.getLong(durationColumn)
 
                 val contentUri: Uri = ContentUris.withAppendedId(
                     MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,

@@ -27,7 +27,7 @@ class LikedSongsFragment : Fragment(R.layout.fragment_liked_songs) {
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.songs.observe(viewLifecycleOwner) {
+        viewModel.likedSongs.observe(viewLifecycleOwner) {
             itemSongAdapter.submitList(it)
         }
     }

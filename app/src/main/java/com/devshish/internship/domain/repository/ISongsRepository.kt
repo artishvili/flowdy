@@ -2,7 +2,7 @@ package com.devshish.internship.domain.repository
 
 import com.devshish.internship.domain.model.Song
 
-interface ILocalSongsRepository {
+interface ISongsRepository {
 
-    suspend fun getLocalSongs(): List<Song>
+    suspend fun getSongs(): List<Song>
 }
