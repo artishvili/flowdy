@@ -55,7 +55,7 @@ class LocalSongsRepository(
                 )
 
                 val thumbnail: Uri = ContentUris.withAppendedId(
-                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                    Uri.parse("content://media/external/audio/albumart"),
                     albumId
                 )
 
