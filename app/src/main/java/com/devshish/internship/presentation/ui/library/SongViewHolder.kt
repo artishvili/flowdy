@@ -5,7 +5,7 @@ import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.ItemSongBinding
 import com.devshish.internship.domain.model.Song
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeUnit.*
 
 class SongViewHolder(
     private val binding: ItemSongBinding,
@@ -20,16 +20,13 @@ class SongViewHolder(
 
             tvSongName.text = song.title
             tvArtist.text = song.artist
-            tvDuration.text = String.format(
-                    "%02d:%02d",
-                    TimeUnit.MILLISECONDS.toMinutes(song.duration),
-                    TimeUnit.MILLISECONDS.toSeconds(song.duration) - TimeUnit.MINUTES.toSeconds(
-                        TimeUnit.MILLISECONDS.toMinutes(song.duration)
-                    )
-                )
+
+            val minutes = MILLISECONDS.toMinutes(song.duration.toLong())
+            val seconds = MILLISECONDS.toSeconds(song.duration.toLong()) - MINUTES.toSeconds(minutes)
+            tvDuration.text = String.format("%02d:%02d", minutes, seconds)
 
             Glide.with(ivSongCover)
-                .load(song.imageUrl)
+                .load(song.imageUri)
                 .placeholder(R.drawable.liked)
                 .into(ivSongCover)
         }

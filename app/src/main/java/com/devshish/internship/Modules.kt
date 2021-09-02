@@ -16,14 +16,17 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
+private const val LIKED_SONGS = "liked"
+private const val LOCAL_SONGS = "local"
+
 val appModule = module {
     // Profile
     single<IProfileRepository> { ProfileRepository() }
 
     // Library
     single<IAlbumsRepository> { AlbumsRepository() }
-    single<ISongsRepository>(named("liked")) { LikedSongsRepository() }
-    single<ISongsRepository>(named("local")) {
+    single<ISongsRepository>(named(LIKED_SONGS)) { LikedSongsRepository() }
+    single<ISongsRepository>(named(LOCAL_SONGS)) {
         LocalSongsRepository(applicationContext = get())
     }
 }
@@ -34,7 +37,7 @@ val viewModelModule = module {
     viewModel { EditProfileViewModel(repository = get()) }
 
     // Library
-    viewModel { LikedSongsViewModel(repository = get(named("liked"))) }
-    viewModel { LocalSongsViewModel(repository = get(named("local"))) }
+    viewModel { LikedSongsViewModel(repository = get(named(LIKED_SONGS))) }
+    viewModel { LocalSongsViewModel(repository = get(named(LOCAL_SONGS))) }
     viewModel { AlbumsViewModel(repository = get()) }
 }

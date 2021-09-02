@@ -4,7 +4,6 @@ import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -23,36 +22,16 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
-            if (isGranted) {
-                Timber.i("Granted")
-            } else {
-                Timber.i("Denied")
-            }
+            Timber.i("Permission granted: $isGranted")
         }
-
-    private fun requestPermissions() {
-        when {
-            ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) -> {
-                requestPermissionLauncher.launch(
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-            }
-
-            else -> {
-                requestPermissionLauncher.launch(
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        requestPermissions()
+
+        requestPermissionLauncher.launch(
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navHostFragment) as NavHostFragment

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_large">26sp</dimen>
+    <dimen name="large_dp">100dp</dimen>
+    <!-- Spacing -->
     <dimen name="spacing_default">16dp</dimen>
     <dimen name="spacing_small">8dp</dimen>
     <dimen name="spacing_micro">4dp</dimen>
-    <dimen name="large_dp">100dp</dimen>
+    <!-- Images -->
     <dimen name="profile_header_height">112dp</dimen>
     <dimen name="profile_image_size">88dp</dimen>
     <dimen name="library_cover_image_size">56dp</dimen>
