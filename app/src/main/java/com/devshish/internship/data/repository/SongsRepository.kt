@@ -6,19 +6,19 @@ import com.devshish.internship.domain.repository.LikedSongsRepository
 class SongsRepository : LikedSongsRepository {
 
     private val songs = listOf(
-        Song("Tell Em", "Cochise, SNOT", 260, ""),
-        Song("Spaceship", "Playboi Carti", 300, ""),
-        Song("Water Glass", "Cannon", 240, ""),
-        Song("Ms. Jackson", "Outkast", 240, ""),
-        Song("Ninety", "Jaden", 240, ""),
-        Song("Dunno", "Mac Miller", 240, ""),
-        Song("DR. WHOEVER", "Amine", 240, ""),
-        Song("Well Travelled", "Masego", 240, ""),
-        Song("Been Around", "Cordae", 240, ""),
-        Song("Trust", "Brent Faiyaz", 240, ""),
-        Song("YEAH RIGHT", "Joji", 240, ""),
-        Song("RIVER ROAD", "Jack Harlow", 240, "")
+        Song(null, "Tell Em", "Cochise, SNOT", 260, ""),
+        Song(null, "Spaceship", "Playboi Carti", 300, ""),
+        Song(null, "Water Glass", "Cannon", 240, ""),
+        Song(null, "Ms. Jackson", "Outkast", 240, ""),
+        Song(null, "Ninety", "Jaden", 240, ""),
+        Song(null, "Dunno", "Mac Miller", 240, ""),
+        Song(null, "DR. WHOEVER", "Amine", 240, ""),
+        Song(null, "Well Travelled", "Masego", 240, ""),
+        Song(null, "Been Around", "Cordae", 240, ""),
+        Song(null, "Trust", "Brent Faiyaz", 240, ""),
+        Song(null, "YEAH RIGHT", "Joji", 240, ""),
+        Song(null, "RIVER ROAD", "Jack Harlow", 240, "")
     )
 
-    override suspend fun getLikedSongs() = songs
+    override suspend fun getLikedSongs(): List<Song> = songs
 }

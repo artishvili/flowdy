@@ -1,11 +1,10 @@
-package com.devshish.internship.presentation.ui.likedalbums
+package com.devshish.internship.presentation.ui.library.likedalbums
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.Album
-import com.devshish.internship.domain.model.Song
 import com.devshish.internship.domain.repository.IAlbumsRepository
 import kotlinx.coroutines.launch
 

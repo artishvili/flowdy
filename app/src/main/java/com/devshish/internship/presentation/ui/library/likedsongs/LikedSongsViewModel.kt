@@ -1,11 +1,10 @@
-package com.devshish.internship.presentation.ui.likedsongs
+package com.devshish.internship.presentation.ui.library.likedsongs
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.Song
-import com.devshish.internship.data.repository.SongsRepository
 import com.devshish.internship.domain.repository.LikedSongsRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber

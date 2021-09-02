@@ -10,6 +10,8 @@
     <string name="library_songs_count">12 songs</string>
     <string name="library_albums">Liked Albums</string>
     <string name="library_albums_count">3 albums</string>
+    <string name="library_local_songs">Local Songs</string>
+    <string name="library_local_songs_count">Your local songs</string>
     <!-- Profile -->
     <string name="profile_user_country">Country: %1$s</string>
     <string name="profile_user_city">City: %1$s</string>

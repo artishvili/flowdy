@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.likedalbums
+package com.devshish.internship.presentation.ui.library.likedalbums
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

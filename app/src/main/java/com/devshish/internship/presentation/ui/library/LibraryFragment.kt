@@ -2,7 +2,6 @@ package com.devshish.internship.presentation.ui.library
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
@@ -26,8 +25,7 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
                 playlistTitle = R.string.library_favorites,
                 playlistItemCount = R.string.library_songs_count
             ) {
-                val action = LibraryFragmentDirections
-                    .actionLibraryFragmentToLikedSongsFragment()
+                val action = LibraryFragmentDirections.actionLibraryFragmentToLikedSongsFragment()
                 findNavController().navigate(action)
             }
 
@@ -37,8 +35,16 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
                 playlistTitle = R.string.library_albums,
                 playlistItemCount = R.string.library_albums_count
             ) {
-                val action = LibraryFragmentDirections
-                    .actionLibraryFragmentToLikedAlbumsFragment()
+                val action = LibraryFragmentDirections.actionLibraryFragmentToLikedAlbumsFragment()
+                findNavController().navigate(action)
+            }
+
+            layoutLocalSongs.setData(
+                playlistCover = R.drawable.ic_folder,
+                playlistTitle = R.string.library_local_songs,
+                playlistItemCount = R.string.library_local_songs_count
+            ) {
+                val action = LibraryFragmentDirections.actionLibraryFragmentToLocalSongsFragment()
                 findNavController().navigate(action)
             }
         }
