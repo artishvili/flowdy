@@ -25,7 +25,7 @@
         android:layout_marginStart="@dimen/spacing_default"
         android:layout_marginEnd="@dimen/spacing_small"
         android:fontFamily="@font/rubik_medium"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:textAppearance="?attr/textAppearanceBody2"
         app:layout_constraintBottom_toTopOf="@+id/tvArtist"
         app:layout_constraintEnd_toStartOf="@id/tvDuration"
         app:layout_constraintStart_toEndOf="@id/ivSongCover"

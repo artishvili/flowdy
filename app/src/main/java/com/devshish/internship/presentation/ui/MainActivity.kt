@@ -1,6 +1,6 @@
 package com.devshish.internship.presentation.ui
 
-import android.Manifest
+import android.Manifest.permission.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,9 +29,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        requestPermissionLauncher.launch(
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
+        requestPermissionLauncher.launch(READ_EXTERNAL_STORAGE)
+        requestPermissionLauncher.launch(WRITE_EXTERNAL_STORAGE)
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navHostFragment) as NavHostFragment
