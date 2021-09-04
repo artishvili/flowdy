@@ -1,29 +1,30 @@
-package com.devshish.internship.presentation.ui.library.likedalbums
+package com.devshish.internship.presentation.ui.albums.local
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
-import com.devshish.internship.databinding.FragmentLikedAlbumsBinding
+import com.devshish.internship.databinding.FragmentLocalAlbumsBinding
+import com.devshish.internship.presentation.ui.albums.ItemAlbumAdapter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class LikedAlbumsFragment : Fragment(R.layout.fragment_liked_albums) {
+class LocalAlbumsFragment : Fragment(R.layout.fragment_local_albums) {
 
-    private val binding by viewBinding(FragmentLikedAlbumsBinding::bind)
-    private val viewModel: AlbumsViewModel by viewModel()
+    private val binding by viewBinding(FragmentLocalAlbumsBinding::bind)
+    private val viewModel: LocalAlbumsViewModel by viewModel()
     private val itemAlbumAdapter = ItemAlbumAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvAlbums.apply {
+        binding.layoutLocalAlbums.rvItems.apply {
             adapter = itemAlbumAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.albums.observe(viewLifecycleOwner) {
+        viewModel.localAlbums.observe(viewLifecycleOwner) {
             itemAlbumAdapter.submitList(it)
         }
     }

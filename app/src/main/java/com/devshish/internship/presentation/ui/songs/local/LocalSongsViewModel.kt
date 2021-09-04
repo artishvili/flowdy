@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.library.likedsongs
+package com.devshish.internship.presentation.ui.songs.local
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,23 +7,18 @@ import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.Song
 import com.devshish.internship.domain.repository.ISongsRepository
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
-class LikedSongsViewModel(
+class LocalSongsViewModel(
     private val repository: ISongsRepository
 ) : ViewModel() {
 
-    val likedSongs: LiveData<List<Song>>
-        get() = _likedSongs
-    private val _likedSongs = MutableLiveData<List<Song>>()
+    val localSongs: LiveData<List<Song>>
+        get() = _localSongs
+    private val _localSongs = MutableLiveData<List<Song>>()
 
     init {
         viewModelScope.launch {
-            _likedSongs.value = repository.getSongs()
+            _localSongs.value = repository.getSongs()
         }
-    }
-
-    fun onSongClick(song: Song) {
-        Timber.d("Song clicked: $song")
     }
 }

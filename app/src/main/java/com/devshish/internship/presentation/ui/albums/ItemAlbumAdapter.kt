@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.library.likedalbums
+package com.devshish.internship.presentation.ui.albums
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.library
+package com.devshish.internship.presentation.ui.songs
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide

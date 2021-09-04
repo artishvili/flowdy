@@ -4,27 +4,25 @@ import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
-import com.devshish.internship.domain.model.Song
-import com.devshish.internship.domain.repository.ISongsRepository
+import com.devshish.internship.domain.model.Album
+import com.devshish.internship.domain.repository.IAlbumsRepository
 
-class LocalSongsRepository(
+class LocalAlbumsRepository(
     private val applicationContext: Context
-) : ISongsRepository {
+) : IAlbumsRepository {
 
-    override suspend fun getSongs(): List<Song> {
-        val songs = mutableListOf<Song>()
+    override suspend fun getAlbums(): List<Album> {
+        val albums = mutableListOf<Album>()
 
         val projection = arrayOf(
-            MediaStore.Audio.Media._ID,
-            MediaStore.Audio.Media.TITLE,
-            MediaStore.Audio.Media.ARTIST,
-            MediaStore.Audio.Media.DURATION,
-            MediaStore.Audio.Media.ALBUM_ID
+            MediaStore.Audio.Media.ALBUM_ID,
+            MediaStore.Audio.Media.ALBUM,
+            MediaStore.Audio.Media.ARTIST
         )
 
         val selection = "${MediaStore.Audio.Media.IS_MUSIC}=1"
 
-        // Display songs in alphabetical order based on their title.
+        // Display albums in alphabetical order based on their title.
         val sortOrder = "${MediaStore.Audio.Media.TITLE} ASC"
 
         applicationContext.contentResolver.query(
@@ -35,23 +33,19 @@ class LocalSongsRepository(
             sortOrder
         )?.use { cursor ->
             // Cache column indices.
-            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
-            val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE)
-            val artistColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
-            val durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
             val albumIdColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM_ID)
+            val albumColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ALBUM)
+            val artistColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
 
             while (cursor.moveToNext()) {
                 // Get values of columns for a given audio.
-                val id = cursor.getLong(idColumn)
-                val name = cursor.getString(nameColumn)
-                val artist = cursor.getString(artistColumn)
-                val duration = cursor.getInt(durationColumn)
                 val albumId = cursor.getLong(albumIdColumn)
+                val album = cursor.getString(albumColumn)
+                val artist = cursor.getString(artistColumn)
 
                 val contentUri: Uri = ContentUris.withAppendedId(
                     MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                    id
+                    albumId
                 )
 
                 val thumbnail: Uri = ContentUris.withAppendedId(
@@ -61,9 +55,10 @@ class LocalSongsRepository(
 
                 // Stores column values and the contentUri in a local object
                 // that represents the media file.
-                songs += Song(contentUri, name, artist, duration, thumbnail)
+                albums += Album(contentUri, album, artist, thumbnail)
             }
         }
-        return songs
+
+        return albums
     }
 }

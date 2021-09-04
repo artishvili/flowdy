@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.library.likedalbums
+package com.devshish.internship.presentation.ui.albums.local
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,17 +8,17 @@ import com.devshish.internship.domain.model.Album
 import com.devshish.internship.domain.repository.IAlbumsRepository
 import kotlinx.coroutines.launch
 
-class AlbumsViewModel(
+class LocalAlbumsViewModel(
     private val repository: IAlbumsRepository
 ) : ViewModel() {
 
-    val albums: LiveData<List<Album>>
-        get() = _albums
-    private val _albums = MutableLiveData<List<Album>>()
+    val localAlbums: LiveData<List<Album>>
+        get() = _localAlbums
+    private val _localAlbums = MutableLiveData<List<Album>>()
 
     init {
         viewModelScope.launch {
-            _albums.value = repository.getLikedAlbums()
+            _localAlbums.value = repository.getAlbums()
         }
     }
 }

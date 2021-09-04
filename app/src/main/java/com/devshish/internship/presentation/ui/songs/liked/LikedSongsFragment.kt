@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.library.likedsongs
+package com.devshish.internship.presentation.ui.songs.liked
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentLikedSongsBinding
-import com.devshish.internship.presentation.ui.library.ItemSongAdapter
+import com.devshish.internship.presentation.ui.songs.ItemSongAdapter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -22,7 +22,7 @@ class LikedSongsFragment : Fragment(R.layout.fragment_liked_songs) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvSongs.apply {
+        binding.layoutLikedSongs.rvItems.apply {
             adapter = itemSongAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }

@@ -29,6 +29,14 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
                 findNavController().navigate(action)
             }
 
+            layoutLocalSongs.setData(
+                playlistCover = R.drawable.ic_folder,
+                playlistTitle = R.string.library_local_songs,
+                playlistItemCount = R.string.library_local_songs_count
+            ) {
+                val action = LibraryFragmentDirections.actionLibraryFragmentToLocalSongsFragment()
+                findNavController().navigate(action)
+            }
 
             layoutLikedAlbums.setData(
                 playlistCover = R.drawable.album,
@@ -39,12 +47,12 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
                 findNavController().navigate(action)
             }
 
-            layoutLocalSongs.setData(
+            layoutLocalAlbums.setData(
                 playlistCover = R.drawable.ic_folder,
-                playlistTitle = R.string.library_local_songs,
-                playlistItemCount = R.string.library_local_songs_count
+                playlistTitle = R.string.library_local_albums,
+                playlistItemCount = R.string.library_local_albums_count
             ) {
-                val action = LibraryFragmentDirections.actionLibraryFragmentToLocalSongsFragment()
+                val action = LibraryFragmentDirections.actionLibraryFragmentToLocalAlbumsFragment()
                 findNavController().navigate(action)
             }
         }

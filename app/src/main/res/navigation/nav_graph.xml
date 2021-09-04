@@ -41,10 +41,17 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_libraryFragment_to_localAlbumsFragment"
+            app:destination="@id/localAlbumsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/likedSongsFragment"
-        android:name="com.devshish.internship.presentation.ui.library.likedsongs.LikedSongsFragment"
+        android:name="com.devshish.internship.presentation.ui.songs.liked.LikedSongsFragment"
         android:label="fragment_liked_songs"
         tools:layout="@layout/fragment_liked_songs" />
     <fragment
@@ -67,12 +74,17 @@
         tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/likedAlbumsFragment"
-        android:name="com.devshish.internship.presentation.ui.library.likedalbums.LikedAlbumsFragment"
+        android:name="com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsFragment"
         android:label="fragment_liked_albums"
         tools:layout="@layout/fragment_liked_albums" />
     <fragment
         android:id="@+id/localSongsFragment"
-        android:name="com.devshish.internship.presentation.ui.library.localsongs.LocalSongsFragment"
+        android:name="com.devshish.internship.presentation.ui.songs.local.LocalSongsFragment"
         android:label="fragment_local_songs"
         tools:layout="@layout/fragment_local_songs" />
+    <fragment
+        android:id="@+id/localAlbumsFragment"
+        android:name="com.devshish.internship.presentation.ui.albums.local.LocalAlbumsFragment"
+        android:label="fragment_local_albums"
+        tools:layout="@layout/fragment_local_albums" />
 </navigation>
