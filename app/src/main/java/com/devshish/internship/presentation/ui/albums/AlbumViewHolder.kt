@@ -7,11 +7,16 @@ import com.devshish.internship.databinding.ItemAlbumBinding
 import com.devshish.internship.domain.model.Album
 
 class AlbumViewHolder(
-    private val binding: ItemAlbumBinding
+    private val binding: ItemAlbumBinding,
+    private val onClick: (Album) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(album: Album) {
         binding.apply {
+            root.setOnClickListener {
+                onClick(album)
+            }
+
             tvAlbumTitle.text = album.title
             tvArtist.text = album.artist
 

@@ -4,6 +4,7 @@ import com.devshish.internship.data.repository.*
 import com.devshish.internship.domain.repository.IAlbumsRepository
 import com.devshish.internship.domain.repository.IProfileRepository
 import com.devshish.internship.domain.repository.ISongsRepository
+import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
 import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
@@ -19,6 +20,7 @@ private const val SONGS_LOCAL = "songs_local"
 
 private const val ALBUMS_LIKED = "albums_liked"
 private const val ALBUMS_LOCAL = "albums_local"
+private const val ALBUM_SONGS = "album_songs"
 
 val appModule = module {
     // Profile
@@ -35,6 +37,7 @@ val appModule = module {
     single<ISongsRepository>(named(SONGS_LOCAL)) {
         LocalSongsRepository(applicationContext = get())
     }
+    single<ISongsRepository>(named(ALBUM_SONGS)) { LikedSongsRepository() }
 }
 
 val viewModelModule = module {
@@ -45,6 +48,7 @@ val viewModelModule = module {
     // Albums
     viewModel { LikedAlbumsViewModel(repository = get(named(ALBUMS_LIKED))) }
     viewModel { LocalAlbumsViewModel(repository = get(named(ALBUMS_LOCAL))) }
+    viewModel { AlbumDetailsViewModel(repository = get(named(ALBUM_SONGS))) }
 
     // Songs
     viewModel { LikedSongsViewModel(repository = get(named(SONGS_LIKED))) }

@@ -7,7 +7,9 @@ import com.devshish.internship.databinding.ItemAlbumBinding
 import com.devshish.internship.domain.model.Album
 import com.devshish.internship.presentation.model.AlbumItemCallback
 
-class ItemAlbumAdapter : ListAdapter<Album, AlbumViewHolder>(AlbumItemCallback()) {
+class ItemAlbumAdapter(
+    private val onClick: (Album) -> Unit
+) : ListAdapter<Album, AlbumViewHolder>(AlbumItemCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder {
         val binding = ItemAlbumBinding.inflate(
@@ -15,7 +17,7 @@ class ItemAlbumAdapter : ListAdapter<Album, AlbumViewHolder>(AlbumItemCallback()
             parent,
             false
         )
-        return AlbumViewHolder(binding)
+        return AlbumViewHolder(binding, onClick)
     }
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {

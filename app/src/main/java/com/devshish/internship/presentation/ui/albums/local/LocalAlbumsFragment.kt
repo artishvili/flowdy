@@ -3,6 +3,7 @@ package com.devshish.internship.presentation.ui.albums.local
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentLocalAlbumsBinding
@@ -14,7 +15,10 @@ class LocalAlbumsFragment : Fragment(R.layout.fragment_local_albums) {
 
     private val binding by viewBinding(FragmentLocalAlbumsBinding::bind)
     private val viewModel: LocalAlbumsViewModel by viewModel()
-    private val itemAlbumAdapter = ItemAlbumAdapter()
+    private val itemAlbumAdapter = ItemAlbumAdapter {
+        val action = LocalAlbumsFragmentDirections.actionLocalAlbumsFragmentToAlbumDetailsFragment()
+        findNavController().navigate(action)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

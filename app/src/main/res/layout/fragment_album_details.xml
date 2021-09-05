@@ -3,50 +3,89 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".presentation.ui.albums.details.AlbumDetailsFragment">
 
     <ImageView
         android:id="@+id/ivAlbumCover"
-        android:layout_width="144dp"
-        android:layout_height="144dp"
-        android:layout_marginTop="56dp"
+        android:layout_width="124dp"
+        android:layout_height="124dp"
+        android:src="@color/purple_200"
         app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@color/purple_200" />
+        app:layout_constraintTop_toTopOf="@id/glTop" />
 
     <TextView
         android:id="@+id/tvAlbumTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_default"
         android:fontFamily="@font/rubik_medium"
-        android:textAppearance="?attr/textAppearanceHeadline5"
+        android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintBottom_toTopOf="@+id/tvArtist"
+        app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toEndOf="@id/ivAlbumCover"
         app:layout_constraintTop_toTopOf="@id/ivAlbumCover"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Album Title" />
+        tools:text="4 Your Eyez Only" />
 
     <TextView
         android:id="@+id/tvArtist"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_default"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:textAppearance="?attr/textAppearanceBody1"
+        android:layout_marginTop="@dimen/spacing_micro"
         app:layout_constraintBottom_toBottomOf="@id/ivAlbumCover"
+        app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toEndOf="@id/ivAlbumCover"
         app:layout_constraintTop_toBottomOf="@+id/tvAlbumTitle"
-        tools:text="Album artist" />
+        tools:text="J. Cole" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPlay"
-        android:layout_width="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.Icon"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_default"
         android:text="Play"
+        app:icon="@drawable/ic_play"
+        app:iconGravity="textStart"
+        app:layout_constraintEnd_toStartOf="@+id/btnShufflePlay"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@id/ivAlbumCover" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnShufflePlay"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_default"
+        android:text="Shuffle"
+        app:icon="@drawable/ic_shuffle"
+        app:iconGravity="textStart"
+        app:layout_constraintEnd_toEndOf="@id/glEnd"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnPlay"
+        app:layout_constraintTop_toBottomOf="@id/ivAlbumCover" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAlbumsSongs"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnPlay"
+        tools:listitem="@layout/item_album_song" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="@dimen/library_cover_image_size" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glStart"
