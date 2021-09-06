@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/ivAlbumCover"
-        android:layout_width="124dp"
-        android:layout_height="124dp"
+        android:layout_width="@dimen/library_album_cover"
+        android:layout_height="@dimen/library_album_cover"
         android:src="@color/purple_200"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toTopOf="@id/glTop" />

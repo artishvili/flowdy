@@ -20,17 +20,22 @@ class MainActivity : AppCompatActivity() {
 
     private val requestPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            Timber.i("Permission granted: $isGranted")
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            permissions.entries.forEach {
+                Timber.i("Permission granted: ${it.value}")
+            }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        requestPermissionLauncher.launch(READ_EXTERNAL_STORAGE)
-        requestPermissionLauncher.launch(WRITE_EXTERNAL_STORAGE)
+        requestPermissionLauncher.launch(arrayOf(
+            READ_EXTERNAL_STORAGE,
+            WRITE_EXTERNAL_STORAGE
+        ))
+
 
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navHostFragment) as NavHostFragment

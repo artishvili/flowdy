@@ -43,11 +43,6 @@ class LocalAlbumsRepository(
                 val album = cursor.getString(albumColumn)
                 val artist = cursor.getString(artistColumn)
 
-                val contentUri: Uri = ContentUris.withAppendedId(
-                    MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                    albumId
-                )
-
                 val thumbnail: Uri = ContentUris.withAppendedId(
                     Uri.parse("content://media/external/audio/albumart"),
                     albumId
@@ -55,7 +50,7 @@ class LocalAlbumsRepository(
 
                 // Stores column values and the contentUri in a local object
                 // that represents the media file.
-                albums += Album(contentUri, album, artist, thumbnail)
+                albums += Album(album, artist, thumbnail)
             }
         }
 

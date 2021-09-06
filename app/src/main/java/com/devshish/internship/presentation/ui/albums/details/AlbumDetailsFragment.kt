@@ -25,8 +25,8 @@ class AlbumDetailsFragment : Fragment(R.layout.fragment_album_details) {
             .into(binding.ivAlbumCover)
 
         binding.apply {
-            tvAlbumTitle.text = "Album title"
-            tvArtist.text = "by Artist"
+            tvAlbumTitle.text = getString(R.string.library_details_album_title)
+            tvArtist.text = getString(R.string.library_details_album_artist)
             rvAlbumsSongs.apply {
                 adapter = itemAlbumSongsAdapter
                 layoutManager = LinearLayoutManager(requireContext())

@@ -1,5 +1,6 @@
 package com.devshish.internship
 
+import com.devshish.internship.MusicLibrary.*
 import com.devshish.internship.data.repository.*
 import com.devshish.internship.domain.repository.IAlbumsRepository
 import com.devshish.internship.domain.repository.IProfileRepository
@@ -15,12 +16,13 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-private const val SONGS_LIKED = "songs_liked"
-private const val SONGS_LOCAL = "songs_local"
-
-private const val ALBUMS_LIKED = "albums_liked"
-private const val ALBUMS_LOCAL = "albums_local"
-private const val ALBUM_SONGS = "album_songs"
+enum class MusicLibrary {
+    SONGS_LIKED,
+    SONGS_LOCAL,
+    ALBUMS_LIKED,
+    ALBUMS_LOCAL,
+    ALBUM_SONGS
+}
 
 val appModule = module {
     // Profile
