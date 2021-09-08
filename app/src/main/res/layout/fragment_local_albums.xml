@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.albums.liked.LikedAlbumsFragment">
+    tools:context=".presentation.ui.albums.local.LocalAlbumsFragment">
 
     <include
-        android:id="@+id/layoutLikedAlbums"
+        android:id="@+id/layoutLocalAlbums"
         layout="@layout/item_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

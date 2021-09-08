@@ -4,5 +4,5 @@ import com.devshish.internship.domain.model.Album
 
 interface IAlbumsRepository {
 
-    suspend fun getLikedAlbums(): List<Album>
+    suspend fun getAlbums(): List<Album>
 }

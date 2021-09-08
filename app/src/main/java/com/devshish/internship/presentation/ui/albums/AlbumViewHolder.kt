@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.likedalbums
+package com.devshish.internship.presentation.ui.albums
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -7,11 +7,16 @@ import com.devshish.internship.databinding.ItemAlbumBinding
 import com.devshish.internship.domain.model.Album
 
 class AlbumViewHolder(
-    private val binding: ItemAlbumBinding
+    private val binding: ItemAlbumBinding,
+    private val onClick: (Album) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(album: Album) {
         binding.apply {
+            root.setOnClickListener {
+                onClick(album)
+            }
+
             tvAlbumTitle.text = album.title
             tvArtist.text = album.artist
 

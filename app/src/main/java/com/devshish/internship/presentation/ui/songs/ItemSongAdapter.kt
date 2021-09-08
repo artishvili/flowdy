@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.likedsongs
+package com.devshish.internship.presentation.ui.songs
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
