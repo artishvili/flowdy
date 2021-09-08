@@ -1,6 +1,7 @@
 package com.devshish.internship
 
-import com.devshish.internship.MusicLibrary.*
+import com.devshish.internship.Albums.*
+import com.devshish.internship.Songs.*
 import com.devshish.internship.data.repository.*
 import com.devshish.internship.domain.repository.IAlbumsRepository
 import com.devshish.internship.domain.repository.IProfileRepository
@@ -16,12 +17,15 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-enum class MusicLibrary {
+enum class Albums {
+    ALBUMS_LIKED,
+    ALBUMS_LOCAL
+}
+
+enum class Songs {
     SONGS_LIKED,
     SONGS_LOCAL,
-    ALBUMS_LIKED,
-    ALBUMS_LOCAL,
-    ALBUM_SONGS
+    SONGS_ALBUM
 }
 
 val appModule = module {
@@ -39,7 +43,7 @@ val appModule = module {
     single<ISongsRepository>(named(SONGS_LOCAL)) {
         LocalSongsRepository(applicationContext = get())
     }
-    single<ISongsRepository>(named(ALBUM_SONGS)) { LikedSongsRepository() }
+    single<ISongsRepository>(named(SONGS_ALBUM)) { LikedSongsRepository() }
 }
 
 val viewModelModule = module {
@@ -50,7 +54,7 @@ val viewModelModule = module {
     // Albums
     viewModel { LikedAlbumsViewModel(repository = get(named(ALBUMS_LIKED))) }
     viewModel { LocalAlbumsViewModel(repository = get(named(ALBUMS_LOCAL))) }
-    viewModel { AlbumDetailsViewModel(repository = get(named(ALBUM_SONGS))) }
+    viewModel { AlbumDetailsViewModel(repository = get(named(SONGS_ALBUM))) }
 
     // Songs
     viewModel { LikedSongsViewModel(repository = get(named(SONGS_LIKED))) }

@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             ActivityResultContracts.RequestMultiplePermissions()
         ) { permissions ->
             permissions.entries.forEach {
-                Timber.i("Permission granted: ${it.value}")
+                Timber.i("Permission ${it.key} granted: ${it.value}")
             }
         }
 
