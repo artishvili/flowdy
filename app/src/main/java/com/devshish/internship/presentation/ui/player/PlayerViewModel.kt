@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class PlayerViewModel : ViewModel() {
 
-    val song = Song(null, "Pure Souls", "Kanye West", 300, null)
+    private val song = Song(null, "Pure Souls", "Kanye West", 300, null)
 
     val songToPlay: LiveData<Song>
         get() = _songToPlay

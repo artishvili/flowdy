@@ -17,33 +17,37 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(viewModel) {
-            binding.ivPlay.setOnClickListener { onPause() }
-            binding.ivPause.setOnClickListener { onPlay() }
+        with(binding) {
+            ivPlay.setOnClickListener { viewModel.onPause() }
+            ivPause.setOnClickListener { viewModel.onPlay() }
         }
 
-        with(binding) {
-            viewModel.songToPlay.observe(viewLifecycleOwner) {
-                tvPlaylist.text = getString(R.string.library_favorites)
-                tvSong.text = it.title
-                tvArtist.text = it.artist
-                tvDurationStart.text = "0:00"
-                tvDurationEnd.text = "3:40"
+        with(viewModel) {
+            with(binding) {
+                songToPlay.observe(viewLifecycleOwner) {
+                    tvPlaylist.text = getString(R.string.library_favorites)
+                    tvSong.text = it.title
+                    tvArtist.text = it.artist
 
-                Glide.with(this@PlayerFragment)
-                    .load(it.imageUri)
-                    .placeholder(R.color.purple_200)
-                    .into(ivSongCover)
-            }
+                    // TODO: IMPLEMENT REAL DESTINATION START AND END
+                    tvDurationStart.text = "0:00"
+                    tvDurationEnd.text = "3:40"
 
-            viewModel.pauseEvent.observe(viewLifecycleOwner) {
-                ivPlay.visibility = View.INVISIBLE
-                ivPause.visibility = View.VISIBLE
-            }
+                    Glide.with(this@PlayerFragment)
+                        .load(it.imageUri)
+                        .placeholder(R.color.purple_200)
+                        .into(ivSongCover)
+                }
 
-            viewModel.playEvent.observe(viewLifecycleOwner) {
-                ivPlay.visibility = View.VISIBLE
-                ivPause.visibility = View.INVISIBLE
+                pauseEvent.observe(viewLifecycleOwner) {
+                    ivPlay.visibility = View.INVISIBLE
+                    ivPause.visibility = View.VISIBLE
+                }
+
+                playEvent.observe(viewLifecycleOwner) {
+                    ivPlay.visibility = View.VISIBLE
+                    ivPause.visibility = View.INVISIBLE
+                }
             }
         }
     }
