@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_large">26sp</dimen>
+    <dimen name="spacing_big">24dp</dimen>
     <dimen name="large_dp">100dp</dimen>
     <!-- Spacing -->
     <dimen name="spacing_default">16dp</dimen>
@@ -12,4 +13,10 @@
     <dimen name="library_cover_image_size">56dp</dimen>
     <dimen name="library_image_size">72dp</dimen>
     <dimen name="library_album_cover">124dp</dimen>
+    <!-- Player image -->
+    <dimen name="player_song_cover_size">304dp</dimen>
+    <dimen name="player_icon_size">32dp</dimen>
+    <dimen name="player_play_icon_size">80dp</dimen>
+    <dimen name="player_nav_icon_size">56dp</dimen>
+
 </resources>
