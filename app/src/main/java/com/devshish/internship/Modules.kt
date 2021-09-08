@@ -3,16 +3,15 @@ package com.devshish.internship
 import com.devshish.internship.Albums.*
 import com.devshish.internship.Songs.*
 import com.devshish.internship.data.repository.*
-import com.devshish.internship.domain.repository.IAlbumsRepository
-import com.devshish.internship.domain.repository.IProfileRepository
-import com.devshish.internship.domain.repository.ISongsRepository
+import com.devshish.internship.domain.repository.*
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
-import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
-import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
+import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.EditProfileViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
+import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
+import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -59,4 +58,5 @@ val viewModelModule = module {
     // Songs
     viewModel { LikedSongsViewModel(repository = get(named(SONGS_LIKED))) }
     viewModel { LocalSongsViewModel(repository = get(named(SONGS_LOCAL))) }
+    viewModel { PlayerViewModel() }
 }
