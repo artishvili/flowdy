@@ -14,7 +14,7 @@ class AlbumDetailsViewHolder(
             tvSongPosition.text = adapterPosition.plus(1).toString()
             tvArtist.text = song.artist
             tvSongName.text = song.title
-            tvDuration.text = convertMillisToTime(song.duration)
+//            tvDuration.text = convertMillisToTime(song.duration)
         }
     }
 }

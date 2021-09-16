@@ -19,7 +19,7 @@ class LikedSongsFragment : Fragment(R.layout.fragment_liked_songs) {
     private val itemSongAdapter = ItemSongAdapter {
         viewModel.onSongClick(it)
 
-        val action = LikedSongsFragmentDirections.actionLikedSongsFragmentToPlayerFragment()
+        val action = LikedSongsFragmentDirections.actionLikedSongsFragmentToPlayerFragment(it)
         findNavController().navigate(action)
     }
 

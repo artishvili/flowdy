@@ -20,7 +20,7 @@ class SongViewHolder(
 
             tvSongName.text = song.title
             tvArtist.text = song.artist
-            tvDuration.text = convertMillisToTime(song.duration)
+//            tvDuration.text = convertMillisToTime(song.duration)
 
             Glide.with(ivSongCover)
                 .load(song.imageUri)

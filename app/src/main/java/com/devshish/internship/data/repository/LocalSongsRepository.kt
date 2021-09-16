@@ -44,6 +44,7 @@ class LocalSongsRepository(
             while (cursor.moveToNext()) {
                 // Get values of columns for a given audio.
                 val id = cursor.getLong(idColumn)
+                val mediaId = cursor.getString(idColumn)
                 val name = cursor.getString(nameColumn)
                 val artist = cursor.getString(artistColumn)
                 val duration = cursor.getInt(durationColumn)
@@ -61,7 +62,7 @@ class LocalSongsRepository(
 
                 // Stores column values and the contentUri in a local object
                 // that represents the media file.
-                songs += Song(contentUri, name, artist, duration, thumbnail)
+                songs += Song(mediaId, contentUri, name, artist, duration, thumbnail)
             }
         }
         return songs

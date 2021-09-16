@@ -4,36 +4,37 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devshish.internship.domain.model.Song
+import com.devshish.internship.presentation.ui.utils.Constants.UPDATE_PLAYER_POSITION_INTERVAL
+import com.devshish.internship.presentation.ui.utils.currentPlaybackPosition
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class PlayerViewModel : ViewModel() {
+class PlayerViewModel(
+    musicServiceConnection: MusicServiceConnection
+) : ViewModel() {
 
-    private val song = Song(null, "Pure Souls", "Kanye West", 300, null)
+    private val playbackState = musicServiceConnection.playbackState
 
-    val songToPlay: LiveData<Song>
-        get() = _songToPlay
-    private val _songToPlay = MutableLiveData<Song>()
+    private val _curSongDuration = MutableLiveData<Long>()
+    val curSongDuration: LiveData<Long> = _curSongDuration
 
-    val pauseEvent: LiveData<Unit>
-        get() = _pauseEvent
-    private val _pauseEvent = MutableLiveData<Unit>()
-
-    val playEvent: LiveData<Unit>
-        get() = _playEvent
-    private val _playEvent = MutableLiveData<Unit>()
+    private val _curPlayerPosition = MutableLiveData<Long>()
+    val curPlayerPosition: LiveData<Long> = _curPlayerPosition
 
     init {
+        updateCurrentPlayerPosition()
+    }
+
+    private fun updateCurrentPlayerPosition() {
         viewModelScope.launch {
-            _songToPlay.value = song
+            while (true) {
+                val position = playbackState.value?.currentPlaybackPosition
+                if (curPlayerPosition.value != position) {
+                    _curPlayerPosition.postValue(position!!)
+                    _curSongDuration.postValue(MusicService.curSongDuration)
+                }
+                delay(UPDATE_PLAYER_POSITION_INTERVAL)
+            }
         }
-    }
-
-    fun onPause() {
-        _pauseEvent.value = Unit
-    }
-
-    fun onPlay() {
-        _playEvent.value = Unit
     }
 }

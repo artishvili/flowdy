@@ -11,7 +11,7 @@ class MusicServiceApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@MusicServiceApplication)
-            modules(listOf(appModule, viewModelModule))
+            modules(listOf(appModule, viewModelModule, serviceModule))
         }
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())

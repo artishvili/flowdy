@@ -7,6 +7,8 @@ buildscript {
         coroutinesVersion = "1.5.1"
         lifecycleVersion = "2.4.0-alpha03"
         koinVersion = "3.1.2"
+        viewBindingDelegateVersion = "1.0.0"
+        exoPlayerVersion = "2.15.0"
     }
     repositories {
         google()

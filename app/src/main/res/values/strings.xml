@@ -16,6 +16,7 @@
     <string name="library_local_albums_count">Your local albums</string>
     <string name="library_details_album_title">Album Title</string>
     <string name="library_details_album_artist">by Artist</string>
+    <string name="library_songs">Songs</string>
     <!-- Profile -->
     <string name="profile_user_country">Country: %1$s</string>
     <string name="profile_user_city">City: %1$s</string>
@@ -32,4 +33,11 @@
     <string name="content_description_profile_user_background_image">Background image</string>
     <!-- Fields -->
     <string name="fields_not_filled">Fill in all the necessary fields!</string>
+    <!-- Service -->
+    <string name="service_connection_suspended">The connection was suspended</string>
+    <string name="service_connection_failed">Couldn\'t connect to media browser</string>
+    <string name="service_connection_server_error">Couldn\'t connect to the server.</string>
+
+    <string name="notification_channel_name">Music Channel</string>
+    <string name="notification_channel_description">Shows cur playing song</string>
 </resources>

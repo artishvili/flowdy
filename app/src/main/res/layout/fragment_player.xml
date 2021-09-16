@@ -24,6 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/player_song_cover_size"
         android:layout_marginTop="@dimen/spacing_big"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@id/tvPlaylist"
@@ -63,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintTop_toTopOf="@id/tvSong" />
 
-    <com.google.android.material.slider.Slider
+    <SeekBar
         android:id="@+id/sPlayer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -121,17 +122,6 @@
         android:id="@+id/ivPlay"
         android:layout_width="@dimen/player_play_icon_size"
         android:layout_height="@dimen/player_play_icon_size"
-        android:src="@drawable/ic_play_filled"
-        app:layout_constraintEnd_toEndOf="@id/glEnd"
-        app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toBottomOf="@id/tvDurationStart" />
-
-    <ImageView
-        android:id="@+id/ivPause"
-        android:layout_width="@dimen/player_play_icon_size"
-        android:layout_height="@dimen/player_play_icon_size"
-        android:src="@drawable/ic_pause_filled"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@id/tvDurationStart" />

@@ -4,14 +4,19 @@ import com.devshish.internship.Albums.*
 import com.devshish.internship.Songs.*
 import com.devshish.internship.data.repository.*
 import com.devshish.internship.domain.repository.*
+import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
+import com.devshish.internship.presentation.ui.player.MusicServiceConnection
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.EditProfileViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
 import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
+import com.google.android.exoplayer2.util.Util
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -28,6 +33,7 @@ enum class Songs {
 }
 
 val appModule = module {
+
     // Profile
     single<IProfileRepository> { ProfileRepository() }
 
@@ -43,6 +49,9 @@ val appModule = module {
         LocalSongsRepository(applicationContext = get())
     }
     single<ISongsRepository>(named(SONGS_ALBUM)) { LikedSongsRepository() }
+
+    // Service
+    single { MusicServiceConnection(context = get()) }
 }
 
 val viewModelModule = module {
@@ -58,5 +67,18 @@ val viewModelModule = module {
     // Songs
     viewModel { LikedSongsViewModel(repository = get(named(SONGS_LIKED))) }
     viewModel { LocalSongsViewModel(repository = get(named(SONGS_LOCAL))) }
-    viewModel { PlayerViewModel() }
+    viewModel { PlayerViewModel(get()) }
+    viewModel { MainViewModel(get()) }
+}
+
+val serviceModule = module {
+
+    single { DefaultDataSourceFactory(
+        get(),
+        Util.getUserAgent(get(), "Internship")
+    ) }
+
+    single { SimpleExoPlayer.Builder(get()).build() }
+
+    single { LocalSongsRepository(get()) }
 }
