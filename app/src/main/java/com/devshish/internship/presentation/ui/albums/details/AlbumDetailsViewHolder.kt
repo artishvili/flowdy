@@ -11,10 +11,9 @@ class AlbumDetailsViewHolder(
 
     fun bind(song: Song) {
         binding.apply {
-            tvSongPosition.text = adapterPosition.plus(1).toString()
+            tvSongPosition.text = bindingAdapterPosition.plus(1).toString()
             tvArtist.text = song.artist
             tvSongName.text = song.title
-//            tvDuration.text = convertMillisToTime(song.duration)
         }
     }
 }

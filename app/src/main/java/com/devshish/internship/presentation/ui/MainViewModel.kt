@@ -44,14 +44,6 @@ class MainViewModel(
         })
     }
 
-    fun skipToNextSong() {
-        musicServiceConnection.transportControls.skipToNext()
-    }
-
-    fun skipToPreviousSong() {
-        musicServiceConnection.transportControls.skipToPrevious()
-    }
-
     fun seekTo(position: Long) {
         musicServiceConnection.transportControls.seekTo(position)
     }
@@ -74,6 +66,9 @@ class MainViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        musicServiceConnection.unsubscribe(Constants.MEDIA_ROOT_ID, object : MediaBrowserCompat.SubscriptionCallback() {})
+        musicServiceConnection.unsubscribe(
+            Constants.MEDIA_ROOT_ID,
+            object : MediaBrowserCompat.SubscriptionCallback() {}
+        )
     }
 }

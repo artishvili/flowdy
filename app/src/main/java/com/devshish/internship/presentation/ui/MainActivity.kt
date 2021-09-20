@@ -3,7 +3,6 @@ package com.devshish.internship.presentation.ui
 import android.Manifest.permission.*
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.media.session.PlaybackStateCompat
 import androidx.activity.result.contract.ActivityResultContracts
 import android.view.View
 import androidx.navigation.NavController
@@ -12,9 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.devshish.internship.R
 import com.devshish.internship.databinding.ActivityMainBinding
-import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.ui.utils.Status
-import com.devshish.internship.presentation.ui.utils.toSong
 import com.devshish.internship.presentation.ui.utils.viewBinding
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -23,13 +20,10 @@ import timber.log.Timber
 class MainActivity : AppCompatActivity() {
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
+
     private lateinit var navController: NavController
 
     private val viewModel: MainViewModel by viewModel()
-
-    private var curPlayingSong: Song? = null
-
-    private var playbackState: PlaybackStateCompat? = null
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -68,29 +62,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun subscribeToObservers() {
-        viewModel.curPlayingSong.observe(this) {
-            if (it == null) return@observe
-            curPlayingSong = it.toSong()
-        }
-
         viewModel.isConnected.observe(this) {
-            it?.getContentIfNotHandled()?.let { result ->
-                when (result.status) {
-                    Status.ERROR -> Snackbar.make(
-                        binding.root,
-                        result.message ?: "An unknown error occurred",
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    else -> Unit
-                }
-            }
-        }
-
-        viewModel.playbackState.observe(this) {
-            playbackState = it
-        }
-
-        viewModel.networkError.observe(this) {
             it?.getContentIfNotHandled()?.let { result ->
                 when (result.status) {
                     Status.ERROR -> Snackbar.make(

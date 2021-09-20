@@ -1,9 +1,12 @@
 package com.devshish.internship
 
-import com.devshish.internship.Albums.*
+import com.devshish.internship.Albums.ALBUMS_LIKED
+import com.devshish.internship.Albums.ALBUMS_LOCAL
 import com.devshish.internship.Songs.*
 import com.devshish.internship.data.repository.*
-import com.devshish.internship.domain.repository.*
+import com.devshish.internship.domain.repository.IAlbumsRepository
+import com.devshish.internship.domain.repository.IProfileRepository
+import com.devshish.internship.domain.repository.ISongsRepository
 import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
@@ -14,7 +17,9 @@ import com.devshish.internship.presentation.ui.profile.EditProfileViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
 import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -73,12 +78,20 @@ val viewModelModule = module {
 
 val serviceModule = module {
 
-    single { DefaultDataSourceFactory(
-        get(),
-        Util.getUserAgent(get(), "Internship")
-    ) }
+    single<DataSource.Factory> {
+        DefaultDataSourceFactory(
+            get(),
+            Util.getUserAgent(get(), "Internship")
+        )
+    }
 
-    single { SimpleExoPlayer.Builder(get()).build() }
+    single<ExoPlayer> {
+        SimpleExoPlayer.Builder(get()).build()
+    }
 
-    single { LocalSongsRepository(get()) }
+    single<ISongsRepository> {
+        LocalSongsRepository(
+            applicationContext = get()
+        )
+    }
 }

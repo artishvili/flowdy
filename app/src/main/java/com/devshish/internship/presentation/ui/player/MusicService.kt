@@ -9,24 +9,27 @@ import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
 import com.devshish.internship.data.repository.LocalSongsRepository
+import com.devshish.internship.domain.repository.ISongsRepository
 import com.devshish.internship.presentation.ui.utils.Constants.MEDIA_ROOT_ID
 import com.devshish.internship.presentation.ui.utils.Constants.NETWORK_ERROR
 import com.devshish.internship.presentation.ui.utils.Constants.SERVICE_TAG
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.ext.mediasession.TimelineQueueNavigator
+import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 
 class MusicService : MediaBrowserServiceCompat() {
 
-    val dataSourceFactory: DefaultDataSourceFactory by inject()
+    private val dataSourceFactory: DataSource.Factory by inject()
 
-    val exoPlayer: SimpleExoPlayer by inject()
+    private val exoPlayer: ExoPlayer by inject()
 
-    private val musicDatabase: LocalSongsRepository by inject()
+    private val musicDatabase: ISongsRepository by inject()
     var localMusicSource: LocalMusicSource = LocalMusicSource(musicDatabase)
 
     private lateinit var musicNotificationManager: MusicNotificationManager
