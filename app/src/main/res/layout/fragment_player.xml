@@ -65,7 +65,7 @@
         app:layout_constraintTop_toTopOf="@id/tvSong" />
 
     <SeekBar
-        android:id="@+id/sPlayer"
+        android:id="@+id/seekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_default"
@@ -86,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toBottomOf="@id/sPlayer"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
         tools:text="0:00" />
 
     <TextView
@@ -94,7 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
-        app:layout_constraintTop_toBottomOf="@id/sPlayer"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
         tools:text="3:40" />
 
     <ImageView
@@ -105,7 +105,7 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/ivPlay"
         app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toBottomOf="@id/sPlayer"
+        app:layout_constraintTop_toBottomOf="@id/seekBar"
         app:layout_constraintTop_toTopOf="@id/ivPlay" />
 
     <ImageView

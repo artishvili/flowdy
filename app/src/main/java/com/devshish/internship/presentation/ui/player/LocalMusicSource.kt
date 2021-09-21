@@ -51,6 +51,7 @@ class LocalMusicSource(
                 .putString(METADATA_KEY_ALBUM_ART_URI, song.imageUri.toString())
                 .putString(METADATA_KEY_DISPLAY_SUBTITLE, song.artist)
                 .putString(METADATA_KEY_DISPLAY_DESCRIPTION, song.artist)
+                .putLong(METADATA_KEY_DURATION, song.duration.toLong())
                 .build()
         }
         state = STATE_INITIALIZED

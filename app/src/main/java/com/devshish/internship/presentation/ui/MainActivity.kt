@@ -1,29 +1,24 @@
 package com.devshish.internship.presentation.ui
 
-import android.Manifest.permission.*
-import androidx.appcompat.app.AppCompatActivity
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.os.Bundle
-import androidx.activity.result.contract.ActivityResultContracts
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.devshish.internship.R
 import com.devshish.internship.databinding.ActivityMainBinding
-import com.devshish.internship.presentation.ui.utils.Status
 import com.devshish.internship.presentation.ui.utils.viewBinding
-import com.google.android.material.snackbar.Snackbar
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
-
     private lateinit var navController: NavController
-
-    private val viewModel: MainViewModel by viewModel()
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -37,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        subscribeToObservers()
 
         requestPermissionLauncher.launch(
             arrayOf(
@@ -57,21 +51,6 @@ class MainActivity : AppCompatActivity() {
                 binding.bottomNavView.visibility = View.GONE
             } else {
                 binding.bottomNavView.visibility = View.VISIBLE
-            }
-        }
-    }
-
-    private fun subscribeToObservers() {
-        viewModel.isConnected.observe(this) {
-            it?.getContentIfNotHandled()?.let { result ->
-                when (result.status) {
-                    Status.ERROR -> Snackbar.make(
-                        binding.root,
-                        result.message ?: "An unknown error occurred",
-                        Snackbar.LENGTH_LONG
-                    ).show()
-                    else -> Unit
-                }
             }
         }
     }

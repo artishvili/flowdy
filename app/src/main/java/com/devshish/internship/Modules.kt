@@ -7,10 +7,10 @@ import com.devshish.internship.data.repository.*
 import com.devshish.internship.domain.repository.IAlbumsRepository
 import com.devshish.internship.domain.repository.IProfileRepository
 import com.devshish.internship.domain.repository.ISongsRepository
-import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
+import com.devshish.internship.presentation.ui.player.MusicService
 import com.devshish.internship.presentation.ui.player.MusicServiceConnection
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.EditProfileViewModel
@@ -43,41 +43,109 @@ val appModule = module {
     single<IProfileRepository> { ProfileRepository() }
 
     // Albums
-    single<IAlbumsRepository>(named(ALBUMS_LIKED)) { LikedAlbumsRepository() }
-    single<IAlbumsRepository>(named(ALBUMS_LOCAL)) {
-        LocalAlbumsRepository(applicationContext = get())
+    single<IAlbumsRepository>(
+        named(ALBUMS_LIKED)
+    ) { LikedAlbumsRepository() }
+
+    single<IAlbumsRepository>(
+        named(ALBUMS_LOCAL)
+    ) {
+        LocalAlbumsRepository(
+            applicationContext = get()
+        )
     }
 
     // Songs
-    single<ISongsRepository>(named(SONGS_LIKED)) { LikedSongsRepository() }
-    single<ISongsRepository>(named(SONGS_LOCAL)) {
-        LocalSongsRepository(applicationContext = get())
-    }
-    single<ISongsRepository>(named(SONGS_ALBUM)) { LikedSongsRepository() }
+    single<ISongsRepository>(
+        named(SONGS_LIKED)
+    ) { LikedSongsRepository() }
 
-    // Service
-    single { MusicServiceConnection(context = get()) }
+    single<ISongsRepository>(
+        named(SONGS_LOCAL)
+    ) {
+        LocalSongsRepository(
+            applicationContext = get()
+        )
+    }
+
+    single<ISongsRepository>(
+        named(SONGS_ALBUM)
+    ) { LikedSongsRepository() }
 }
 
 val viewModelModule = module {
-    // Profile
-    viewModel { ProfileViewModel(repository = get()) }
-    viewModel { EditProfileViewModel(repository = get()) }
 
-    // Albums
-    viewModel { LikedAlbumsViewModel(repository = get(named(ALBUMS_LIKED))) }
-    viewModel { LocalAlbumsViewModel(repository = get(named(ALBUMS_LOCAL))) }
-    viewModel { AlbumDetailsViewModel(repository = get(named(SONGS_ALBUM))) }
+    /*
+    * Profile
+    * */
+    viewModel {
+        ProfileViewModel(
+            repository = get()
+        )
+    }
 
-    // Songs
-    viewModel { LikedSongsViewModel(repository = get(named(SONGS_LIKED))) }
-    viewModel { LocalSongsViewModel(repository = get(named(SONGS_LOCAL))) }
-    viewModel { PlayerViewModel(get()) }
-    viewModel { MainViewModel(get()) }
+    viewModel {
+        EditProfileViewModel(
+            repository = get()
+        )
+    }
+
+    /*
+    * Albums
+    * */
+    viewModel {
+        LikedAlbumsViewModel(
+            repository = get(
+                named(ALBUMS_LIKED)
+            )
+        )
+    }
+
+    viewModel {
+        LocalAlbumsViewModel(
+            repository = get(
+                named(ALBUMS_LOCAL)
+            )
+        )
+    }
+
+    viewModel {
+        AlbumDetailsViewModel(
+            repository = get(
+                named(SONGS_ALBUM)
+            )
+        )
+    }
+
+    /*
+    * Songs
+    * */
+    viewModel {
+        LikedSongsViewModel(
+            repository = get(
+                named(SONGS_LIKED)
+            )
+        )
+    }
+
+    viewModel {
+        LocalSongsViewModel(
+            repository = get(
+                named(SONGS_LOCAL)
+            )
+        )
+    }
+
+    viewModel {
+        PlayerViewModel(
+            serviceConnection = get()
+        )
+    }
 }
 
 val serviceModule = module {
 
+    // Data source factory
     single<DataSource.Factory> {
         DefaultDataSourceFactory(
             get(),
@@ -85,13 +153,25 @@ val serviceModule = module {
         )
     }
 
+    // Exo player
     single<ExoPlayer> {
         SimpleExoPlayer.Builder(get()).build()
     }
 
+    // Songs repository
     single<ISongsRepository> {
         LocalSongsRepository(
             applicationContext = get()
+        )
+    }
+
+    single {
+        MusicService()
+    }
+
+    single {
+        MusicServiceConnection(
+            context = get()
         )
     }
 }

@@ -2,7 +2,6 @@ package com.devshish.internship.presentation.ui.player
 
 import android.content.ComponentName
 import android.content.Context
-import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
@@ -10,33 +9,27 @@ import android.support.v4.media.session.PlaybackStateCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.devshish.internship.R
-import com.devshish.internship.presentation.ui.utils.Constants.NETWORK_ERROR
-import com.devshish.internship.presentation.ui.utils.Event
-import com.devshish.internship.presentation.ui.utils.Resource
+import com.devshish.internship.presentation.ui.utils.isPlayEnabled
+import com.devshish.internship.presentation.ui.utils.isPlaying
+import com.devshish.internship.presentation.ui.utils.isPrepared
+import timber.log.Timber
 
 class MusicServiceConnection(
     context: Context
 ) {
 
-    val isConnected: LiveData<Event<Resource<Boolean>>>
-        get() = _isConnected
-    private val _isConnected = MutableLiveData<Event<Resource<Boolean>>>()
-
-    val networkError: LiveData<Event<Resource<Boolean>>>
-        get() = _networkError
-    private val _networkError = MutableLiveData<Event<Resource<Boolean>>>()
-
     val playbackState: LiveData<PlaybackStateCompat?>
         get() = _playbackState
     private val _playbackState = MutableLiveData<PlaybackStateCompat?>()
+
+    var isPlaying: ((Unit) -> Boolean)? = null
 
     val curPlayingSong: LiveData<MediaMetadataCompat?>
         get() = _curPlayingSong
     private val _curPlayingSong = MutableLiveData<MediaMetadataCompat?>()
 
-    lateinit var mediaController: MediaControllerCompat
-
-    private val mediaBrowserConnectionCallback = MediaBrowserConnectionCallback(context)
+    private val mediaBrowserConnectionCallback =
+        MediaBrowserConnectionCallback(context, this)
 
     private val mediaBrowser = MediaBrowserCompat(
         context,
@@ -44,6 +37,13 @@ class MusicServiceConnection(
         mediaBrowserConnectionCallback,
         null
     ).apply { connect() }
+
+    val mediaController: MediaControllerCompat by lazy {
+        MediaControllerCompat(
+            context,
+            mediaBrowser.sessionToken
+        )
+    }
 
     val transportControls: MediaControllerCompat.TransportControls
         get() = mediaController.transportControls
@@ -56,65 +56,54 @@ class MusicServiceConnection(
         mediaBrowser.unsubscribe(parentId, callback)
     }
 
-    private inner class MediaBrowserConnectionCallback(
-        private val context: Context
+    private class MediaBrowserConnectionCallback(
+        private val context: Context,
+        private val serviceConnection: MusicServiceConnection
     ) : MediaBrowserCompat.ConnectionCallback() {
 
         override fun onConnected() {
-            mediaController = MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
-                registerCallback(MediaControllerCallback(context))
+            serviceConnection.mediaController.apply {
+                registerCallback(MediaControllerCallback(serviceConnection))
             }
-            _isConnected.postValue(Event(Resource.success(data = true)))
         }
 
         override fun onConnectionSuspended() {
-            _isConnected.postValue(
-                Event(
-                Resource.error(
-                message = context.getString(R.string.service_connection_suspended),
-                data = false
-            ))
-            )
+            Timber.i(context.getString(R.string.service_connection_suspended))
         }
 
         override fun onConnectionFailed() {
-            _isConnected.postValue(
-                Event(
-                Resource.error(
-                message = context.getString(R.string.service_connection_failed),
-                data = false
-            ))
-            )
+            Timber.i(context.getString(R.string.service_connection_failed))
         }
     }
 
-    private inner class MediaControllerCallback(
-        private val context: Context
+    private class MediaControllerCallback(
+        private val serviceConnection: MusicServiceConnection
     ) : MediaControllerCompat.Callback() {
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
-            _playbackState.postValue(state)
+            serviceConnection._playbackState.postValue(state)
+            /*if (state?.isPrepared == true) {
+                serviceConnection.isPlaying = state.isPrepared
+            }
+            if (state?.isPlaying == true) {
+                serviceConnection.isPlaying = state.isPlaying
+            }
+            if (state?.isPlayEnabled == true) {
+                serviceConnection.isPlaying = state.isPlayEnabled
+            }*/
+
+            serviceConnection.isPlaying?.let { it(serviceConnection._playbackState.postValue(state)) }
+
+            Timber.d("$state -- ${serviceConnection.isPlaying}")
         }
 
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
-            _curPlayingSong.postValue(metadata)
-        }
-
-        override fun onSessionEvent(event: String?, extras: Bundle?) {
-            super.onSessionEvent(event, extras)
-            when (event) {
-                NETWORK_ERROR -> _networkError.postValue(
-                    Event(
-                    Resource.error(
-                    message = context.getString(R.string.service_connection_server_error),
-                    data = null
-                ))
-                )
-            }
+            serviceConnection._curPlayingSong.postValue(metadata)
         }
 
         override fun onSessionDestroyed() {
-            mediaBrowserConnectionCallback.onConnectionSuspended()
+            serviceConnection.mediaBrowserConnectionCallback
+                .onConnectionSuspended()
         }
     }
 }

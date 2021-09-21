@@ -1,0 +1,20 @@
+What are we expecting:
+
+ViewModel
+Something like that
+1) PlayerViewModel {
+    val isPlaying: LiveData<Boolean>
+    val currentSong: LiveData<Song>
+    val currentPosition: LiveData<Int> // can be float
+
+    fun seekTo(position: Int)
+    fun toggle()
+}
+
+Connection
+Just the idea
+2) Connection {
+    var isPlaying: ((Boolean) -> Unit)?
+    val currentSong: ((Song) -> Unit)?
+    val currentPosition: ((Int) -> Unit)?
+}
