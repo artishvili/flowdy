@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentPlayerBinding
 import com.devshish.internship.presentation.ui.utils.convertMillisToTime
-import com.devshish.internship.presentation.ui.utils.isPlaying
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
@@ -29,6 +31,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             tvArtist.text = args.song.artist
             tvDurationStart.text = convertMillisToTime(0)
             tvDurationEnd.text = convertMillisToTime(args.song.duration)
+            seekBar.max = args.song.duration
 
             Glide.with(this@PlayerFragment)
                 .load(args.song.imageUri)
@@ -36,7 +39,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                 .into(ivSongCover)
 
             ivPlay.setOnClickListener {
-                viewModel.toggle(args.song, true)
+                viewModel.toggle(args.song)
             }
 
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -57,28 +60,21 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         }
 
         with(viewModel) {
-            /*playbackState.observe(viewLifecycleOwner) {
-                binding.ivPlay.setImageResource(
-                    if (it?.isPlaying == true) R.drawable.ic_pause_filled else
-                        R.drawable.ic_play_filled
-                )
-                binding.seekBar.progress = it?.position?.toInt() ?: 0
-            }*/
+            viewModelScope.launch {
+                delay(500)
+                toggle(args.song)
+            }
 
             isPlaying.observe(viewLifecycleOwner) {
                 binding.ivPlay.setImageResource(
-                    if (!it) R.drawable.ic_pause_filled else
+                    if (it) R.drawable.ic_pause_filled else
                         R.drawable.ic_play_filled
                 )
             }
 
-            curPlayerPosition.observe(viewLifecycleOwner) {
+            currentPosition.observe(viewLifecycleOwner) {
                 binding.seekBar.progress = it.toInt()
                 binding.tvDurationStart.text = convertMillisToTime(it.toInt())
-            }
-
-            curSongDuration.observe(viewLifecycleOwner) {
-                binding.seekBar.max = it.toInt()
             }
         }
     }
