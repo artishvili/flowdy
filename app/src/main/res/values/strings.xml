@@ -32,4 +32,6 @@
     <string name="content_description_profile_user_background_image">Background image</string>
     <!-- Fields -->
     <string name="fields_not_filled">Fill in all the necessary fields!</string>
+    <!-- Search -->
+    <string name="search_songs_not_found">In order to display songs, first you need to search for them</string>
 </resources>

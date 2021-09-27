@@ -5,8 +5,10 @@ buildscript {
         glideVersion = "4.11.0"
         timberVersion = "5.0.0"
         coroutinesVersion = "1.5.1"
-        lifecycleVersion = "2.4.0-alpha03"
+        lifecycleVersion = "2.4.0-beta01"
+        lifecycleViewModelVersion = "2.3.1"
         koinVersion = "3.1.2"
+        viewBindingDelegateVersion = "1.0.0"
     }
     repositories {
         google()
@@ -14,8 +16,8 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.0"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20"
+        classpath 'com.android.tools.build:gradle:7.0.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
 
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
         // NOTE: Do not place your application dependencies here; they belong
