@@ -31,7 +31,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     R.id.actionSearch -> {
                         val searchView = menuItem.actionView as SearchView
                         searchView.onQueryTextChanged {
-                            progressIndicator.show()
                             tvDescription.visibility = View.GONE
                             viewModel.searchSongs(it)
                         }
@@ -45,11 +44,14 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         with(viewModel) {
             searching.observe(viewLifecycleOwner) {
                 searchSongAdapter.submitList(it)
-                binding.progressIndicator.hide()
             }
 
-            if (searching.hasActiveObservers()) {
-                binding.progressIndicator.show()
+            isLoading.observe(viewLifecycleOwner) { isLoading ->
+                if (isLoading) {
+                    binding.progressIndicator.show()
+                } else {
+                    binding.progressIndicator.hide()
+                }
             }
         }
     }

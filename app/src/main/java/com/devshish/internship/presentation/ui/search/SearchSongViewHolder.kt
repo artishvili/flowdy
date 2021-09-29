@@ -2,19 +2,19 @@ package com.devshish.internship.presentation.ui.search
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.devshish.internship.databinding.ItemSearchSongBinding
-import com.devshish.internship.domain.model.searchDTO.HitDTO
+import com.devshish.internship.databinding.ItemSongBinding
+import com.devshish.internship.domain.model.SearchSong
 
 class SearchSongViewHolder(
-    private val binding: ItemSearchSongBinding
+    private val binding: ItemSongBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(hitDTO: HitDTO) {
+    fun bind(searchSong: SearchSong) {
         with(binding) {
-            tvSongName.text = hitDTO.result.title
-            tvArtist.text = hitDTO.result.primaryArtist.name
+            tvSongName.text = searchSong.title
+            tvArtist.text = searchSong.artist
             Glide.with(root)
-                .load(hitDTO.result.headerImageUrl)
+                .load(searchSong.imageUri)
                 .into(ivSongCover)
         }
     }

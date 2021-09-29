@@ -1,24 +1,26 @@
 package com.devshish.internship.data.repository
 
-import com.devshish.internship.domain.model.searchDTO.SongDTO
-import com.devshish.internship.domain.repository.ISearchApiRepository
+import androidx.core.net.toUri
+import com.devshish.internship.data.api.GeniusSearchApi
+import com.devshish.internship.domain.model.SearchSong
+import com.devshish.internship.domain.repository.ISearchSongsRepository
 import com.devshish.internship.domain.util.Constants.TOKEN
-import retrofit2.Response
 
 class SearchAPIRepository(
-    private val apiRepository: ISearchApiRepository
-) {
+    private val api: GeniusSearchApi
+) : ISearchSongsRepository {
 
-    /*override suspend fun searchSongs(token: String, query: String): Response<SongDTO> {
-//        return Response<SongDTO>(song)
-        return searchSongs(token, query)
-    }*/
-
-    suspend fun searchSongs(
-        query: String
-    ): Response<SongDTO> =
-        apiRepository.searchSongs(
+    override suspend fun searchSongs(query: String): List<SearchSong> {
+        return api.searchSongs(
+            // TODO move to Interceptor
             token = TOKEN,
             query = query
-        )
+        ).response.hits.map {
+            SearchSong(
+                title = it.result.title,
+                artist = it.result.primaryArtist.name,
+                imageUri = it.result.headerImageUrl.toUri()
+            )
+        }
+    }
 }
