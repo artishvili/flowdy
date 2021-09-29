@@ -14,6 +14,10 @@ class SearchViewModel(
     private val repository: ISearchSongsRepository
 ) : ViewModel() {
 
+    val isVisible: LiveData<Boolean>
+        get() = _isVisible
+    private val _isVisible = MutableLiveData<Boolean>()
+
     val isLoading: LiveData<Boolean>
         get() = _isLoading
     private val _isLoading = MutableLiveData<Boolean>()
@@ -25,11 +29,13 @@ class SearchViewModel(
     fun searchSongs(query: String) {
         viewModelScope.launch {
             _isLoading.value = true
+            _isVisible.value = false
             try {
                 _searching.value = repository.searchSongs(query)
-                _isLoading.value = false
             } catch (e: Exception) {
                 Timber.e(e)
+            } finally {
+                _isLoading.value = false
             }
         }
     }
