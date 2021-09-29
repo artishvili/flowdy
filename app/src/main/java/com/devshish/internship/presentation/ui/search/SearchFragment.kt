@@ -3,6 +3,7 @@ package com.devshish.internship.presentation.ui.search
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
@@ -41,11 +42,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
 
         with(viewModel) {
-            searching.observe(viewLifecycleOwner) {
+            songsList.observe(viewLifecycleOwner) {
                 searchSongAdapter.submitList(it)
             }
 
-            isLoading.observe(viewLifecycleOwner) { isLoading ->
+            isProgressLoading.observe(viewLifecycleOwner) { isLoading ->
                 if (isLoading) {
                     binding.progressIndicator.show()
                 } else {
@@ -53,10 +54,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
             }
 
-            isVisible.observe(viewLifecycleOwner) { isVisible ->
-                if (!isVisible) {
-                    binding.tvDescription.visibility = View.GONE
-                }
+            isDescriptionVisible.observe(viewLifecycleOwner) { isVisible ->
+                binding.tvDescription.isVisible = isVisible
             }
         }
     }
