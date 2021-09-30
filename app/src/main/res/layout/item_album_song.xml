@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/spacing_default"
     android:paddingTop="@dimen/spacing_small"
-    android:paddingBottom="@dimen/spacing_small"
-    android:paddingEnd="@dimen/spacing_default">
+    android:paddingEnd="@dimen/spacing_default"
+    android:paddingBottom="@dimen/spacing_small">
 
     <TextView
         android:id="@+id/tvSongPosition"
@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_default"
         android:layout_marginEnd="@dimen/spacing_small"
-        android:fontFamily="@font/rubik_medium"
         android:textAppearance="?attr/textAppearanceBody2"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tvArtist"
         app:layout_constraintEnd_toStartOf="@id/tvDuration"
         app:layout_constraintStart_toEndOf="@id/tvSongPosition"
