@@ -1,8 +1,11 @@
 package com.devshish.internship.di
 
 import com.devshish.internship.BuildConfig
+import com.devshish.internship.data.api.GeniusAuthApi
 import com.devshish.internship.data.repository.SearchAPIRepository
 import com.devshish.internship.data.api.GeniusSearchApi
+import com.devshish.internship.data.repository.AuthApiRepository
+import com.devshish.internship.domain.repository.IAuthRepository
 import com.devshish.internship.domain.repository.ISearchSongsRepository
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -12,6 +15,18 @@ val networkModule = module {
     single<ISearchSongsRepository> {
         SearchAPIRepository(
             api = get()
+        )
+    }
+
+    single<IAuthRepository> {
+        AuthApiRepository(
+            api = get()
+        )
+    }
+
+    single {
+        provideAuthApiRepository(
+            retrofit = get()
         )
     }
 
@@ -32,3 +47,6 @@ fun provideRetrofit(): Retrofit =
 
 fun provideSearchApiRepository(retrofit: Retrofit): GeniusSearchApi =
     retrofit.create(GeniusSearchApi::class.java)
+
+fun provideAuthApiRepository(retrofit: Retrofit): GeniusAuthApi =
+    retrofit.create(GeniusAuthApi::class.java)

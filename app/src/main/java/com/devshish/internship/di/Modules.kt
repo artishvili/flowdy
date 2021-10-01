@@ -1,5 +1,6 @@
 package com.devshish.internship.di
 
+import com.devshish.internship.data.api.GeniusAuthApi
 import com.devshish.internship.di.Albums.ALBUMS_LIKED
 import com.devshish.internship.di.Albums.ALBUMS_LOCAL
 import com.devshish.internship.di.Songs.*
@@ -10,6 +11,7 @@ import com.devshish.internship.domain.repository.ISongsRepository
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
+import com.devshish.internship.presentation.ui.auth.AuthViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.EditProfileViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
@@ -65,5 +67,16 @@ val viewModelModule = module {
     viewModel { PlayerViewModel() }
 
     // Search
-    viewModel { SearchViewModel(get()) }
+    viewModel {
+        SearchViewModel(
+            repository = get()
+        )
+    }
+
+    // Auth
+    viewModel {
+        AuthViewModel(
+            authApiRepository = get()
+        )
+    }
 }
