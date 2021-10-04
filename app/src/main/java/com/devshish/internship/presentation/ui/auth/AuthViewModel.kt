@@ -1,28 +1,25 @@
 package com.devshish.internship.presentation.ui.auth
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.repository.IAuthRepository
-import kotlinx.coroutines.launch
 
 class AuthViewModel(
-    authApiRepository: IAuthRepository
+    private val repository: IAuthRepository
 ) : ViewModel() {
 
-    val requestAuth: LiveData<String>
+    val onAuthenticateClick: LiveData<Unit>
+        get() = _onAuthenticateClick
+    private val _onAuthenticateClick = MutableLiveData<Unit>()
+
+    val requestAuth: LiveData<Uri>
         get() = _requestAuth
-    private val _requestAuth = MutableLiveData<String>()
+    private val _requestAuth = MutableLiveData<Uri>()
 
-    val requestToken: LiveData<String>
-        get() = _requestToken
-    private val _requestToken = MutableLiveData<String>()
-
-    init {
-        viewModelScope.launch {
-            _requestAuth.value = authApiRepository.requestAuthentication().raw().request.url.toString()
-//            _requestToken.value = authApiRepository.getToken().toString()
-        }
+    fun requestAuthentication() {
+        _requestAuth.value = repository.authRequest
+        _onAuthenticateClick.value = Unit
     }
 }

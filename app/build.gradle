@@ -19,6 +19,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "BASE_URL", "\"https://api.genius.com\""
+        buildConfigField "String", "CLIENT_ID", "\"dhj7OPXTEwXBwXYgw1Lrm3fkZ6MncRCZptfyj_lGaOMaORZ8UWG8esomSkZzfI3P\""
+        buildConfigField "String", "CLIENT_SECRET", "\"-x1_eEXyTJ6gaIZ4lwJz-2f4kCQyG5P6F6PvJ6g9QFYzTGhReiQUdWQG9OsQw_S-v61UYGU9oaCLz8bMNA9Kyw\""
     }
 
     buildTypes {

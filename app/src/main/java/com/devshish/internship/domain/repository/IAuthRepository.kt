@@ -1,11 +1,11 @@
 package com.devshish.internship.domain.repository
 
-import okhttp3.ResponseBody
-import retrofit2.Response
+import android.net.Uri
+import com.devshish.internship.data.model.TokenDTO
 
 interface IAuthRepository {
 
-    suspend fun requestAuthentication(): Response<ResponseBody>
+    val authRequest: Uri
 
-//    suspend fun getToken(): Response<ResponseBody>
+    suspend fun getToken(code: String): TokenDTO
 }

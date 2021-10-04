@@ -1,23 +1,23 @@
 package com.devshish.internship.di
 
-import com.devshish.internship.data.api.GeniusAuthApi
+import com.devshish.internship.data.repository.*
 import com.devshish.internship.di.Albums.ALBUMS_LIKED
 import com.devshish.internship.di.Albums.ALBUMS_LOCAL
 import com.devshish.internship.di.Songs.*
-import com.devshish.internship.data.repository.*
 import com.devshish.internship.domain.repository.IAlbumsRepository
 import com.devshish.internship.domain.repository.IProfileRepository
 import com.devshish.internship.domain.repository.ISongsRepository
-import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
-import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
-import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
 import com.devshish.internship.presentation.ui.auth.AuthViewModel
-import com.devshish.internship.presentation.ui.player.PlayerViewModel
-import com.devshish.internship.presentation.ui.profile.EditProfileViewModel
-import com.devshish.internship.presentation.ui.profile.ProfileViewModel
-import com.devshish.internship.presentation.ui.search.SearchViewModel
-import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
-import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
+import com.devshish.internship.presentation.ui.main.albums.details.AlbumDetailsViewModel
+import com.devshish.internship.presentation.ui.main.albums.liked.LikedAlbumsViewModel
+import com.devshish.internship.presentation.ui.main.albums.local.LocalAlbumsViewModel
+import com.devshish.internship.presentation.ui.main.player.PlayerViewModel
+import com.devshish.internship.presentation.ui.main.profile.EditProfileViewModel
+import com.devshish.internship.presentation.ui.main.profile.ProfileViewModel
+import com.devshish.internship.presentation.ui.main.search.SearchViewModel
+import com.devshish.internship.presentation.ui.main.songs.liked.LikedSongsViewModel
+import com.devshish.internship.presentation.ui.main.songs.local.LocalSongsViewModel
+import com.devshish.internship.presentation.ui.web.WebViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -76,7 +76,15 @@ val viewModelModule = module {
     // Auth
     viewModel {
         AuthViewModel(
-            authApiRepository = get()
+            repository = get()
+        )
+    }
+
+    // WEB
+    viewModel {
+        WebViewModel(
+            authRepository = get(),
+            tokenRepository = get()
         )
     }
 }
