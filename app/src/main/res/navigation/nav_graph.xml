@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/authFragment">
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.devshish.internship.presentation.ui.main.home.HomeFragment"
+        android:name="com.devshish.internship.presentation.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.devshish.internship.presentation.ui.main.search.SearchFragment"
+        android:name="com.devshish.internship.presentation.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/libraryFragment"
-        android:name="com.devshish.internship.presentation.ui.main.library.LibraryFragment"
+        android:name="com.devshish.internship.presentation.ui.library.LibraryFragment"
         android:label="fragment_library"
         tools:layout="@layout/fragment_library" >
         <action
@@ -51,7 +51,7 @@
     </fragment>
     <fragment
         android:id="@+id/likedSongsFragment"
-        android:name="com.devshish.internship.presentation.ui.main.songs.liked.LikedSongsFragment"
+        android:name="com.devshish.internship.presentation.ui.songs.liked.LikedSongsFragment"
         android:label="fragment_liked_songs"
         tools:layout="@layout/fragment_liked_songs" >
         <action
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.devshish.internship.presentation.ui.main.profile.ProfileFragment"
+        android:name="com.devshish.internship.presentation.ui.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -77,12 +77,12 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.devshish.internship.presentation.ui.main.profile.EditProfileFragment"
+        android:name="com.devshish.internship.presentation.ui.profile.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" />
     <fragment
         android:id="@+id/likedAlbumsFragment"
-        android:name="com.devshish.internship.presentation.ui.main.albums.liked.LikedAlbumsFragment"
+        android:name="com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsFragment"
         android:label="fragment_liked_albums"
         tools:layout="@layout/fragment_liked_albums" >
         <action
@@ -95,12 +95,12 @@
     </fragment>
     <fragment
         android:id="@+id/localSongsFragment"
-        android:name="com.devshish.internship.presentation.ui.main.songs.local.LocalSongsFragment"
+        android:name="com.devshish.internship.presentation.ui.songs.local.LocalSongsFragment"
         android:label="fragment_local_songs"
         tools:layout="@layout/fragment_local_songs" />
     <fragment
         android:id="@+id/localAlbumsFragment"
-        android:name="com.devshish.internship.presentation.ui.main.albums.local.LocalAlbumsFragment"
+        android:name="com.devshish.internship.presentation.ui.albums.local.LocalAlbumsFragment"
         android:label="fragment_local_albums"
         tools:layout="@layout/fragment_local_albums" >
         <action
@@ -113,12 +113,41 @@
     </fragment>
     <fragment
         android:id="@+id/albumDetailsFragment"
-        android:name="com.devshish.internship.presentation.ui.main.albums.details.AlbumDetailsFragment"
+        android:name="com.devshish.internship.presentation.ui.albums.details.AlbumDetailsFragment"
         android:label="fragment_album_details"
         tools:layout="@layout/fragment_album_details" />
     <fragment
         android:id="@+id/playerFragment"
-        android:name="com.devshish.internship.presentation.ui.main.player.PlayerFragment"
+        android:name="com.devshish.internship.presentation.ui.player.PlayerFragment"
         android:label="fragment_player"
         tools:layout="@layout/fragment_player" />
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.devshish.internship.presentation.ui.auth.AuthFragment"
+        android:label="fragment_auth"
+        tools:layout="@layout/fragment_auth" >
+        <action
+            android:id="@+id/action_authFragment_to_webFragment"
+            app:destination="@id/webFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/webFragment"
+        android:name="com.devshish.internship.presentation.ui.web.WebFragment"
+        android:label="fragment_web"
+        tools:layout="@layout/fragment_web" >
+        <action
+            android:id="@+id/action_webFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <argument
+            android:name="link"
+            app:argType="string" />
+    </fragment>
 </navigation>
