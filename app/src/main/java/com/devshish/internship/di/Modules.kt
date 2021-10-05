@@ -83,8 +83,7 @@ val viewModelModule = module {
     // WEB
     viewModel {
         WebViewModel(
-            authRepository = get(),
-            tokenRepository = get()
+            authRepository = get()
         )
     }
 }

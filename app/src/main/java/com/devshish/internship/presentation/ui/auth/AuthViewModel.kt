@@ -14,12 +14,12 @@ class AuthViewModel(
         get() = _onAuthenticateClick
     private val _onAuthenticateClick = MutableLiveData<Unit>()
 
-    val requestAuth: LiveData<Uri>
-        get() = _requestAuth
-    private val _requestAuth = MutableLiveData<Uri>()
+    val authLink: LiveData<Uri>
+        get() = _authLink
+    private val _authLink = MutableLiveData<Uri>()
 
     fun requestAuthentication() {
-        _requestAuth.value = repository.authRequest
+        _authLink.value = repository.authLink
         _onAuthenticateClick.value = Unit
     }
 }

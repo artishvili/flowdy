@@ -13,7 +13,7 @@ class SearchAPIRepository(
     override suspend fun searchSongs(query: String): List<SearchSong> {
         return api.searchSongs(
             // TODO move to Interceptor
-            token = TOKEN,
+//            token = TOKEN,
             query = query
         ).response.hits.map {
             SearchSong(

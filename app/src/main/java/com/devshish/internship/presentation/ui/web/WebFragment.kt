@@ -6,9 +6,10 @@ import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentWebBinding
@@ -25,26 +26,34 @@ class WebFragment : Fragment(R.layout.fragment_web) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val client = object : WebViewClient() {
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun shouldOverrideUrlLoading(
+                view: WebView?,
+                request: WebResourceRequest?
+            ): Boolean =
+                if (request?.isRedirect == true) {
+                    viewModel.checkUrl(request.url)
+                    true
+                } else false
+        }
+
         with(binding) {
             webView.apply {
                 settings.javaScriptEnabled = true
-                webViewClient = object : WebViewClient() {
-
-                    @RequiresApi(Build.VERSION_CODES.N)
-                    override fun shouldOverrideUrlLoading(
-                        view: WebView?,
-                        request: WebResourceRequest?
-                    ): Boolean =
-                        if (request?.isRedirect == true) {
-                            val code = request.url.getQueryParameter("code")
-                            viewModel.getToken(code!!)
-
-                            val action = WebFragmentDirections.actionWebFragmentToHomeFragment()
-                            findNavController().navigate(action)
-                            true
-                        } else false
-                }
+                webViewClient = client
                 loadUrl(args.link)
+            }
+        }
+
+        with(viewModel) {
+            navigateForward.observe(viewLifecycleOwner) {
+                val action = WebFragmentDirections.actionWebFragmentToHomeFragment()
+                findNavController().navigate(action)
+            }
+
+            token.observe(viewLifecycleOwner) {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
             }
         }
     }

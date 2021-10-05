@@ -9,7 +9,7 @@ interface GeniusSearchApi {
 
     @GET("search")
     suspend fun searchSongs(
-        @Header("Authorization") token: String,
+//        @Header("Authorization") token: String,
         @Query("q") query: String
     ): SongDTO
 }

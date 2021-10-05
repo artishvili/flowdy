@@ -5,7 +5,7 @@ import com.devshish.internship.data.model.TokenDTO
 
 interface IAuthRepository {
 
-    val authRequest: Uri
+    val authLink: Uri
 
-    suspend fun getToken(code: String): TokenDTO
+    suspend fun authorize(code: String)
 }

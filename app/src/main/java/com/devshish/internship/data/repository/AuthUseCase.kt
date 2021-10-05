@@ -5,12 +5,14 @@ import com.devshish.internship.BuildConfig.*
 import com.devshish.internship.data.api.GeniusAuthApi
 import com.devshish.internship.data.model.TokenDTO
 import com.devshish.internship.domain.repository.IAuthRepository
+import com.devshish.internship.domain.repository.ITokenRepository
 
-class AuthApiRepository(
-    private val api: GeniusAuthApi
+class AuthUseCase(
+    private val api: GeniusAuthApi,
+    private val tokenRepository: ITokenRepository
 ) : IAuthRepository {
 
-    override val authRequest: Uri
+    override val authLink: Uri
         get() = Uri.parse(BASE_URL)
             .buildUpon()
             .appendPath("oauth")
@@ -22,8 +24,8 @@ class AuthApiRepository(
             .appendQueryParameter("response_type", "code")
             .build()
 
-    override suspend fun getToken(code: String): TokenDTO {
-        return api.requestToken(
+    override suspend fun authorize(code: String) {
+        val tokenDto = api.requestToken(
             code = code,
             clientSecret = CLIENT_SECRET,
             grantType = "authorization_code",
@@ -31,5 +33,6 @@ class AuthApiRepository(
             redirectUri = "https://github.com/ArtemShishko/internship",
             responseType = "code"
         )
+        tokenRepository.setToken(tokenDto.token)
     }
 }
