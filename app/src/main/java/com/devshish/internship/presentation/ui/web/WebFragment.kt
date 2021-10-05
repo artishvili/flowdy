@@ -51,10 +51,6 @@ class WebFragment : Fragment(R.layout.fragment_web) {
                 val action = WebFragmentDirections.actionWebFragmentToHomeFragment()
                 findNavController().navigate(action)
             }
-
-            token.observe(viewLifecycleOwner) {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
-            }
         }
     }
 }

@@ -16,10 +16,6 @@ class WebViewModel(
         get() = _navigateForward
     private val _navigateForward = MutableLiveData<Unit>()
 
-    val token: LiveData<String>
-        get() = _token
-    private val _token = MutableLiveData<String>()
-
     fun checkUrl(url: Uri) {
         url.getQueryParameter("code")?.let { code ->
             getToken(code)
