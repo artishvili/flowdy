@@ -1,10 +1,11 @@
 package com.devshish.internship.presentation.ui
 
-import android.Manifest.permission.*
-import androidx.appcompat.app.AppCompatActivity
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -46,10 +47,11 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.playerFragment) {
-                binding.bottomNavView.visibility = View.GONE
-            } else {
-                binding.bottomNavView.visibility = View.VISIBLE
+            when (destination.id) {
+                R.id.authFragment,
+                R.id.webFragment,
+                R.id.playerFragment -> binding.bottomNavView.isVisible = false
+                else -> binding.bottomNavView.isVisible = true
             }
         }
     }

@@ -1,12 +1,13 @@
 package com.devshish.internship.di
 
+import com.devshish.internship.data.repository.*
 import com.devshish.internship.di.Albums.ALBUMS_LIKED
 import com.devshish.internship.di.Albums.ALBUMS_LOCAL
 import com.devshish.internship.di.Songs.*
-import com.devshish.internship.data.repository.*
 import com.devshish.internship.domain.repository.IAlbumsRepository
 import com.devshish.internship.domain.repository.IProfileRepository
 import com.devshish.internship.domain.repository.ISongsRepository
+import com.devshish.internship.presentation.ui.auth.AuthViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
@@ -16,6 +17,7 @@ import com.devshish.internship.presentation.ui.profile.ProfileViewModel
 import com.devshish.internship.presentation.ui.search.SearchViewModel
 import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
+import com.devshish.internship.presentation.ui.web.WebViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -65,5 +67,23 @@ val viewModelModule = module {
     viewModel { PlayerViewModel() }
 
     // Search
-    viewModel { SearchViewModel(get()) }
+    viewModel {
+        SearchViewModel(
+            repository = get()
+        )
+    }
+
+    // Auth
+    viewModel {
+        AuthViewModel(
+            useCase = get()
+        )
+    }
+
+    // WEB
+    viewModel {
+        WebViewModel(
+            useCase = get()
+        )
+    }
 }
