@@ -4,22 +4,17 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.devshish.internship.domain.repository.IAuthRepository
+import com.devshish.internship.domain.usecase.IAuthUseCase
 
 class AuthViewModel(
-    private val repository: IAuthRepository
+    private val useCase: IAuthUseCase
 ) : ViewModel() {
 
-    val onAuthenticateClick: LiveData<Unit>
+    val onAuthenticateClick: LiveData<Uri>
         get() = _onAuthenticateClick
-    private val _onAuthenticateClick = MutableLiveData<Unit>()
-
-    val authLink: LiveData<Uri>
-        get() = _authLink
-    private val _authLink = MutableLiveData<Uri>()
+    private val _onAuthenticateClick = MutableLiveData<Uri>()
 
     fun requestAuthentication() {
-        _authLink.value = repository.authLink
-        _onAuthenticateClick.value = Unit
+        _onAuthenticateClick.value = useCase.authLink
     }
 }

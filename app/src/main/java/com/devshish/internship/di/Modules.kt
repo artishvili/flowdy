@@ -76,14 +76,14 @@ val viewModelModule = module {
     // Auth
     viewModel {
         AuthViewModel(
-            repository = get()
+            useCase = get()
         )
     }
 
     // WEB
     viewModel {
         WebViewModel(
-            authRepository = get()
+            useCase = get()
         )
     }
 }

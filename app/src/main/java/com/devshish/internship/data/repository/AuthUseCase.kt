@@ -3,14 +3,13 @@ package com.devshish.internship.data.repository
 import android.net.Uri
 import com.devshish.internship.BuildConfig.*
 import com.devshish.internship.data.api.GeniusAuthApi
-import com.devshish.internship.data.model.TokenDTO
-import com.devshish.internship.domain.repository.IAuthRepository
 import com.devshish.internship.domain.repository.ITokenRepository
+import com.devshish.internship.domain.usecase.IAuthUseCase
 
 class AuthUseCase(
     private val api: GeniusAuthApi,
     private val tokenRepository: ITokenRepository
-) : IAuthRepository {
+) : IAuthUseCase {
 
     override val authLink: Uri
         get() = Uri.parse(BASE_URL)
@@ -20,7 +19,7 @@ class AuthUseCase(
             .appendQueryParameter("client_id", CLIENT_ID)
             .appendQueryParameter("redirect_uri", "https://github.com/ArtemShishko/internship")
             .appendQueryParameter("scope", "me")
-            .appendQueryParameter("state", "request")
+            .appendQueryParameter("state", GENIUS_REQUEST_STATE)
             .appendQueryParameter("response_type", "code")
             .build()
 

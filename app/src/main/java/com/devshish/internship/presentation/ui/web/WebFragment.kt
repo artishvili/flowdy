@@ -1,13 +1,7 @@
 package com.devshish.internship.presentation.ui.web
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -23,20 +17,12 @@ class WebFragment : Fragment(R.layout.fragment_web) {
 
     private val args: WebFragmentArgs by navArgs()
 
+    private val client = GeniusAuthWebViewClient {
+        viewModel.inputCode(it)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val client = object : WebViewClient() {
-            @RequiresApi(Build.VERSION_CODES.N)
-            override fun shouldOverrideUrlLoading(
-                view: WebView?,
-                request: WebResourceRequest?
-            ): Boolean =
-                if (request?.isRedirect == true) {
-                    viewModel.checkUrl(request.url)
-                    true
-                } else false
-        }
 
         with(binding) {
             webView.apply {

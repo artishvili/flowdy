@@ -23,9 +23,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
 
         with(viewModel) {
             onAuthenticateClick.observe(viewLifecycleOwner) {
-                val action = AuthFragmentDirections.actionAuthFragmentToWebFragment(
-                    authLink.value.toString()
-                )
+                val action = AuthFragmentDirections.actionAuthFragmentToWebFragment(it.toString())
                 findNavController().navigate(action)
             }
         }
