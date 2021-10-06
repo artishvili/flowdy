@@ -9,23 +9,24 @@ class SplashViewModel(
     private val repository: ITokenRepository
 ) : ViewModel() {
 
-    val navigateToAuth: LiveData<Unit>
-        get() = _navigateToAuth
-    private val _navigateToAuth = MutableLiveData<Unit>()
-
-    val navigateToApp: LiveData<Unit>
-        get() = _navigateToApp
-    private val _navigateToApp = MutableLiveData<Unit>()
+    val navigationEvent: LiveData<SplashNavigationEvent>
+        get() = _navigationEvent
+    private val _navigationEvent = MutableLiveData<SplashNavigationEvent>()
 
     init {
         decideNavigation()
     }
 
     private fun decideNavigation() {
-        if (repository.token.isNullOrBlank()) {
-            _navigateToAuth.value = Unit
+        _navigationEvent.value = if (repository.token.isNullOrBlank()) {
+            SplashNavigationEvent.NAVIGATE_TO_AUTH
         } else {
-            _navigateToApp.value = Unit
+            SplashNavigationEvent.NAVIGATE_TO_APP
         }
+    }
+
+    enum class SplashNavigationEvent {
+        NAVIGATE_TO_AUTH,
+        NAVIGATE_TO_APP
     }
 }
