@@ -60,10 +60,10 @@ val networkModule = module {
         val tokenRepository = get<ITokenRepository>()
         Interceptor {
             val original = it.request()
-            val token = if (tokenRepository.token?.isNotEmpty() == true) {
-                "Bearer ${tokenRepository.token}"
-            } else {
+            val token = if (tokenRepository.token.isNullOrBlank()) {
                 ""
+            } else {
+                "Bearer ${tokenRepository.token}"
             }
             val request = original.newBuilder()
                 .header("Authorization", token)

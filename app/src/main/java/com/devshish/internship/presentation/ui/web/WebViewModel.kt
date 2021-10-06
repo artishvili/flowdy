@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.usecase.IAuthUseCase
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class WebViewModel(
     private val useCase: IAuthUseCase,
@@ -17,8 +18,12 @@ class WebViewModel(
 
     fun inputCode(code: String) {
         viewModelScope.launch {
-            useCase.authorize(code)
-            _navigateForward.value = Unit
+            try {
+                useCase.authorize(code)
+                _navigateForward.value = Unit
+            } catch (e: Exception) {
+                Timber.d(e)
+            }
         }
     }
 }
