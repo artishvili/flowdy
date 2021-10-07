@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
+                R.id.splashFragment,
                 R.id.authFragment,
                 R.id.webFragment,
                 R.id.playerFragment -> binding.bottomNavView.isVisible = false

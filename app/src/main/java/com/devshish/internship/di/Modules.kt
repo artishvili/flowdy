@@ -17,6 +17,7 @@ import com.devshish.internship.presentation.ui.profile.ProfileViewModel
 import com.devshish.internship.presentation.ui.search.SearchViewModel
 import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
+import com.devshish.internship.presentation.ui.splash.SplashViewModel
 import com.devshish.internship.presentation.ui.web.WebViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -84,6 +85,13 @@ val viewModelModule = module {
     viewModel {
         WebViewModel(
             useCase = get()
+        )
+    }
+
+    // Splash
+    viewModel {
+        SplashViewModel(
+            repository = get()
         )
     }
 }
