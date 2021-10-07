@@ -35,7 +35,11 @@ enum class Songs {
 
 val appModule = module {
     // Profile
-    single<IProfileRepository> { ProfileRepository() }
+    single<IProfileRepository> {
+        ProfileRepositoryImpl(
+            api = get()
+        )
+    }
 
     // Albums
     single<IAlbumsRepository>(named(ALBUMS_LIKED)) { LikedAlbumsRepository() }

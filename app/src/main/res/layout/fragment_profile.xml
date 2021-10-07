@@ -53,48 +53,15 @@
         app:layout_constraintTop_toTopOf="@+id/tvNickname" />
 
     <TextView
-        android:id="@+id/tvCountry"
-        style="@style/TextAppearance.App.TextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_small"
-        app:layout_constraintEnd_toEndOf="@id/glEnd"
-        app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toBottomOf="@id/ivProfilePicture"
-        tools:text="Country: Belarus" />
-
-    <TextView
-        android:id="@+id/tvCity"
-        style="@style/TextAppearance.App.TextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_small"
-        app:layout_constraintEnd_toEndOf="@id/glEnd"
-        app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toBottomOf="@id/tvCountry"
-        tools:text="City: Minsk" />
-
-    <TextView
         android:id="@+id/tvDescription"
         style="@style/TextAppearance.App.TextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_default"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toBottomOf="@id/tvCity"
+        app:layout_constraintTop_toBottomOf="@id/ivProfilePicture"
         tools:text="Description: Not provided" />
-
-    <TextView
-        android:id="@+id/tvBackground"
-        style="@style/TextAppearance.App.TextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_small"
-        app:layout_constraintEnd_toEndOf="@id/glEnd"
-        app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toBottomOf="@id/tvDescription"
-        tools:text="Background: Not chosen" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glStart"

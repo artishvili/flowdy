@@ -32,16 +32,6 @@ class EditProfileViewModel(
         get() = _showSnackBarEvent.asSharedFlow()
     private val _showSnackBarEvent = MutableSharedFlow<Unit>()
 
-    init {
-        viewModelScope.launch {
-            repository.getUser().collect {
-                _userFlow.emit(it)
-                _profilePictureUri.value = it.photo
-                _backgroundPictureUri.value = it.background
-            }
-        }
-    }
-
     fun onProfileImagePick(uri: Uri) {
         _profilePictureUri.value = uri
     }
@@ -67,7 +57,6 @@ class EditProfileViewModel(
                     background = _backgroundPictureUri.value
                 )
 
-                repository.editUser(user)
                 Timber.d(userFlow.toString())
                 _navigateBackEvent.emit(Unit)
             } else {
