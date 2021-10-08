@@ -1,8 +1,8 @@
 package com.devshish.internship.domain.repository
 
-import com.devshish.internship.data.model.UserInfoDTO
+import com.devshish.internship.domain.model.User
 
 interface IProfileRepository {
 
-    suspend fun getUser(): UserInfoDTO
+    suspend fun getUser(): User
 }

@@ -44,21 +44,16 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             userData.observe(viewLifecycleOwner) {
                 binding.apply {
                     Glide.with(this@ProfileFragment)
-                        .load(it.headerImageUrl)
+                        .load(it.background)
                         .placeholder(R.drawable.ic_profile)
                         .into(ivBackgroundPicture)
 
                     Glide.with(this@ProfileFragment)
-                        .load(it.photoUrl)
+                        .load(it.photo)
                         .placeholder(R.drawable.ic_profile)
                         .into(ivProfilePicture)
 
-                    tvDescription.checkAndSetText(
-                        it.aboutMe.dom.tag,
-                        R.string.profile_user_description
-                    )
-
-                    tvNickname.text = it.name
+                    tvNickname.text = it.nickname
                 }
             }
         }

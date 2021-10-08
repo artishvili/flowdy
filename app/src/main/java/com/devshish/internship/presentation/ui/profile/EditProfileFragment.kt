@@ -88,11 +88,11 @@ class EditProfileFragment : Fragment(R.layout.fragment_edit_profile) {
     }
 
     private fun showUser(user: User) {
-        binding.apply {
+        /*binding.apply {
             etNickname.setText(user.nickname)
             etCountry.setText(user.country)
             etCity.setText(user.city)
             etDescription.setText(user.description)
-        }
+        }*/
     }
 }

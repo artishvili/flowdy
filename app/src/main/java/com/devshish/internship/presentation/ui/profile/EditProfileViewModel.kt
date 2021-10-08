@@ -47,7 +47,7 @@ class EditProfileViewModel(
         description: String
     ) {
         viewModelScope.launch {
-            if (validate(nickname)) {
+            /*if (validate(nickname)) {
                 val user = User(
                     nickname = nickname,
                     country = country.validateMandatoryField(),
@@ -61,7 +61,7 @@ class EditProfileViewModel(
                 _navigateBackEvent.emit(Unit)
             } else {
                 _showSnackBarEvent.emit(Unit)
-            }
+            }*/
         }
     }
 
