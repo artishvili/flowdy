@@ -24,10 +24,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
-            ivEditProfile.setOnClickListener { viewModel.onEditButtonClick() }
-        }
-
         with(viewModel) {
             viewLifecycleOwner.lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -54,13 +50,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         .into(ivProfilePicture)
 
                     tvNickname.text = it.nickname
+                    tvEmail.text = it.email
                 }
             }
         }
     }
 
-    private fun TextView.checkAndSetText(data: String?, resourceId: Int) {
+    /*private fun TextView.checkAndSetText(data: String?, resourceId: Int) {
         val checkedData = data ?: getString(R.string.data_not_chosen)
         text = getString(resourceId, checkedData)
-    }
+    }*/
 }

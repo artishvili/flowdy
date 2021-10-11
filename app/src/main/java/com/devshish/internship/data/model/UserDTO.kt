@@ -15,5 +15,6 @@ data class UserInfoDTO(
     val headerImageUrl: String,
     @SerializedName("photo_url")
     val photoUrl: String,
+    val email: String,
     val name: String
 )

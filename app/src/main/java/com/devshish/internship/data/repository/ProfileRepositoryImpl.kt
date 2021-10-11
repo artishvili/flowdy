@@ -12,6 +12,7 @@ class ProfileRepositoryImpl(
         val user = api.getUser().response.user
         return User(
             nickname = user.name,
+            email = user.email,
             photo = user.photoUrl,
             background = user.headerImageUrl
         )
