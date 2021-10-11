@@ -172,5 +172,9 @@
         android:id="@+id/lyricsFragment"
         android:name="com.devshish.internship.presentation.ui.lyrics.LyricsFragment"
         android:label="fragment_lyrics"
-        tools:layout="@layout/fragment_lyrics" />
+        tools:layout="@layout/fragment_lyrics" >
+        <argument
+            android:name="searchSong"
+            app:argType="com.devshish.internship.domain.model.SearchSong" />
+    </fragment>
 </navigation>

@@ -19,7 +19,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private val viewModel: SearchViewModel by viewModel()
 
     private val searchSongAdapter = ItemSearchSongAdapter {
-        viewModel.onSearchSongClick()
+        viewModel.onSearchSongClick(it)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,8 +63,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
 
             navigateToLyricsEvent.observe(viewLifecycleOwner) {
-                val action = SearchFragmentDirections.actionSearchFragmentToLyricsFragment()
-                findNavController().navigate(action)
+                it.getContentIfNotHandled()?.let { song ->
+                    val action = SearchFragmentDirections.actionSearchFragmentToLyricsFragment(song)
+                    findNavController().navigate(action)
+                }
             }
         }
     }

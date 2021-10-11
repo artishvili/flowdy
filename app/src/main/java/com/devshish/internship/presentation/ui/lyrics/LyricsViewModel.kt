@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ILyricsRepository
 import kotlinx.coroutines.launch
 
@@ -15,9 +16,10 @@ class LyricsViewModel(
         get() = _getLyricsEvent
     private val _getLyricsEvent = MutableLiveData<String>()
 
-    init {
+    fun getLyrics(song: SearchSong) {
         viewModelScope.launch {
-            _getLyricsEvent.value = repository.getLyrics()
+            val result = repository.getLyrics(song)
+            _getLyricsEvent.value = result
         }
     }
 }

@@ -1,10 +1,11 @@
 package com.devshish.internship.data.repository
 
+import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ILyricsRepository
 
 class LyricsRepositoryImpl : ILyricsRepository {
 
-    override suspend fun getLyrics(): String =
+    override suspend fun getLyrics(song: SearchSong): String =
         "[Part I]\n" +
                 "\n" +
                 "[Intro: Baby Keem]\n" +
