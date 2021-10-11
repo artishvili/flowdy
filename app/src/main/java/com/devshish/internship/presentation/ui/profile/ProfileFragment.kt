@@ -25,18 +25,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
 
         with(viewModel) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    launch {
-                        navigateForwardEvent.collect {
-                            val action = ProfileFragmentDirections
-                                .actionProfileFragmentToEditProfileFragment()
-                            findNavController().navigate(action)
-                        }
-                    }
-                }
-            }
-
             userData.observe(viewLifecycleOwner) {
                 binding.apply {
                     Glide.with(this@ProfileFragment)
@@ -55,9 +43,4 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
         }
     }
-
-    /*private fun TextView.checkAndSetText(data: String?, resourceId: Int) {
-        val checkedData = data ?: getString(R.string.data_not_chosen)
-        text = getString(resourceId, checkedData)
-    }*/
 }

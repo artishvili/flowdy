@@ -12,7 +12,6 @@ import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewMo
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
-import com.devshish.internship.presentation.ui.profile.EditProfileViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
 import com.devshish.internship.presentation.ui.search.SearchViewModel
 import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
@@ -58,7 +57,6 @@ val appModule = module {
 val viewModelModule = module {
     // Profile
     viewModel { ProfileViewModel(repository = get()) }
-    viewModel { EditProfileViewModel(repository = get()) }
 
     // Albums
     viewModel { LikedAlbumsViewModel(repository = get(named(ALBUMS_LIKED))) }
