@@ -5,12 +5,14 @@ import com.devshish.internship.di.Albums.ALBUMS_LIKED
 import com.devshish.internship.di.Albums.ALBUMS_LOCAL
 import com.devshish.internship.di.Songs.*
 import com.devshish.internship.domain.repository.IAlbumsRepository
+import com.devshish.internship.domain.repository.ILyricsRepository
 import com.devshish.internship.domain.repository.IProfileRepository
 import com.devshish.internship.domain.repository.ISongsRepository
 import com.devshish.internship.presentation.ui.auth.AuthViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
+import com.devshish.internship.presentation.ui.lyrics.LyricsViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.EditProfileViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
@@ -50,6 +52,11 @@ val appModule = module {
         LocalSongsRepository(applicationContext = get())
     }
     single<ISongsRepository>(named(SONGS_ALBUM)) { LikedSongsRepository() }
+
+    // Lyrics
+    single<ILyricsRepository> {
+        LyricsRepositoryImpl()
+    }
 }
 
 val viewModelModule = module {
@@ -91,6 +98,13 @@ val viewModelModule = module {
     // Splash
     viewModel {
         SplashViewModel(
+            repository = get()
+        )
+    }
+
+    // Lyrics
+    viewModel {
+        LyricsViewModel(
             repository = get()
         )
     }

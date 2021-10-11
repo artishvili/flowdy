@@ -25,6 +25,14 @@ class SearchViewModel(
         get() = _songsList
     private val _songsList = MutableLiveData<List<SearchSong>>()
 
+    val navigateToLyricsEvent: LiveData<Unit>
+        get() = _navigateToLyricsEvent
+    private val _navigateToLyricsEvent = MutableLiveData<Unit>()
+
+    fun onSearchSongClick() {
+        _navigateToLyricsEvent.value = Unit
+    }
+
     fun searchSongs(query: String) {
         viewModelScope.launch {
             _isProgressLoading.value = true

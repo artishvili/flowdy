@@ -7,8 +7,9 @@ import com.devshish.internship.databinding.ItemSongBinding
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.presentation.model.SearchSongItemCallback
 
-class ItemSearchSongAdapter :
-    ListAdapter<SearchSong, SearchSongViewHolder>(SearchSongItemCallback()) {
+class ItemSearchSongAdapter(
+    private val onClick: (SearchSong) -> Unit
+) : ListAdapter<SearchSong, SearchSongViewHolder>(SearchSongItemCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchSongViewHolder {
         val binding = ItemSongBinding.inflate(
@@ -16,7 +17,7 @@ class ItemSearchSongAdapter :
             parent,
             false
         )
-        return SearchSongViewHolder(binding)
+        return SearchSongViewHolder(binding, onClick)
     }
 
     override fun onBindViewHolder(holder: SearchSongViewHolder, position: Int) {
