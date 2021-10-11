@@ -3,6 +3,7 @@ package com.devshish.internship.di
 import android.content.Context
 import com.devshish.internship.BuildConfig
 import com.devshish.internship.data.api.GeniusAuthApi
+import com.devshish.internship.data.api.GeniusProfileApi
 import com.devshish.internship.data.api.GeniusSearchApi
 import com.devshish.internship.data.repository.AuthUseCase
 import com.devshish.internship.data.repository.SearchAPIRepository
@@ -46,6 +47,12 @@ val networkModule = module {
 
     single {
         provideSearchApiRepository(
+            retrofit = get()
+        )
+    }
+
+    single {
+        provideProfileApiRepository(
             retrofit = get()
         )
     }
@@ -100,3 +107,6 @@ fun provideSearchApiRepository(retrofit: Retrofit): GeniusSearchApi =
 
 fun provideAuthApiRepository(retrofit: Retrofit): GeniusAuthApi =
     retrofit.create(GeniusAuthApi::class.java)
+
+fun provideProfileApiRepository(retrofit: Retrofit): GeniusProfileApi =
+    retrofit.create(GeniusProfileApi::class.java)

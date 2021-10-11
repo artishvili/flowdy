@@ -1,10 +1,14 @@
 package com.devshish.internship.presentation.ui.profile
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.User
 import com.devshish.internship.domain.repository.IProfileRepository
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -12,15 +16,13 @@ class ProfileViewModel(
     repository: IProfileRepository
 ) : ViewModel() {
 
-    val userFlow: Flow<User> = repository.getUser()
+    val userData: LiveData<User>
+        get() = _userData
+    private val _userData = MutableLiveData<User>()
 
-    private val _navigateForwardEvent = MutableSharedFlow<Unit>()
-    val navigateForwardEvent: Flow<Unit> = _navigateForwardEvent.asSharedFlow()
-
-    fun onEditButtonClick() {
+    init {
         viewModelScope.launch {
-            Timber.d(userFlow.toString())
-            _navigateForwardEvent.emit(Unit)
+            _userData.value = repository.getUser()
         }
     }
 }
