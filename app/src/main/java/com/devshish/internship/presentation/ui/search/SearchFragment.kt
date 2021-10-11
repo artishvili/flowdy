@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentSearchBinding
@@ -16,7 +17,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private val binding by viewBinding(FragmentSearchBinding::bind)
     private val viewModel: SearchViewModel by viewModel()
-    private val searchSongAdapter = ItemSearchSongAdapter()
+
+    private val searchSongAdapter = ItemSearchSongAdapter {
+        viewModel.onSearchSongClick(it)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,6 +60,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
             isDescriptionVisible.observe(viewLifecycleOwner) { isVisible ->
                 binding.tvDescription.isVisible = isVisible
+            }
+
+            navigateToLyricsEvent.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { song ->
+                    val action = SearchFragmentDirections.actionSearchFragmentToLyricsFragment(song)
+                    findNavController().navigate(action)
+                }
             }
         }
     }

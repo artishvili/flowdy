@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ISearchSongsRepository
+import com.devshish.internship.presentation.ui.utils.Event
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -24,6 +25,15 @@ class SearchViewModel(
     val songsList: LiveData<List<SearchSong>>
         get() = _songsList
     private val _songsList = MutableLiveData<List<SearchSong>>()
+
+    val navigateToLyricsEvent: LiveData<Event<SearchSong>>
+        get() = _navigateToLyricsEvent
+    private val _navigateToLyricsEvent = MutableLiveData<Event<SearchSong>>()
+
+    fun onSearchSongClick(song: SearchSong) {
+        val event = Event(song)
+        _navigateToLyricsEvent.value = event
+    }
 
     fun searchSongs(query: String) {
         viewModelScope.launch {
