@@ -9,12 +9,15 @@ import com.devshish.internship.domain.repository.ILyricsRepository
 import com.devshish.internship.domain.repository.IProfileRepository
 import com.devshish.internship.domain.repository.ISongsRepository
 import com.devshish.internship.presentation.ui.auth.AuthViewModel
+import com.devshish.internship.domain.repository.*
+import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
 import com.devshish.internship.presentation.ui.lyrics.LyricsViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
+import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
 import com.devshish.internship.presentation.ui.search.SearchViewModel
 import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
@@ -36,6 +39,9 @@ enum class Songs {
 }
 
 val appModule = module {
+    // Client
+    single { MediaBrowserClient(context = get()) }
+
     // Profile
     single<IProfileRepository> {
         ProfileRepositoryImpl(
@@ -63,6 +69,9 @@ val appModule = module {
 }
 
 val viewModelModule = module {
+    // Main
+    viewModel { MainViewModel(mediaBrowser = get()) }
+
     // Profile
     viewModel { ProfileViewModel(repository = get()) }
 
@@ -110,4 +119,5 @@ val viewModelModule = module {
             repository = get()
         )
     }
+    viewModel { PlayerViewModel(mediaBrowser = get()) }
 }
