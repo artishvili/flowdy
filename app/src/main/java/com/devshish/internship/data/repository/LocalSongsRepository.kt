@@ -11,6 +11,8 @@ class LocalSongsRepository(
     private val applicationContext: Context
 ) : ISongsRepository {
 
+    override var songToPlay: Song? = null
+
     override suspend fun getSongs(): List<Song> {
         val songs = mutableListOf<Song>()
 

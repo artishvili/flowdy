@@ -4,5 +4,7 @@ import com.devshish.internship.domain.model.Song
 
 interface ISongsRepository {
 
+    var songToPlay: Song?
+
     suspend fun getSongs(): List<Song>
 }
