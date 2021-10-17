@@ -83,6 +83,13 @@ val viewModelModule = module {
     // Songs
     viewModel { LikedSongsViewModel(repository = get(named(SONGS_LIKED))) }
     viewModel { LocalSongsViewModel(repository = get(named(SONGS_LOCAL))) }
+    viewModel {
+        PlayerViewModel(
+            repository = get(named(SONGS_LOCAL)),
+            mediaBrowser = get()
+        )
+    }
+    viewModel { PlayerViewModel() }
 
     // Search
     viewModel {
@@ -118,5 +125,4 @@ val viewModelModule = module {
             repository = get()
         )
     }
-    viewModel { PlayerViewModel(mediaBrowser = get()) }
 }

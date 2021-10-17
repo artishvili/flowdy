@@ -2,10 +2,10 @@ package com.devshish.internship.presentation.ui.service.client
 
 import android.content.ComponentName
 import android.content.Context
+import android.net.Uri
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import androidx.core.net.toUri
 import com.devshish.internship.presentation.ui.service.server.MediaBrowserService
 
 class MediaBrowserClient(context: Context) {
@@ -38,6 +38,8 @@ class MediaBrowserClient(context: Context) {
             null
         )
     }
+
+    fun playFromUri(uri: Uri?) = mediaController.transportControls.playFromUri(uri, null)
 
     fun toggle() {
         val pbState = mediaController.playbackState.state

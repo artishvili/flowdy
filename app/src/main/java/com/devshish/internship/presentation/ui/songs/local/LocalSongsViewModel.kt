@@ -21,4 +21,8 @@ class LocalSongsViewModel(
             _localSongs.value = repository.getSongs()
         }
     }
+
+    fun sendSong(song: Song) {
+        repository.songToPlay = song
+    }
 }
