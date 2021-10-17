@@ -12,11 +12,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.devshish.internship.R
 import com.devshish.internship.databinding.ActivityMainBinding
 import com.devshish.internship.presentation.ui.utils.viewBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
+    private val viewModel: MainViewModel by viewModel()
     private lateinit var navController: NavController
 
     private val requestPermissionLauncher =
@@ -39,7 +41,6 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.navHostFragment) as NavHostFragment
         navController = navHostFragment.findNavController()
@@ -53,5 +54,20 @@ class MainActivity : AppCompatActivity() {
                 binding.bottomNavView.visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.connect()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.disconnect()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.unregister()
     }
 }

@@ -4,12 +4,14 @@ import com.devshish.internship.Albums.*
 import com.devshish.internship.Songs.*
 import com.devshish.internship.data.repository.*
 import com.devshish.internship.domain.repository.*
+import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.EditProfileViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
+import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
 import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -28,6 +30,9 @@ enum class Songs {
 }
 
 val appModule = module {
+    // Client
+    single { MediaBrowserClient(context = get()) }
+
     // Profile
     single<IProfileRepository> { ProfileRepository() }
 
@@ -46,6 +51,9 @@ val appModule = module {
 }
 
 val viewModelModule = module {
+    // Main
+    viewModel { MainViewModel(mediaBrowser = get()) }
+
     // Profile
     viewModel { ProfileViewModel(repository = get()) }
     viewModel { EditProfileViewModel(repository = get()) }
@@ -58,5 +66,5 @@ val viewModelModule = module {
     // Songs
     viewModel { LikedSongsViewModel(repository = get(named(SONGS_LIKED))) }
     viewModel { LocalSongsViewModel(repository = get(named(SONGS_LOCAL))) }
-    viewModel { PlayerViewModel() }
+    viewModel { PlayerViewModel(mediaBrowser = get()) }
 }

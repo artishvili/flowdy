@@ -69,4 +69,7 @@ dependencies {
     implementation "io.insert-koin:koin-android:$koinVersion"
 
     implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
+
+    // Exo Player
+    implementation "com.google.android.exoplayer:extension-mediasession:$exoPlayerVersion"
 }
