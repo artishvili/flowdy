@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentPlayerBinding
+import com.devshish.internship.domain.model.Song
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -18,37 +19,42 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            ivPlay.setOnClickListener { viewModel.toggle() }
-            ivPause.setOnClickListener { viewModel.onPlay() }
+            tvPlaylist.text = getString(R.string.library_favorites)
+
+            ivPlay.setOnClickListener {
+                viewModel.toggle()
+                viewModel.getState()
+            }
         }
 
         with(viewModel) {
-            with(binding) {
-                songToPlay.observe(viewLifecycleOwner) {
-                    tvPlaylist.text = getString(R.string.library_favorites)
-                    tvSong.text = it.title
-                    tvArtist.text = it.artist
-
-                    // TODO: IMPLEMENT REAL DESTINATION START AND END
-                    tvDurationStart.text = "0:00"
-                    tvDurationEnd.text = "3:40"
-
-                    Glide.with(this@PlayerFragment)
-                        .load(it.imageUri)
-                        .placeholder(R.color.purple_200)
-                        .into(ivSongCover)
-                }
-
-                pauseEvent.observe(viewLifecycleOwner) {
-                    ivPlay.visibility = View.INVISIBLE
-                    ivPause.visibility = View.VISIBLE
-                }
-
-                playEvent.observe(viewLifecycleOwner) {
-                    ivPlay.visibility = View.VISIBLE
-                    ivPause.visibility = View.INVISIBLE
-                }
+            songToPlay.observe(viewLifecycleOwner) {
+                setSong(it)
             }
+
+            isPlaying.observe(viewLifecycleOwner) { playing ->
+                binding.ivPlay.setImageResource(
+                    if (playing) R.drawable.ic_pause_filled else R.drawable.ic_play_filled
+                )
+            }
+        }
+    }
+
+    // TODO
+    // Fragment knows about the existence of the domain package!!
+    private fun setSong(song: Song) {
+        binding.apply {
+            tvSong.text = song.title
+            tvArtist.text = song.artist
+
+            // TODO: IMPLEMENT REAL DESTINATION START AND END
+            tvDurationStart.text = "0:00"
+            tvDurationEnd.text = "3:40"
+
+            Glide.with(this@PlayerFragment)
+                .load(song.imageUri)
+                .placeholder(R.color.purple_200)
+                .into(ivSongCover)
         }
     }
 }

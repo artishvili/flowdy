@@ -14,6 +14,10 @@ import com.devshish.internship.presentation.ui.profile.ProfileViewModel
 import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
 import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
+import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.audio.AudioAttributes
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -32,6 +36,18 @@ enum class Songs {
 val appModule = module {
     // Client
     single { MediaBrowserClient(context = get()) }
+
+    // Exo Player
+    single<ExoPlayer> {
+        val audioAttributes = AudioAttributes.Builder()
+            .setUsage(C.USAGE_MEDIA)
+            .setContentType(C.CONTENT_TYPE_SPEECH)
+            .build()
+        SimpleExoPlayer.Builder(get())
+            .setAudioAttributes(audioAttributes, true)
+            .setHandleAudioBecomingNoisy(true)
+            .build()
+    }
 
     // Profile
     single<IProfileRepository> { ProfileRepository() }

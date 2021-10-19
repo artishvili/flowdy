@@ -121,7 +121,6 @@
         android:id="@+id/ivPlay"
         android:layout_width="@dimen/player_play_icon_size"
         android:layout_height="@dimen/player_play_icon_size"
-        android:src="@drawable/ic_play_filled"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@id/tvDurationStart" />

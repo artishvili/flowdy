@@ -16,9 +16,18 @@ class PlayerViewModel(
         get() = _songToPlay
     private val _songToPlay = MutableLiveData<Song>()
 
+    val isPlaying: LiveData<Boolean>
+        get() = _isPlaying
+    private val _isPlaying = MutableLiveData<Boolean>()
+
     init {
         _songToPlay.value = repository.songToPlay
         mediaBrowser.playFromUri(repository.songToPlay?.uri)
+        getState()
+    }
+
+    fun getState() {
+        _isPlaying.value = mediaBrowser.isPlaying
     }
 
     fun toggle() = mediaBrowser.toggle()

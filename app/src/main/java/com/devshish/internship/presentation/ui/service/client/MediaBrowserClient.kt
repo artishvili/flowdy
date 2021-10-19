@@ -15,6 +15,8 @@ class MediaBrowserClient(context: Context) {
 
     private val controllerCallback = MediaControllerCallback()
 
+    var isPlaying = false
+
     init {
         mediaBrowser = MediaBrowserCompat(
             context,
@@ -32,14 +34,19 @@ class MediaBrowserClient(context: Context) {
         )
     }
 
-    fun playFromUri(uri: Uri?) = mediaController.transportControls.playFromUri(uri, null)
+    fun playFromUri(uri: Uri?) {
+        mediaController.transportControls.playFromUri(uri, null)
+        isPlaying = true
+    }
 
     fun toggle() {
         val pbState = mediaController.playbackState.state
         if (pbState == PlaybackStateCompat.STATE_PLAYING) {
             mediaController.transportControls.pause()
+            isPlaying = false
         } else {
             mediaController.transportControls.play()
+            isPlaying = true
         }
     }
 
