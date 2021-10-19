@@ -63,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintTop_toTopOf="@id/tvSong" />
 
-    <com.google.android.material.slider.Slider
+    <SeekBar
         android:id="@+id/sPlayer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

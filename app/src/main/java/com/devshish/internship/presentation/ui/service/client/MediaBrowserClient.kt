@@ -3,6 +3,7 @@ package com.devshish.internship.presentation.ui.service.client
 import android.content.ComponentName
 import android.content.Context
 import android.net.Uri
+import android.os.SystemClock
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
@@ -41,14 +42,18 @@ class MediaBrowserClient(context: Context) {
 
     fun toggle() {
         val pbState = mediaController.playbackState.state
-        if (pbState == PlaybackStateCompat.STATE_PLAYING) {
+        isPlaying = if (pbState == PlaybackStateCompat.STATE_PLAYING) {
             mediaController.transportControls.pause()
-            isPlaying = false
+            false
         } else {
             mediaController.transportControls.play()
-            isPlaying = true
+            true
         }
     }
+
+    fun getPosition() = mediaController.playbackState.currentPlaybackPosition
+
+    fun seekTo(position: Long) = mediaController.transportControls.seekTo(position)
 
     fun connect() = mediaBrowser.connect()
 
@@ -56,3 +61,9 @@ class MediaBrowserClient(context: Context) {
 
     fun unregister() = mediaController.unregisterCallback(controllerCallback)
 }
+
+inline val PlaybackStateCompat.currentPlaybackPosition: Long
+    get() = if (state == PlaybackStateCompat.STATE_PLAYING) {
+        val timeDelta = SystemClock.elapsedRealtime() - lastPositionUpdateTime
+        (position + (timeDelta * playbackSpeed)).toLong()
+    } else position
