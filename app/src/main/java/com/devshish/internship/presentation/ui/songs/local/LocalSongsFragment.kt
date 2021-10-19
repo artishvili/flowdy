@@ -16,10 +16,7 @@ class LocalSongsFragment : Fragment(R.layout.fragment_local_songs) {
     private val binding by viewBinding(FragmentLocalSongsBinding::bind)
     private val viewModel: LocalSongsViewModel by viewModel()
     private val itemSongAdapter = ItemSongAdapter {
-        viewModel.sendSong(it)
-
-        val action = LocalSongsFragmentDirections.actionLocalSongsFragmentToPlayerFragment()
-        findNavController().navigate(action)
+        viewModel.songClicked(it)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,8 +27,15 @@ class LocalSongsFragment : Fragment(R.layout.fragment_local_songs) {
             layoutManager = LinearLayoutManager(requireContext())
         }
 
-        viewModel.localSongs.observe(viewLifecycleOwner) {
-            itemSongAdapter.submitList(it)
+        with(viewModel) {
+            localSongs.observe(viewLifecycleOwner) {
+                itemSongAdapter.submitList(it)
+            }
+
+            navigationEvent.observe(viewLifecycleOwner) {
+                val action = LocalSongsFragmentDirections.actionLocalSongsFragmentToPlayerFragment()
+                findNavController().navigate(action)
+            }
         }
     }
 }

@@ -5,8 +5,6 @@ import com.devshish.internship.domain.repository.ISongsRepository
 
 class LikedSongsRepository : ISongsRepository {
 
-    override var songToPlay: Song? = null
-
     private val songs = listOf(
         Song(null, "Tell Em", "Cochise, SNOT", 300000, null),
         Song(null, "Spaceship", "Playboi Carti", 300000, null),

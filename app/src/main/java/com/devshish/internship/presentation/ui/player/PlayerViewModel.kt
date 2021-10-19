@@ -4,11 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.devshish.internship.domain.model.Song
-import com.devshish.internship.domain.repository.ISongsRepository
 import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
 
 class PlayerViewModel(
-    repository: ISongsRepository,
     private val mediaBrowser: MediaBrowserClient
 ) : ViewModel() {
 
@@ -17,8 +15,8 @@ class PlayerViewModel(
     private val _songToPlay = MutableLiveData<Song>()
 
     init {
-        _songToPlay.value = repository.songToPlay
-        mediaBrowser.playFromUri(repository.songToPlay?.uri)
+        _songToPlay.value = mediaBrowser.getSong()
+        mediaBrowser.playFromUri()
     }
 
     fun toggle() = mediaBrowser.toggle()

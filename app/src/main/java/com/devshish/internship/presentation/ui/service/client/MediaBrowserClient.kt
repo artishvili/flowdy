@@ -7,6 +7,7 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.net.toUri
+import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.ui.service.server.MediaBrowserService
 
 class MediaBrowserClient(context: Context) {
@@ -15,6 +16,8 @@ class MediaBrowserClient(context: Context) {
     private lateinit var mediaController: MediaControllerCompat
 
     private val controllerCallback = MediaControllerCallback()
+
+    private var songToPlay: Song? = null
 
     init {
         mediaBrowser = MediaBrowserCompat(
@@ -40,7 +43,14 @@ class MediaBrowserClient(context: Context) {
         )
     }
 
-    fun playFromUri(uri: Uri?): Unit = mediaController.transportControls.playFromUri(uri, null)
+    fun setSong(song: Song) {
+        songToPlay = song
+    }
+
+    fun getSong(): Song? = songToPlay
+
+    fun playFromUri(): Unit =
+        mediaController.transportControls.playFromUri(songToPlay?.uri, null)
 
     fun toggle() {
         val pbState = mediaController.playbackState.state
