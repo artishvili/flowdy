@@ -11,37 +11,34 @@ class MediaSessionCallback(
     private val stateBuilder: PlaybackStateCompat.Builder
 ) : MediaSessionCompat.Callback() {
 
-    private fun setState(
-        mediaSession: MediaSessionCompat,
+    private fun MediaSessionCompat.updateState(
         stateBuilder: PlaybackStateCompat.Builder,
         state: Int,
         position: Long = 0L,
         speed: Float = 1f
-    ) = mediaSession.setPlaybackState(
-        stateBuilder.setState(state, position, speed).build()
-    )
+    ): Unit = setPlaybackState(stateBuilder.setState(state, position, speed).build())
 
     override fun onPlayFromUri(uri: Uri?, extras: Bundle?) {
         super.onPlayFromUri(uri, extras)
-        setState(mediaSession, stateBuilder, PlaybackStateCompat.STATE_PLAYING)
+        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING)
         Timber.d("OnPlayFromUri: $uri")
     }
 
     override fun onPlay() {
         super.onPlay()
-        setState(mediaSession, stateBuilder, PlaybackStateCompat.STATE_PLAYING)
+        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING)
         Timber.d("onPlay")
     }
 
     override fun onPause() {
         super.onPause()
-        setState(mediaSession, stateBuilder, PlaybackStateCompat.STATE_PAUSED)
+        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PAUSED)
         Timber.d("onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        setState(mediaSession, stateBuilder, PlaybackStateCompat.STATE_STOPPED)
+        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_STOPPED)
         Timber.d("onStop")
     }
 }

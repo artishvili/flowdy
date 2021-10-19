@@ -32,5 +32,5 @@ class MediaBrowserService : MediaBrowserServiceCompat() {
     override fun onLoadChildren(
         parentId: String,
         result: Result<MutableList<MediaBrowserCompat.MediaItem>>
-    ) = result.sendResult(null)
+    ): Unit = result.sendResult(null)
 }

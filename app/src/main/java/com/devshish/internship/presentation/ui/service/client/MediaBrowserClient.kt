@@ -25,11 +25,13 @@ class MediaBrowserClient(context: Context) {
                     mediaController =
                         MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
                             registerCallback(controllerCallback)
+                            // TODO get rid of hardcoded controls
                             transportControls.playFromUri(
                                 "content://media/external/audio/media/19832".toUri(),
                                 null
                             )
                         }
+                    // TODO same here
                     toggle()
                 }
             },
@@ -46,9 +48,9 @@ class MediaBrowserClient(context: Context) {
         }
     }
 
-    fun connect() = mediaBrowser.connect()
+    fun connect(): Unit = mediaBrowser.connect()
 
-    fun disconnect() = mediaBrowser.disconnect()
+    fun disconnect(): Unit = mediaBrowser.disconnect()
 
-    fun unregister() = mediaController.unregisterCallback(controllerCallback)
+    fun unregister(): Unit = mediaController.unregisterCallback(controllerCallback)
 }

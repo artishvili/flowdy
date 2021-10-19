@@ -7,9 +7,9 @@ class MainViewModel(
     private val mediaBrowser: MediaBrowserClient
 ) : ViewModel() {
 
-    fun connect() = mediaBrowser.connect()
+    fun connect(): Unit = mediaBrowser.connect()
 
-    fun disconnect() = mediaBrowser.disconnect()
+    fun disconnect(): Unit = mediaBrowser.disconnect()
 
-    fun unregister() = mediaBrowser.unregister()
+    fun unregister(): Unit = mediaBrowser.unregister()
 }
