@@ -83,7 +83,6 @@ val viewModelModule = module {
     // Songs
     viewModel { LikedSongsViewModel(repository = get(named(SONGS_LIKED))) }
     viewModel { LocalSongsViewModel(repository = get(named(SONGS_LOCAL))) }
-    viewModel { PlayerViewModel() }
 
     // Search
     viewModel {
