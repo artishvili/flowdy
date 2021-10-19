@@ -9,6 +9,7 @@ buildscript {
         lifecycleViewModelVersion = "2.3.1"
         koinVersion = "3.1.2"
         viewBindingDelegateVersion = "1.0.0"
+        exoPlayerVersion = "2.15.1"
     }
     repositories {
         google()

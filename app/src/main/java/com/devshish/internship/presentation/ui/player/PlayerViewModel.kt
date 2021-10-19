@@ -5,9 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.Song
+import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
 import kotlinx.coroutines.launch
 
-class PlayerViewModel : ViewModel() {
+class PlayerViewModel(
+    private val mediaBrowser: MediaBrowserClient
+) : ViewModel() {
+
+    fun toggle() = mediaBrowser.toggle()
 
     private val song = Song(null, "Pure Souls", "Kanye West", 300, null)
 

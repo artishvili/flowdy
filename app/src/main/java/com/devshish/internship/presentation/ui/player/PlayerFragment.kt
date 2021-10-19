@@ -18,7 +18,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            ivPlay.setOnClickListener { viewModel.onPause() }
+            ivPlay.setOnClickListener { viewModel.toggle() }
             ivPause.setOnClickListener { viewModel.onPlay() }
         }
 
