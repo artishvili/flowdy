@@ -89,7 +89,6 @@ val viewModelModule = module {
             mediaBrowser = get()
         )
     }
-    viewModel { PlayerViewModel() }
 
     // Search
     viewModel {

@@ -19,7 +19,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
         with(binding) {
             ivPlay.setOnClickListener { viewModel.toggle() }
-            ivPause.setOnClickListener { viewModel.onPlay() }
         }
 
         with(viewModel) {
@@ -37,16 +36,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                         .load(it.imageUri)
                         .placeholder(R.color.purple_200)
                         .into(ivSongCover)
-                }
-
-                pauseEvent.observe(viewLifecycleOwner) {
-                    ivPlay.visibility = View.INVISIBLE
-                    ivPause.visibility = View.VISIBLE
-                }
-
-                playEvent.observe(viewLifecycleOwner) {
-                    ivPlay.visibility = View.VISIBLE
-                    ivPause.visibility = View.INVISIBLE
                 }
             }
         }
