@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.Song
 import com.devshish.internship.domain.repository.ISongsRepository
-import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
+import com.devshish.internship.presentation.model.MediaBrowserClient
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

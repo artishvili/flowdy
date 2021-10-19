@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.service.client
+package com.devshish.internship.presentation.model
 
 import android.content.ComponentName
 import android.content.Context
@@ -7,7 +7,6 @@ import android.os.SystemClock
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import com.devshish.internship.presentation.ui.service.server.MediaBrowserService
 
 class MediaBrowserClient(context: Context) {
 

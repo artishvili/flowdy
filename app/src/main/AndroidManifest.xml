@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".presentation.ui.service.server.MediaBrowserService"
+            android:name=".presentation.model.MediaBrowserService"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.media.browse.MediaBrowserService" />

@@ -4,6 +4,7 @@ import com.devshish.internship.Albums.*
 import com.devshish.internship.Songs.*
 import com.devshish.internship.data.repository.*
 import com.devshish.internship.domain.repository.*
+import com.devshish.internship.presentation.model.MediaBrowserClient
 import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
@@ -11,7 +12,6 @@ import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.EditProfileViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
-import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
 import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
 import com.google.android.exoplayer2.C

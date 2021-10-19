@@ -1,7 +1,6 @@
-package com.devshish.internship.presentation.ui.service.server
+package com.devshish.internship.presentation.model
 
 import android.app.PendingIntent
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat

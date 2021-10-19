@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.service.client
+package com.devshish.internship.presentation.model
 
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
