@@ -16,8 +16,9 @@ class PlayerViewModel(
 
     init {
         _songToPlay.value = mediaBrowser.getSong()
-        mediaBrowser.playFromUri()
     }
 
-    fun toggle() = mediaBrowser.toggle()
+    fun toggle() {
+        mediaBrowser.toggle()
+    }
 }

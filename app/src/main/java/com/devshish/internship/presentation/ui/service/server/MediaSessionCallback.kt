@@ -4,6 +4,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import com.devshish.internship.domain.model.Song
+import com.devshish.internship.presentation.ui.utils.toMediaMetadata
 import timber.log.Timber
 
 class MediaSessionCallback(
@@ -20,6 +22,10 @@ class MediaSessionCallback(
 
     override fun onPlayFromUri(uri: Uri?, extras: Bundle?) {
         super.onPlayFromUri(uri, extras)
+        val song: Song? = extras?.getSerializable("KEY_SONG") as? Song
+        mediaSession.setMetadata(
+            song?.toMediaMetadata()
+        )
         mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING)
         Timber.d("OnPlayFromUri: $uri")
     }

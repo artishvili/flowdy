@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.Song
 import com.devshish.internship.domain.repository.ISongsRepository
 import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
+import com.devshish.internship.presentation.ui.utils.Event
 import kotlinx.coroutines.launch
 
 class LocalSongsViewModel(
@@ -18,9 +19,9 @@ class LocalSongsViewModel(
         get() = _localSongs
     private val _localSongs = MutableLiveData<List<Song>>()
 
-    val navigationEvent: LiveData<Unit>
+    val navigationEvent: LiveData<Event<Unit>>
         get() = _navigationEvent
-    private val _navigationEvent = MutableLiveData<Unit>()
+    private val _navigationEvent = MutableLiveData<Event<Unit>>()
 
     init {
         viewModelScope.launch {
@@ -29,7 +30,7 @@ class LocalSongsViewModel(
     }
 
     fun songClicked(song: Song) {
-        mediaBrowser.setSong(song)
-        _navigationEvent.value = Unit
+        mediaBrowser.playSong(song)
+        _navigationEvent.value = Event(Unit)
     }
 }

@@ -61,7 +61,7 @@ class LocalSongsRepository(
 
                 // Stores column values and the contentUri in a local object
                 // that represents the media file.
-                songs += Song(contentUri, name, artist, duration, thumbnail)
+                songs += Song(contentUri.toString(), name, artist, duration, thumbnail.toString())
             }
         }
         return songs

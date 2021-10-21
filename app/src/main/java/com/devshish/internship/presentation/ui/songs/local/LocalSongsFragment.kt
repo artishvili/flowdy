@@ -33,8 +33,11 @@ class LocalSongsFragment : Fragment(R.layout.fragment_local_songs) {
             }
 
             navigationEvent.observe(viewLifecycleOwner) {
-                val action = LocalSongsFragmentDirections.actionLocalSongsFragmentToPlayerFragment()
-                findNavController().navigate(action)
+                it.getContentIfNotHandled()?.let {
+                    val action =
+                        LocalSongsFragmentDirections.actionLocalSongsFragmentToPlayerFragment()
+                    findNavController().navigate(action)
+                }
             }
         }
     }
