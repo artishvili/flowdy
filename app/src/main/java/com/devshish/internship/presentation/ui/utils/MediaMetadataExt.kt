@@ -21,10 +21,10 @@ fun MediaMetadataCompat.toSong(): Song {
 
 fun Song.toMediaMetadata(): MediaMetadataCompat {
     return MediaMetadataCompat.Builder()
-        .putString("SONG_URI", uri)
-        .putString("SONG_TITLE", title)
-        .putString("SONG_ARTIST", artist)
-        .putString("SONG_DURATION", duration.toString())
-        .putString("SONG_IMAGE_URI", imageUri)
+        .putString(SONG_URI, uri)
+        .putString(SONG_TITLE, title)
+        .putString(SONG_ARTIST, artist)
+        .putString(SONG_DURATION, duration.toString())
+        .putString(SONG_IMAGE_URI, imageUri)
         .build()
 }
