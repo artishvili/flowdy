@@ -25,15 +25,14 @@ class MediaSessionCallback(
 
     override fun onPlayFromUri(uri: Uri?, extras: Bundle?) {
         super.onPlayFromUri(uri, extras)
-        uri?.let {
-            exoPlayer.apply {
-                setMediaItem(MediaItem.fromUri(it))
-                prepare()
-                seekTo(0L)
-                playWhenReady = true
-            }
+        if (uri == null || extras == null) return
+        exoPlayer.apply {
+            setMediaItem(MediaItem.fromUri(uri))
+            prepare()
+            seekTo(0L)
+            playWhenReady = true
         }
-        mediaSession.setMetadata(extras?.song?.toMediaMetadata())
+        mediaSession.setMetadata(extras.song?.toMediaMetadata())
         mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING)
         Timber.d("OnPlayFromUri: $uri")
     }

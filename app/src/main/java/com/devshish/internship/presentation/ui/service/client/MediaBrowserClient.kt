@@ -19,9 +19,14 @@ class MediaBrowserClient(context: Context) {
     private lateinit var mediaBrowser: MediaBrowserCompat
     private lateinit var mediaController: MediaControllerCompat
 
-    private val controllerCallback = MediaControllerCallback { song ->
-        songCallback?.invoke(song)
-    }
+    private val controllerCallback = MediaControllerCallback(
+        { song ->
+            songCallback?.invoke(song)
+        },
+        { state ->
+            isPlaying?.invoke(state)
+        }
+    )
 
     init {
         mediaBrowser = MediaBrowserCompat(
@@ -45,17 +50,14 @@ class MediaBrowserClient(context: Context) {
             it.song = song
         }
         mediaController.transportControls.playFromUri(song.uri?.toUri(), extras)
-        isPlaying?.invoke(true)
     }
 
     fun toggle() {
         val pbState = mediaController.playbackState.state
         if (pbState == PlaybackStateCompat.STATE_PLAYING) {
             mediaController.transportControls.pause()
-            isPlaying?.invoke(false)
         } else {
             mediaController.transportControls.play()
-            isPlaying?.invoke(true)
         }
     }
 

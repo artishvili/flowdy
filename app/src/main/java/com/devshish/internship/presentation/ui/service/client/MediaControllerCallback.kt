@@ -8,7 +8,8 @@ import com.devshish.internship.presentation.ui.utils.toSong
 import timber.log.Timber
 
 class MediaControllerCallback(
-    private val songCallback: (Song) -> Unit
+    private val songCallback: (Song) -> Unit,
+    private val isPlaying: (Boolean) -> Unit
 ) : MediaControllerCompat.Callback() {
 
     override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
@@ -22,5 +23,12 @@ class MediaControllerCallback(
     override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
         super.onPlaybackStateChanged(state)
         Timber.d("State: $state")
+        if (state == null) return
+        when (state.state) {
+            PlaybackStateCompat.STATE_PLAYING -> isPlaying(true)
+            PlaybackStateCompat.STATE_PAUSED -> isPlaying(false)
+            PlaybackStateCompat.STATE_REWINDING -> isPlaying(false)
+            PlaybackStateCompat.STATE_STOPPED -> isPlaying(false)
+        }
     }
 }

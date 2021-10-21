@@ -37,28 +37,12 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                 )
             }
         }
-
-        with(viewModel) {
-            with(binding) {
-                songToPlay.observe(viewLifecycleOwner) {
-                    tvSong.text = it.title
-                    tvArtist.text = it.artist
-                    tvDurationEnd.text = convertMillisToTime(it.duration)
-
-                    Glide.with(this@PlayerFragment)
-                        .load(it.imageUri)
-                        .placeholder(R.color.purple_200)
-                        .into(ivSongCover)
-                }
-            }
-        }
     }
 
     private fun setSong(song: Song) {
         binding.apply {
             tvSong.text = song.title
             tvArtist.text = song.artist
-            tvDurationStart.text = convertMillisToTime(0)
             tvDurationEnd.text = convertMillisToTime(song.duration)
 
             Glide.with(this@PlayerFragment)
