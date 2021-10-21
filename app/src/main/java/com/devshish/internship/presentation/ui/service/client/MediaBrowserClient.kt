@@ -9,14 +9,18 @@ import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.net.toUri
 import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.ui.service.server.MediaBrowserService
-import com.devshish.internship.presentation.ui.utils.toSong
+import com.devshish.internship.presentation.ui.utils.song
 
 class MediaBrowserClient(context: Context) {
+
+    var songCallback: ((Song) -> Unit)? = null
 
     private lateinit var mediaBrowser: MediaBrowserCompat
     private lateinit var mediaController: MediaControllerCompat
 
-    private val controllerCallback = MediaControllerCallback()
+    private val controllerCallback = MediaControllerCallback { song ->
+        songCallback?.invoke(song)
+    }
 
     init {
         mediaBrowser = MediaBrowserCompat(
@@ -42,11 +46,9 @@ class MediaBrowserClient(context: Context) {
         )
     }
 
-    fun getSong(): Song = mediaController.metadata.toSong()
-
     fun playSong(song: Song) {
-        val extras = Bundle().apply {
-            putSerializable("KEY_SONG", song)
+        val extras = Bundle().also {
+            it.song = song
         }
         mediaController.transportControls.playFromUri(song.uri?.toUri(), extras)
     }

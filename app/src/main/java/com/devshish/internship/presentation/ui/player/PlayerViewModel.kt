@@ -15,10 +15,17 @@ class PlayerViewModel(
     private val _songToPlay = MutableLiveData<Song>()
 
     init {
-        _songToPlay.value = mediaBrowser.getSong()
+        mediaBrowser.songCallback = {
+            _songToPlay.value = it
+        }
     }
 
     fun toggle() {
         mediaBrowser.toggle()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        mediaBrowser.songCallback = null
     }
 }

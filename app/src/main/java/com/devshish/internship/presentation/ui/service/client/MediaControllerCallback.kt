@@ -3,13 +3,20 @@ package com.devshish.internship.presentation.ui.service.client
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
+import com.devshish.internship.domain.model.Song
+import com.devshish.internship.presentation.ui.utils.toSong
 import timber.log.Timber
 
-class MediaControllerCallback : MediaControllerCompat.Callback() {
+class MediaControllerCallback(
+    private val songCallback: (Song) -> Unit
+) : MediaControllerCompat.Callback() {
 
     override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
         super.onMetadataChanged(metadata)
         Timber.d("Metadata: $metadata")
+        metadata?.let {
+            songCallback(it.toSong())
+        }
     }
 
     override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
