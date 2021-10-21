@@ -2,18 +2,25 @@ package com.devshish.internship.presentation.ui.service.client
 
 import android.content.ComponentName
 import android.content.Context
+import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.net.toUri
+import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.ui.service.server.MediaBrowserService
+import com.devshish.internship.presentation.ui.utils.song
 
 class MediaBrowserClient(context: Context) {
+
+    var songCallback: ((Song) -> Unit)? = null
 
     private lateinit var mediaBrowser: MediaBrowserCompat
     private lateinit var mediaController: MediaControllerCompat
 
-    private val controllerCallback = MediaControllerCallback()
+    private val controllerCallback = MediaControllerCallback { song ->
+        songCallback?.invoke(song)
+    }
 
     init {
         mediaBrowser = MediaBrowserCompat(
@@ -37,6 +44,13 @@ class MediaBrowserClient(context: Context) {
             },
             null
         )
+    }
+
+    fun playSong(song: Song) {
+        val extras = Bundle().also {
+            it.song = song
+        }
+        mediaController.transportControls.playFromUri(song.uri?.toUri(), extras)
     }
 
     fun toggle() {
