@@ -34,6 +34,9 @@ class PlayerViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        mediaBrowser.songCallback = null
+        mediaBrowser.apply {
+            songCallback = null
+            isPlaying = null
+        }
     }
 }

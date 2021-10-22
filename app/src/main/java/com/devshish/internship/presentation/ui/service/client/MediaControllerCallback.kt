@@ -26,8 +26,8 @@ class MediaControllerCallback(
         if (state == null) return
         when (state.state) {
             PlaybackStateCompat.STATE_PLAYING -> isPlaying(true)
-            PlaybackStateCompat.STATE_PAUSED -> isPlaying(false)
-            PlaybackStateCompat.STATE_REWINDING -> isPlaying(false)
+            PlaybackStateCompat.STATE_PAUSED,
+            PlaybackStateCompat.STATE_REWINDING,
             PlaybackStateCompat.STATE_STOPPED -> isPlaying(false)
         }
     }

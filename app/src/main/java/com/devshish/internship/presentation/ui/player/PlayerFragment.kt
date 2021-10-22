@@ -20,9 +20,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            tvPlaylist.text = getString(R.string.library_favorites)
-            tvDurationStart.text = convertMillisToTime(0)
-
             ivPlay.setOnClickListener { viewModel.toggle() }
         }
 

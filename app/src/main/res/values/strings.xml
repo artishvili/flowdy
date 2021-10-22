@@ -38,4 +38,6 @@
     <!-- Auth -->
     <string name="auth_description">Find music you love.\n Discover new artists.</string>
     <string name="auth_sign_in">Sign in with Genius</string>
+    <!-- Player -->
+    <string name="player_duration_start">0:00</string>
 </resources>
