@@ -14,13 +14,19 @@ import com.devshish.internship.presentation.ui.utils.song
 class MediaBrowserClient(context: Context) {
 
     var songCallback: ((Song) -> Unit)? = null
+    var isPlaying: ((Boolean) -> Unit)? = null
 
     private lateinit var mediaBrowser: MediaBrowserCompat
     private lateinit var mediaController: MediaControllerCompat
 
-    private val controllerCallback = MediaControllerCallback { song ->
-        songCallback?.invoke(song)
-    }
+    private val controllerCallback = MediaControllerCallback(
+        { song ->
+            songCallback?.invoke(song)
+        },
+        { state ->
+            isPlaying?.invoke(state)
+        }
+    )
 
     init {
         mediaBrowser = MediaBrowserCompat(
@@ -32,14 +38,7 @@ class MediaBrowserClient(context: Context) {
                     mediaController =
                         MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
                             registerCallback(controllerCallback)
-                            // TODO get rid of hardcoded controls
-                            transportControls.playFromUri(
-                                "content://media/external/audio/media/19832".toUri(),
-                                null
-                            )
                         }
-                    // TODO same here
-                    toggle()
                 }
             },
             null

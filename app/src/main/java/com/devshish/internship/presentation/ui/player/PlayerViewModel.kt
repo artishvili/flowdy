@@ -14,9 +14,17 @@ class PlayerViewModel(
         get() = _songToPlay
     private val _songToPlay = MutableLiveData<Song>()
 
+    val isPlaying: LiveData<Boolean>
+        get() = _isPlaying
+    private val _isPlaying = MutableLiveData<Boolean>()
+
     init {
         mediaBrowser.songCallback = {
             _songToPlay.value = it
+        }
+
+        mediaBrowser.isPlaying = {
+            _isPlaying.value = it
         }
     }
 
@@ -26,6 +34,9 @@ class PlayerViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        mediaBrowser.songCallback = null
+        mediaBrowser.apply {
+            songCallback = null
+            isPlaying = null
+        }
     }
 }

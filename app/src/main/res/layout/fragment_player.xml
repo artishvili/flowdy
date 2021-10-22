@@ -12,12 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_big"
         android:gravity="center"
+        android:text="@string/library_local_songs"
         android:textAppearance="?attr/textAppearanceBody1"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="My playlist" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivSongCover"
@@ -84,9 +84,9 @@
         android:id="@+id/tvDurationStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/player_duration_start"
         app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toBottomOf="@id/sPlayer"
-        tools:text="0:00" />
+        app:layout_constraintTop_toBottomOf="@id/sPlayer" />
 
     <TextView
         android:id="@+id/tvDurationEnd"
@@ -121,7 +121,7 @@
         android:id="@+id/ivPlay"
         android:layout_width="@dimen/player_play_icon_size"
         android:layout_height="@dimen/player_play_icon_size"
-        android:src="@drawable/ic_play_filled"
+        android:src="@drawable/ic_pause_filled"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@id/tvDurationStart" />

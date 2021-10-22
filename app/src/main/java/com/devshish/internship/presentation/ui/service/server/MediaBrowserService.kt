@@ -5,10 +5,14 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
 import androidx.media.MediaBrowserServiceCompat
+import com.google.android.exoplayer2.ExoPlayer
+import org.koin.android.ext.android.inject
 
 class MediaBrowserService : MediaBrowserServiceCompat() {
 
-    private var mediaSession: MediaSessionCompat? = null
+    private val exoPlayer: ExoPlayer by inject()
+
+    private lateinit var mediaSession: MediaSessionCompat
     private lateinit var stateBuilder: Builder
 
     override fun onCreate() {
@@ -18,7 +22,7 @@ class MediaBrowserService : MediaBrowserServiceCompat() {
             stateBuilder = Builder()
                 .setActions(ACTION_PLAY or ACTION_PLAY_PAUSE)
             setPlaybackState(stateBuilder.build())
-            setCallback(MediaSessionCallback(this, stateBuilder))
+            setCallback(MediaSessionCallback(this, stateBuilder, exoPlayer))
             setSessionToken(sessionToken)
         }
     }
