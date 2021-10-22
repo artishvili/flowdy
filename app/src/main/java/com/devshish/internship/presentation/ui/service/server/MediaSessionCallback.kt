@@ -19,14 +19,13 @@ class MediaSessionCallback(
     private fun MediaSessionCompat.updateState(
         stateBuilder: PlaybackStateCompat.Builder,
         state: Int,
-        position: Long = 0L,
+        position: Long,
         speed: Float = 1f
     ): Unit = setPlaybackState(stateBuilder.setState(state, position, speed).build())
 
     private fun ExoPlayer.setAndPlaySong(uri: Uri) {
         setMediaItem(MediaItem.fromUri(uri))
         prepare()
-        seekTo(0L)
         playWhenReady = true
     }
 
@@ -35,28 +34,38 @@ class MediaSessionCallback(
         if (uri == null || extras == null) return
         exoPlayer.setAndPlaySong(uri)
         mediaSession.setMetadata(extras.song?.toMediaMetadata())
-        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING)
+        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING,
+            exoPlayer.currentPosition)
         Timber.d("OnPlayFromUri: $uri")
     }
 
     override fun onPlay() {
         super.onPlay()
+        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING,
+            exoPlayer.currentPosition)
         exoPlayer.play()
-        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING)
         Timber.d("onPlay")
     }
 
     override fun onPause() {
         super.onPause()
+        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PAUSED,
+            exoPlayer.currentPosition)
         exoPlayer.pause()
-        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PAUSED)
         Timber.d("onPause")
     }
 
     override fun onStop() {
         super.onStop()
         exoPlayer.stop()
-        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_STOPPED)
+        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_STOPPED,
+            exoPlayer.currentPosition)
         Timber.d("onStop")
+    }
+
+    override fun onSeekTo(pos: Long) {
+        super.onSeekTo(pos)
+        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING, pos)
+        exoPlayer.seekTo(pos)
     }
 }

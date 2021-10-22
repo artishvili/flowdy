@@ -20,12 +20,8 @@ class MediaBrowserClient(context: Context) {
     private lateinit var mediaController: MediaControllerCompat
 
     private val controllerCallback = MediaControllerCallback(
-        { song ->
-            songCallback?.invoke(song)
-        },
-        { state ->
-            isPlaying?.invoke(state)
-        }
+        { song -> songCallback?.invoke(song) },
+        { state -> isPlaying?.invoke(state) }
     )
 
     init {
@@ -60,6 +56,10 @@ class MediaBrowserClient(context: Context) {
             mediaController.transportControls.play()
         }
     }
+
+    fun getPosition(): Long = mediaController.playbackState.position
+
+    fun seekTo(position: Long) = mediaController.transportControls.seekTo(position)
 
     fun connect(): Unit = mediaBrowser.connect()
 
