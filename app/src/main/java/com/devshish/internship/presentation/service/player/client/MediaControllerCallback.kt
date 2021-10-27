@@ -28,9 +28,7 @@ class MediaControllerCallback(
         Timber.d("State: $state")
         if (state == null) return
         when (state.state) {
-            PlaybackStateCompat.STATE_PLAYING -> {
-                isPlaying(true)
-            }
+            PlaybackStateCompat.STATE_PLAYING -> isPlaying(true)
             else -> isPlaying(false)
         }
     }

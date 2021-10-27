@@ -66,13 +66,13 @@ class MediaBrowserClient(context: Context) {
     fun disconnect(): Unit = mediaBrowser.disconnect()
 
     fun unregister(): Unit = mediaController.unregisterCallback(controllerCallback)
-}
 
-interface CurrentSongCallback {
+    interface CurrentSongCallback {
 
-    fun updateSong(song: Song)
+        fun updateSong(song: Song)
 
-    fun getState(isPlaying: Boolean)
+        fun getState(isPlaying: Boolean)
 
-    fun getPosition(position: Long)
+        fun getPosition(position: Long)
+    }
 }

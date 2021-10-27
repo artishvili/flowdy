@@ -34,11 +34,10 @@ class MediaBrowserService : MediaBrowserServiceCompat() {
             setSessionToken(sessionToken)
         }
 
+        val extras = Bundle()
         job.launch {
             while (true) {
-                val extras = Bundle().also {
-                    it.position = exoPlayer.currentPosition
-                }
+                extras.position = exoPlayer.currentPosition
                 mediaSession.setExtras(extras)
                 delay(DELAY)
             }
