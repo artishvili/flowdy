@@ -24,6 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/player_song_cover_size"
         android:layout_marginTop="@dimen/spacing_big"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@id/tvPlaylist"
@@ -63,22 +64,16 @@
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintTop_toTopOf="@id/tvSong" />
 
-    <com.google.android.material.slider.Slider
+    <SeekBar
         android:id="@+id/sPlayer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_default"
         android:layout_marginTop="@dimen/spacing_default"
         android:layout_marginEnd="@dimen/spacing_default"
-        app:haloColor="@color/cardview_dark_background"
-        app:labelBehavior="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvArtist"
-        app:thumbColor="@color/white"
-        app:thumbRadius="8dp"
-        app:trackColorActive="@color/white"
-        app:trackColorInactive="@color/cardview_dark_background" />
+        app:layout_constraintTop_toBottomOf="@id/tvArtist" />
 
     <TextView
         android:id="@+id/tvDurationStart"

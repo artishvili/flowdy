@@ -1,7 +1,7 @@
 package com.devshish.internship.presentation.ui
 
 import androidx.lifecycle.ViewModel
-import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
+import com.devshish.internship.presentation.service.player.client.MediaBrowserClient
 
 class MainViewModel(
     private val mediaBrowser: MediaBrowserClient

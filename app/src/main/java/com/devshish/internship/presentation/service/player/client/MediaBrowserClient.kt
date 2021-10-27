@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.service.client
+package com.devshish.internship.presentation.service.player.client
 
 import android.content.ComponentName
 import android.content.Context
@@ -8,24 +8,20 @@ import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.core.net.toUri
 import com.devshish.internship.domain.model.Song
-import com.devshish.internship.presentation.ui.service.server.MediaBrowserService
+import com.devshish.internship.presentation.service.player.MediaBrowserService
 import com.devshish.internship.presentation.ui.utils.song
 
 class MediaBrowserClient(context: Context) {
 
-    var songCallback: ((Song) -> Unit)? = null
-    var isPlaying: ((Boolean) -> Unit)? = null
-
     private lateinit var mediaBrowser: MediaBrowserCompat
     private lateinit var mediaController: MediaControllerCompat
 
+    var currentSongCallback: CurrentSongCallback? = null
+
     private val controllerCallback = MediaControllerCallback(
-        { song ->
-            songCallback?.invoke(song)
-        },
-        { state ->
-            isPlaying?.invoke(state)
-        }
+        { song -> currentSongCallback?.updateSong(song)  },
+        { state -> currentSongCallback?.getState(state) },
+        { position -> currentSongCallback?.getPosition(position) }
     )
 
     init {
@@ -61,9 +57,22 @@ class MediaBrowserClient(context: Context) {
         }
     }
 
+    fun seekTo(position: Long) {
+        mediaController.transportControls.seekTo(position)
+    }
+
     fun connect(): Unit = mediaBrowser.connect()
 
     fun disconnect(): Unit = mediaBrowser.disconnect()
 
     fun unregister(): Unit = mediaController.unregisterCallback(controllerCallback)
+
+    interface CurrentSongCallback {
+
+        fun updateSong(song: Song)
+
+        fun getState(isPlaying: Boolean)
+
+        fun getPosition(position: Long)
+    }
 }

@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.devshish.internship.domain.model.Song
-import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
+import com.devshish.internship.presentation.service.player.client.MediaBrowserClient
+import com.devshish.internship.presentation.ui.utils.convertMillisToTime
 
 class PlayerViewModel(
     private val mediaBrowser: MediaBrowserClient
@@ -18,13 +19,27 @@ class PlayerViewModel(
         get() = _isPlaying
     private val _isPlaying = MutableLiveData<Boolean>()
 
-    init {
-        mediaBrowser.songCallback = {
-            _songToPlay.value = it
-        }
+    val currentPosition: LiveData<Long>
+        get() = _currentPosition
+    private val _currentPosition = MutableLiveData<Long>()
 
-        mediaBrowser.isPlaying = {
-            _isPlaying.value = it
+    val playbackPosition: LiveData<String>
+        get() = _playbackPosition
+    private val _playbackPosition = MutableLiveData<String>()
+
+    init {
+        mediaBrowser.currentSongCallback = object : MediaBrowserClient.CurrentSongCallback {
+            override fun updateSong(song: Song) {
+                _songToPlay.value = song
+            }
+
+            override fun getState(isPlaying: Boolean) {
+                _isPlaying.value = isPlaying
+            }
+
+            override fun getPosition(position: Long) {
+                _currentPosition.value = position
+            }
         }
     }
 
@@ -32,11 +47,16 @@ class PlayerViewModel(
         mediaBrowser.toggle()
     }
 
+    fun seekTo(position: Long) {
+        mediaBrowser.seekTo(position)
+    }
+
+    fun onProgressChanged(progress: Int) {
+        _playbackPosition.value = convertMillisToTime(progress)
+    }
+
     override fun onCleared() {
         super.onCleared()
-        mediaBrowser.apply {
-            songCallback = null
-            isPlaying = null
-        }
+        mediaBrowser.currentSongCallback = null
     }
 }
