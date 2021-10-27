@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.devshish.internship.domain.model.Song
-import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
+import com.devshish.internship.presentation.service.player.client.CurrentSongCallback
+import com.devshish.internship.presentation.service.player.client.MediaBrowserClient
 import com.devshish.internship.presentation.ui.utils.convertMillisToTime
 
 class PlayerViewModel(
@@ -28,16 +29,18 @@ class PlayerViewModel(
     private val _playbackPosition = MutableLiveData<String>()
 
     init {
-        mediaBrowser.songCallback = {
-            _songToPlay.value = it
-        }
+        mediaBrowser.currentSongCallback = object : CurrentSongCallback {
+            override fun updateSong(song: Song) {
+                _songToPlay.value = song
+            }
 
-        mediaBrowser.isPlaying = {
-            _isPlaying.value = it
-        }
+            override fun getState(isPlaying: Boolean) {
+                _isPlaying.value = isPlaying
+            }
 
-        mediaBrowser.currentPosition = {
-            _currentPosition.value = it
+            override fun getPosition(position: Long) {
+                _currentPosition.value = position
+            }
         }
     }
 
@@ -55,10 +58,6 @@ class PlayerViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        mediaBrowser.apply {
-            songCallback = null
-            isPlaying = null
-            currentPosition = null
-        }
+        mediaBrowser.currentSongCallback = null
     }
 }

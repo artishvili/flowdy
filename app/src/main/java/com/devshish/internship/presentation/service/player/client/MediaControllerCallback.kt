@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.service.client
+package com.devshish.internship.presentation.service.player.client
 
 import android.os.Bundle
 import android.support.v4.media.MediaMetadataCompat

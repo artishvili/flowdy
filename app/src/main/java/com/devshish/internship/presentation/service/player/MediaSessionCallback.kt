@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.service.server
+package com.devshish.internship.presentation.service.player
 
 import android.net.Uri
 import android.os.Bundle
