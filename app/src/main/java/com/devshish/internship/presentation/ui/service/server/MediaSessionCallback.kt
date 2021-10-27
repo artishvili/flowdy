@@ -19,7 +19,7 @@ class MediaSessionCallback(
     private fun MediaSessionCompat.updateState(
         stateBuilder: PlaybackStateCompat.Builder,
         state: Int,
-        position: Long,
+        position: Long = exoPlayer.currentPosition,
         speed: Float = 1f
     ): Unit = setPlaybackState(stateBuilder.setState(state, position, speed).build())
 
@@ -34,23 +34,29 @@ class MediaSessionCallback(
         if (uri == null || extras == null) return
         exoPlayer.setAndPlaySong(uri)
         mediaSession.setMetadata(extras.song?.toMediaMetadata())
-        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING,
-            exoPlayer.currentPosition)
+        mediaSession.updateState(
+            stateBuilder = stateBuilder,
+            state = PlaybackStateCompat.STATE_PLAYING
+        )
         Timber.d("OnPlayFromUri: $uri")
     }
 
     override fun onPlay() {
         super.onPlay()
-        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING,
-            exoPlayer.currentPosition)
+        mediaSession.updateState(
+            stateBuilder = stateBuilder,
+            state = PlaybackStateCompat.STATE_PLAYING
+        )
         exoPlayer.play()
         Timber.d("onPlay")
     }
 
     override fun onPause() {
         super.onPause()
-        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PAUSED,
-            exoPlayer.currentPosition)
+        mediaSession.updateState(
+            stateBuilder = stateBuilder,
+            state = PlaybackStateCompat.STATE_PAUSED
+        )
         exoPlayer.pause()
         Timber.d("onPause")
     }
@@ -58,14 +64,15 @@ class MediaSessionCallback(
     override fun onStop() {
         super.onStop()
         exoPlayer.stop()
-        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_STOPPED,
-            exoPlayer.currentPosition)
+        mediaSession.updateState(
+            stateBuilder = stateBuilder,
+            state = PlaybackStateCompat.STATE_STOPPED
+        )
         Timber.d("onStop")
     }
 
     override fun onSeekTo(pos: Long) {
         super.onSeekTo(pos)
-        mediaSession.updateState(stateBuilder, PlaybackStateCompat.STATE_PLAYING, pos)
         exoPlayer.seekTo(pos)
     }
 }

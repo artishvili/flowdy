@@ -13,15 +13,17 @@ import com.devshish.internship.presentation.ui.utils.song
 
 class MediaBrowserClient(context: Context) {
 
-    var songCallback: ((Song) -> Unit)? = null
-    var isPlaying: ((Boolean) -> Unit)? = null
-
     private lateinit var mediaBrowser: MediaBrowserCompat
     private lateinit var mediaController: MediaControllerCompat
 
+    var songCallback: ((Song) -> Unit)? = null
+    var isPlaying: ((Boolean) -> Unit)? = null
+    var currentPosition: ((Long) -> Unit)? = null
+
     private val controllerCallback = MediaControllerCallback(
         { song -> songCallback?.invoke(song) },
-        { state -> isPlaying?.invoke(state) }
+        { state -> isPlaying?.invoke(state) },
+        { position -> currentPosition?.invoke(position) }
     )
 
     init {
@@ -57,9 +59,9 @@ class MediaBrowserClient(context: Context) {
         }
     }
 
-    fun getPosition(): Long = mediaController.playbackState.position
-
-    fun seekTo(position: Long) = mediaController.transportControls.seekTo(position)
+    fun seekTo(position: Long) {
+        mediaController.transportControls.seekTo(position)
+    }
 
     fun connect(): Unit = mediaBrowser.connect()
 

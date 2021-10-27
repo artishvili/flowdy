@@ -3,11 +3,9 @@ package com.devshish.internship.presentation.ui.player
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.ui.service.client.MediaBrowserClient
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.devshish.internship.presentation.ui.utils.convertMillisToTime
 
 class PlayerViewModel(
     private val mediaBrowser: MediaBrowserClient
@@ -25,6 +23,10 @@ class PlayerViewModel(
         get() = _currentPosition
     private val _currentPosition = MutableLiveData<Long>()
 
+    val playbackPosition: LiveData<String>
+        get() = _playbackPosition
+    private val _playbackPosition = MutableLiveData<String>()
+
     init {
         mediaBrowser.songCallback = {
             _songToPlay.value = it
@@ -34,7 +36,9 @@ class PlayerViewModel(
             _isPlaying.value = it
         }
 
-        updatePosition()
+        mediaBrowser.currentPosition = {
+            _currentPosition.value = it
+        }
     }
 
     fun toggle() {
@@ -45,16 +49,8 @@ class PlayerViewModel(
         mediaBrowser.seekTo(position)
     }
 
-    private fun updatePosition() {
-        viewModelScope.launch {
-            while (true) {
-                val position = mediaBrowser.getPosition()
-                if (currentPosition.value != position) {
-                    _currentPosition.postValue(position)
-                }
-                delay(100L)
-            }
-        }
+    fun onProgressChanged(progress: Int) {
+        _playbackPosition.value = convertMillisToTime(progress)
     }
 
     override fun onCleared() {
@@ -62,6 +58,7 @@ class PlayerViewModel(
         mediaBrowser.apply {
             songCallback = null
             isPlaying = null
+            currentPosition = null
         }
     }
 }

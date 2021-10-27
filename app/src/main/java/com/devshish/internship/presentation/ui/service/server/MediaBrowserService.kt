@@ -5,7 +5,12 @@ import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
 import androidx.media.MediaBrowserServiceCompat
+import com.devshish.internship.presentation.ui.utils.position
 import com.google.android.exoplayer2.ExoPlayer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class MediaBrowserService : MediaBrowserServiceCompat() {
@@ -24,6 +29,16 @@ class MediaBrowserService : MediaBrowserServiceCompat() {
             setPlaybackState(stateBuilder.build())
             setCallback(MediaSessionCallback(this, stateBuilder, exoPlayer))
             setSessionToken(sessionToken)
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            while (true) {
+                val extras = Bundle().also {
+                    it.position = exoPlayer.currentPosition
+                }
+                mediaSession.setExtras(extras)
+                delay(100L)
+            }
         }
     }
 

@@ -19,10 +19,10 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     private val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            binding.tvDurationStart.text = convertMillisToTime(progress)
+            viewModel.onProgressChanged(progress)
         }
 
-        override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
+        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
         override fun onStopTrackingTouch(seekBar: SeekBar?) {
             seekBar?.let {
@@ -41,8 +41,8 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         }
 
         with(viewModel) {
-            songToPlay.observe(viewLifecycleOwner) {
-                setSong(it)
+            songToPlay.observe(viewLifecycleOwner) { song ->
+                setSong(song)
             }
 
             isPlaying.observe(viewLifecycleOwner) { playing ->
@@ -51,8 +51,12 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                 )
             }
 
-            currentPosition.observe(viewLifecycleOwner) {
-                binding.sPlayer.progress = it.toInt()
+            playbackPosition.observe(viewLifecycleOwner) { progress ->
+                binding.tvDurationStart.text = progress
+            }
+
+            currentPosition.observe(viewLifecycleOwner) { position ->
+                binding.sPlayer.progress = position.toInt()
             }
         }
     }
@@ -66,7 +70,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
             Glide.with(this@PlayerFragment)
                 .load(song.imageUri)
-                .placeholder(R.color.purple_200)
+                .placeholder(R.color.black)
                 .into(ivSongCover)
         }
     }
