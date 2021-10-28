@@ -16,7 +16,8 @@ class SearchAPIRepository(
             SearchSong(
                 title = it.result.title,
                 artist = it.result.primaryArtist.name,
-                imageUri = it.result.headerImageUrl.toUri()
+                imageUri = it.result.headerImageUrl.toUri(),
+                lyricsUri = it.result.path
             )
         }
     }

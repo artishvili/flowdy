@@ -24,6 +24,14 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
             getLyricsEvent.observe(viewLifecycleOwner) {
                 binding.tvLyrics.text = it
             }
+
+            isProgressLoading.observe(viewLifecycleOwner) { isLoading ->
+                if (isLoading) {
+                    binding.progressIndicator.show()
+                } else {
+                    binding.progressIndicator.hide()
+                }
+            }
         }
     }
 }
