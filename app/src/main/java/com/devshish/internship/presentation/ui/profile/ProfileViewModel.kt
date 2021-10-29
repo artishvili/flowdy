@@ -31,9 +31,7 @@ class ProfileViewModel(
     fun logout() {
         viewModelScope.launch {
             tokenRepository.clear()
-            if (tokenRepository.token == null) {
-                _navigationEvent.value = Unit
-            }
+            _navigationEvent.value = Unit
         }
     }
 }
