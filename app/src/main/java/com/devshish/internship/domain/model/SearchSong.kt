@@ -6,5 +6,6 @@ import java.io.Serializable
 data class SearchSong(
     val title: String,
     val artist: String,
-    val imageUri: Uri?
+    val imageUri: Uri?,
+    val lyricsUri: String
 ) : Serializable

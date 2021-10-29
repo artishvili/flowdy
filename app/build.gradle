@@ -19,6 +19,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // TODO to move this from code to properties file
+        buildConfigField "String", "GENIUS_MAIN_URL", "\"https://genius.com\""
         buildConfigField "String", "BASE_URL", "\"https://api.genius.com\""
         buildConfigField "String", "CLIENT_ID", "\"dhj7OPXTEwXBwXYgw1Lrm3fkZ6MncRCZptfyj_lGaOMaORZ8UWG8esomSkZzfI3P\""
         buildConfigField "String", "CLIENT_SECRET", "\"-x1_eEXyTJ6gaIZ4lwJz-2f4kCQyG5P6F6PvJ6g9QFYzTGhReiQUdWQG9OsQw_S-v61UYGU9oaCLz8bMNA9Kyw\""
@@ -83,9 +84,11 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:okhttp:4.5.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.5.0'
-    implementation 'com.github.Zhuinden:fragmentviewbindingdelegate-kt:1.0.0'
 
     // Exo Player
     implementation "com.google.android.exoplayer:extension-mediasession:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
+
+    // Jsoup
+    implementation "org.jsoup:jsoup:$jsoupVersion"
 }

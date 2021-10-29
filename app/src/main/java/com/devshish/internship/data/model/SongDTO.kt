@@ -23,5 +23,6 @@ data class ResultDTO(
     val headerImageUrl: String,
     @SerializedName("primary_artist")
     val primaryArtist: PrimaryArtistDTO,
-    val title: String
+    val title: String,
+    val path: String
 )
