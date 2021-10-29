@@ -38,6 +38,11 @@
     <!-- Auth -->
     <string name="auth_description">Find music you love.\n Discover new artists.</string>
     <string name="auth_sign_in">Sign in with Genius</string>
+    <string name="auth_sign_out">Sign out</string>
+    <string name="auth_sign_out_confirmation">Do you really want to sign out?</string>
     <!-- Player -->
     <string name="player_duration_start">0:00</string>
+    <!-- Dialog -->
+    <string name="dialog_positive_button">Yes</string>
+    <string name="dialog_negative_button">No</string>
 </resources>
