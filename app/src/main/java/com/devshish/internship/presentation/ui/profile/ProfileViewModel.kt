@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.User
 import com.devshish.internship.domain.repository.IProfileRepository
 import com.devshish.internship.domain.repository.ITokenRepository
-import com.devshish.internship.presentation.ui.utils.Event
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
@@ -23,24 +22,18 @@ class ProfileViewModel(
         get() = _navigationEvent
     private val _navigationEvent = MutableLiveData<Unit>()
 
-    val dialogEvent: LiveData<Unit>
-        get() = _dialogEvent
-    private val _dialogEvent = MutableLiveData<Unit>()
-
     init {
         viewModelScope.launch {
             _userData.value = repository.getUser()
         }
     }
 
-    fun onLogoutClick() {
-        _dialogEvent.value = Unit
-    }
-
-    fun onDialogConfirmation() {
-        _navigationEvent.value = Unit
+    fun logout() {
         viewModelScope.launch {
             tokenRepository.clear()
+            if (tokenRepository.token == null) {
+                _navigationEvent.value = Unit
+            }
         }
     }
 }

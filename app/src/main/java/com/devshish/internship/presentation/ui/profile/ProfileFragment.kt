@@ -20,7 +20,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            ivLogout.setOnClickListener { viewModel.onLogoutClick() }
+            ivLogout.setOnClickListener {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(getString(R.string.auth_sign_out))
+                    .setMessage(getString(R.string.auth_sign_out_confirmation))
+                    .setNegativeButton(getString(R.string.dialog_negative_button)) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setPositiveButton(getString(R.string.dialog_positive_button)) { dialog, _ ->
+                        dialog.dismiss()
+                        viewModel.logout()
+                    }
+                    .show()
+            }
         }
 
         with(viewModel) {
@@ -39,20 +51,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     tvNickname.text = it.nickname
                     tvEmail.text = it.email
                 }
-            }
-
-            dialogEvent.observe(viewLifecycleOwner) {
-                MaterialAlertDialogBuilder(requireContext())
-                    .setTitle(getString(R.string.auth_sign_out))
-                    .setMessage(getString(R.string.auth_sign_out_confirmation))
-                    .setNegativeButton(getString(R.string.dialog_negative_button)) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .setPositiveButton(getString(R.string.dialog_positive_button)) { dialog, _ ->
-                        dialog.dismiss()
-                        onDialogConfirmation()
-                    }
-                    .show()
             }
 
             navigationEvent.observe(viewLifecycleOwner) {
