@@ -88,7 +88,12 @@ val viewModelModule = module {
     viewModel { MainViewModel(mediaBrowser = get()) }
 
     // Profile
-    viewModel { ProfileViewModel(repository = get()) }
+    viewModel {
+        ProfileViewModel(
+            repository = get(),
+            tokenRepository = get()
+        )
+    }
 
     // Albums
     viewModel { LikedAlbumsViewModel(repository = get(named(ALBUMS_LIKED))) }

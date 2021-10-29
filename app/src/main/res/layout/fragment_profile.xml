@@ -19,6 +19,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@color/purple_200" />
 
+    <ImageView
+        android:id="@+id/ivLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_default"
+        android:src="@drawable/ic_logout"
+        app:layout_constraintEnd_toEndOf="@id/glEnd"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivProfilePicture"
         android:layout_width="@dimen/profile_image_size"
