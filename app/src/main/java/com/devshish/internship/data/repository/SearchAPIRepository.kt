@@ -1,6 +1,7 @@
 package com.devshish.internship.data.repository
 
 import androidx.core.net.toUri
+import com.devshish.internship.BuildConfig
 import com.devshish.internship.data.api.GeniusSearchApi
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ISearchSongsRepository
@@ -17,7 +18,7 @@ class SearchAPIRepository(
                 title = it.result.title,
                 artist = it.result.primaryArtist.name,
                 imageUri = it.result.headerImageUrl.toUri(),
-                lyricsUri = it.result.path
+                lyricsUri = BuildConfig.GENIUS_MAIN_URL + it.result.path
             )
         }
     }

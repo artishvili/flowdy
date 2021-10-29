@@ -2,6 +2,7 @@ package com.devshish.internship.presentation.ui.lyrics
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.devshish.internship.R
@@ -26,11 +27,7 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
             }
 
             isProgressLoading.observe(viewLifecycleOwner) { isLoading ->
-                if (isLoading) {
-                    binding.progressIndicator.show()
-                } else {
-                    binding.progressIndicator.hide()
-                }
+                binding.progressIndicator.isVisible = isLoading
             }
         }
     }
