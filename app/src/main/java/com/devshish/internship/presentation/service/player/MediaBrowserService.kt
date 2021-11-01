@@ -1,14 +1,9 @@
 package com.devshish.internship.presentation.service.player
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat.*
-import androidx.core.app.NotificationManagerCompat
 import androidx.media.MediaBrowserServiceCompat
 import com.devshish.internship.presentation.ui.utils.position
 import com.google.android.exoplayer2.ExoPlayer
@@ -30,22 +25,25 @@ class MediaBrowserService : MediaBrowserServiceCompat() {
 
     override fun onCreate() {
         super.onCreate()
-        createNotificationChannel()
 
         mediaSession = MediaSessionCompat(baseContext, "session_tag").apply {
             stateBuilder = Builder()
                 .setActions(ACTION_PLAY or ACTION_PLAY_PAUSE)
             setPlaybackState(stateBuilder.build())
-            setCallback(MediaSessionCallback(
-                this@MediaBrowserService,
-                mediaSession = this,
-                stateBuilder = stateBuilder,
-                exoPlayer = exoPlayer
-            ) {
-                with(NotificationManagerCompat.from(this@MediaBrowserService)) {
-                    notify(1, it.build())
-                }
-            })
+
+            val notificationManager = PlayerNotificationManager(
+                context = this@MediaBrowserService,
+                mediaSession = this
+            )
+
+            setCallback(
+                MediaSessionCallback(
+                    mediaSession = this,
+                    stateBuilder = stateBuilder,
+                    exoPlayer = exoPlayer,
+                    notificationManager = notificationManager
+                )
+            )
             setSessionToken(sessionToken)
         }
 
@@ -56,20 +54,6 @@ class MediaBrowserService : MediaBrowserServiceCompat() {
                 mediaSession.setExtras(extras)
                 delay(DELAY)
             }
-        }
-    }
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "channel_name"
-            val descriptionText = "channel_desc"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("channel_id", name, importance).apply {
-                description = descriptionText
-            }
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
         }
     }
 
