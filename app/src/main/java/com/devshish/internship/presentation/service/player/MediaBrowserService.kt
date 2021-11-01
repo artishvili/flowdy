@@ -30,7 +30,20 @@ class MediaBrowserService : MediaBrowserServiceCompat() {
             stateBuilder = Builder()
                 .setActions(ACTION_PLAY or ACTION_PLAY_PAUSE)
             setPlaybackState(stateBuilder.build())
-            setCallback(MediaSessionCallback(this, stateBuilder, exoPlayer))
+
+            val notificationManager = PlayerNotificationManager(
+                context = this@MediaBrowserService,
+                mediaSession = this
+            )
+
+            setCallback(
+                MediaSessionCallback(
+                    mediaSession = this,
+                    stateBuilder = stateBuilder,
+                    exoPlayer = exoPlayer,
+                    notificationManager = notificationManager
+                )
+            )
             setSessionToken(sessionToken)
         }
 

@@ -13,7 +13,8 @@ import timber.log.Timber
 class MediaSessionCallback(
     private val mediaSession: MediaSessionCompat,
     private val stateBuilder: PlaybackStateCompat.Builder,
-    private val exoPlayer: ExoPlayer
+    private val exoPlayer: ExoPlayer,
+    private val notificationManager: PlayerNotificationManager
 ) : MediaSessionCompat.Callback() {
 
     private fun MediaSessionCompat.updateState(
@@ -33,11 +34,13 @@ class MediaSessionCallback(
         super.onPlayFromUri(uri, extras)
         if (uri == null || extras == null) return
         exoPlayer.setAndPlaySong(uri)
-        mediaSession.setMetadata(extras.song?.toMediaMetadata())
+        val song = extras.song
+        mediaSession.setMetadata(song?.toMediaMetadata())
         mediaSession.updateState(
             stateBuilder = stateBuilder,
             state = PlaybackStateCompat.STATE_PLAYING
         )
+        notificationManager.onFirstPlay(song)
         Timber.d("OnPlayFromUri: $uri")
     }
 
@@ -48,6 +51,7 @@ class MediaSessionCallback(
             state = PlaybackStateCompat.STATE_PLAYING
         )
         exoPlayer.play()
+        notificationManager.onPlay()
         Timber.d("onPlay")
     }
 
@@ -58,6 +62,7 @@ class MediaSessionCallback(
             state = PlaybackStateCompat.STATE_PAUSED
         )
         exoPlayer.pause()
+        notificationManager.onPause()
         Timber.d("onPause")
     }
 
