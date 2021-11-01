@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_default"
         android:text="Play"
-        app:icon="@drawable/ic_play"
+        app:icon="@drawable/ic_notification_play"
         app:iconGravity="textStart"
         app:layout_constraintEnd_toStartOf="@+id/btnShufflePlay"
         app:layout_constraintHorizontal_bias="0.5"

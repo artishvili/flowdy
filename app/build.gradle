@@ -88,6 +88,7 @@ dependencies {
     // Exo Player
     implementation "com.google.android.exoplayer:extension-mediasession:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-core:$exoPlayerVersion"
+    implementation "com.google.android.exoplayer:exoplayer-ui:$exoPlayerVersion"
 
     // Jsoup
     implementation "org.jsoup:jsoup:$jsoupVersion"
