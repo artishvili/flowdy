@@ -3,7 +3,6 @@ package com.devshish.internship.presentation.ui.songs.local
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentLocalSongsBinding
@@ -30,14 +29,6 @@ class LocalSongsFragment : Fragment(R.layout.fragment_local_songs) {
         with(viewModel) {
             localSongs.observe(viewLifecycleOwner) {
                 itemSongAdapter.submitList(it)
-            }
-
-            navigationEvent.observe(viewLifecycleOwner) {
-                it.getContentIfNotHandled()?.let {
-                    val action =
-                        LocalSongsFragmentDirections.actionLocalSongsFragmentToPlayerFragment()
-                    findNavController().navigate(action)
-                }
             }
         }
     }

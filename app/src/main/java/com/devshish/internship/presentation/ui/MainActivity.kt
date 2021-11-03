@@ -10,8 +10,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.ActivityMainBinding
+import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.ui.utils.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -42,20 +44,67 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.navHostFragment) as NavHostFragment
-        navController = navHostFragment.findNavController()
+        with(binding) {
+            ivToggle.setOnClickListener { viewModel.toggle() }
 
-        binding.bottomNavView.setupWithNavController(navController)
+            clPlayerBar.setOnClickListener { viewModel.onPlayerClick() }
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.splashFragment,
-                R.id.authFragment,
-                R.id.webFragment,
-                R.id.playerFragment -> binding.bottomNavView.isVisible = false
-                else -> binding.bottomNavView.isVisible = true
+            val navHostFragment = supportFragmentManager
+                .findFragmentById(R.id.navHostFragment) as NavHostFragment
+            navController = navHostFragment.findNavController()
+
+            binding.bottomNavView.setupWithNavController(navController)
+
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                when (destination.id) {
+                    R.id.splashFragment,
+                    R.id.authFragment,
+                    R.id.webFragment,
+                    R.id.playerFragment -> binding.bottomNavView.isVisible = true
+                    else -> binding.bottomNavView.isVisible = true
+                }
             }
+        }
+
+        with(viewModel) {
+            songToPlay.observe(this@MainActivity) { song ->
+                setupPlayerBar(song)
+                binding.progressIndicator.max = song.duration
+            }
+
+            isPlaying.observe(this@MainActivity) { isPlaying ->
+                if (isPlaying) {
+                    binding.ivToggle.setImageResource(R.drawable.ic_pause)
+                } else {
+                    binding.ivToggle.setImageResource(R.drawable.ic_play)
+                }
+            }
+
+            currentPosition.observe(this@MainActivity) { position ->
+                binding.progressIndicator.setProgressCompat(position.toInt(), true)
+            }
+
+            navigationEvent.observe(this@MainActivity) {
+                it.getContentIfNotHandled()?.let {
+                    navController.navigate(R.id.action_global_playerFragment)
+                }
+            }
+
+            playerBarVisibility.observe(this@MainActivity) { visibility ->
+                binding.clPlayerBar.isVisible = visibility
+            }
+        }
+    }
+
+    private fun setupPlayerBar(song: Song) {
+        binding.apply {
+            tvTitle.text = song.title
+            tvArtist.text = song.artist
+
+            Glide.with(this@MainActivity)
+                .load(song.imageUri)
+                .placeholder(R.color.black)
+                .into(ivSongCover)
         }
     }
 
