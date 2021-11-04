@@ -98,11 +98,7 @@
         android:id="@+id/localSongsFragment"
         android:name="com.devshish.internship.presentation.ui.songs.local.LocalSongsFragment"
         android:label="fragment_local_songs"
-        tools:layout="@layout/fragment_local_songs" >
-        <action
-            android:id="@+id/action_localSongsFragment_to_playerFragment"
-            app:destination="@id/playerFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_local_songs" />
     <fragment
         android:id="@+id/localAlbumsFragment"
         android:name="com.devshish.internship.presentation.ui.albums.local.LocalAlbumsFragment"
@@ -178,5 +174,4 @@
             android:name="searchSong"
             app:argType="com.devshish.internship.domain.model.SearchSong" />
     </fragment>
-    <action android:id="@+id/action_global_playerFragment" app:destination="@id/playerFragment" />
 </navigation>

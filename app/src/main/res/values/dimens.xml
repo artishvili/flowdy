@@ -20,4 +20,7 @@
     <dimen name="player_nav_icon_size">56dp</dimen>
     <!-- Lyrics font size -->
     <dimen name="lyrics_font_size">18sp</dimen>
+    <!-- Player bar sizes -->
+    <dimen name="player_bar_cover">48dp</dimen>
+    <dimen name="player_bar_toggle">40dp</dimen>
 </resources>

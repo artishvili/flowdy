@@ -14,6 +14,7 @@ class LocalSongsFragment : Fragment(R.layout.fragment_local_songs) {
 
     private val binding by viewBinding(FragmentLocalSongsBinding::bind)
     private val viewModel: LocalSongsViewModel by viewModel()
+
     private val itemSongAdapter = ItemSongAdapter {
         viewModel.songClicked(it)
     }
