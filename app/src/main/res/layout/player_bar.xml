@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray"
-    android:visibility="invisible">
+    android:background="@color/gray">
 
     <ImageView
         android:id="@+id/ivCover"

@@ -19,6 +19,7 @@ import com.devshish.internship.presentation.ui.utils.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
+// TODO SET PLAYER BAR VISIBILITY
 class MainActivity : AppCompatActivity() {
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
@@ -62,11 +63,6 @@ class MainActivity : AppCompatActivity() {
                     R.id.webFragment,
                     R.id.playerFragment -> false
                     else -> true
-                }
-
-                layoutPlayerBar.root.isVisible = when (destination.id) {
-                    R.id.playerFragment -> false
-                    else -> playerViewModel.check()
                 }
             }
 

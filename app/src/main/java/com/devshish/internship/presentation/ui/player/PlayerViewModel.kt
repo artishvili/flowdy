@@ -7,6 +7,7 @@ import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.service.player.client.MediaBrowserClient
 import com.devshish.internship.presentation.ui.utils.convertMillisToTime
 
+// TODO CHECK IF MEDIA BROWSER CALLBACK IS NULL TO SHOW/HIDE PLAYER BAR
 class PlayerViewModel(
     private val mediaBrowser: MediaBrowserClient
 ) : ViewModel() {
@@ -41,10 +42,6 @@ class PlayerViewModel(
                 _currentPosition.value = position.toInt()
             }
         }
-    }
-
-    fun check(): Boolean {
-        return mediaBrowser.currentSongCallback != null
     }
 
     fun toggle() {
