@@ -7,6 +7,7 @@ import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.service.player.client.MediaBrowserClient
 import com.devshish.internship.presentation.ui.utils.convertMillisToTime
 
+// TODO CHECK IF MEDIA BROWSER CALLBACK IS NULL TO SHOW/HIDE PLAYER BAR
 class PlayerViewModel(
     private val mediaBrowser: MediaBrowserClient
 ) : ViewModel() {
@@ -19,9 +20,9 @@ class PlayerViewModel(
         get() = _isPlaying
     private val _isPlaying = MutableLiveData<Boolean>()
 
-    val currentPosition: LiveData<Long>
+    val currentPosition: LiveData<Int>
         get() = _currentPosition
-    private val _currentPosition = MutableLiveData<Long>()
+    private val _currentPosition = MutableLiveData<Int>()
 
     val playbackPosition: LiveData<String>
         get() = _playbackPosition
@@ -38,7 +39,7 @@ class PlayerViewModel(
             }
 
             override fun getPosition(position: Long) {
-                _currentPosition.value = position
+                _currentPosition.value = position.toInt()
             }
         }
     }

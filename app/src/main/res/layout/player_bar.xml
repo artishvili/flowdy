@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gray">
+
+    <ImageView
+        android:id="@+id/ivCover"
+        android:layout_width="@dimen/player_bar_cover"
+        android:layout_height="@dimen/player_bar_cover"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@color/purple_200" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvArtist"
+        app:layout_constraintEnd_toStartOf="@id/ivToggle"
+        app:layout_constraintStart_toEndOf="@id/ivCover"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="HUMBLE." />
+
+    <TextView
+        android:id="@+id/tvArtist"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="@id/ivCover"
+        app:layout_constraintEnd_toStartOf="@id/ivToggle"
+        app:layout_constraintStart_toEndOf="@id/ivCover"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        tools:text="Kendrick Lamar" />
+
+    <ImageView
+        android:id="@+id/ivToggle"
+        android:layout_width="@dimen/player_bar_toggle"
+        android:layout_height="@dimen/player_bar_toggle"
+        android:layout_marginEnd="@dimen/spacing_micro"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@id/ivCover"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivCover"
+        tools:src="@drawable/ic_pause" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivCover" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

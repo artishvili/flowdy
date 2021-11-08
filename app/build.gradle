@@ -92,4 +92,6 @@ dependencies {
 
     // Jsoup
     implementation "org.jsoup:jsoup:$jsoupVersion"
+
+    implementation "androidx.media:media:1.4.3"
 }

@@ -10,17 +10,24 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.ActivityMainBinding
+import com.devshish.internship.domain.model.Song
+import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.utils.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
+// TODO SET PLAYER BAR VISIBILITY
 class MainActivity : AppCompatActivity() {
 
     private val binding by viewBinding(ActivityMainBinding::inflate)
-    private val viewModel: MainViewModel by viewModel()
+
     private lateinit var navController: NavController
+
+    private val mainViewModel: MainViewModel by viewModel()
+    private val playerViewModel: PlayerViewModel by viewModel()
 
     private val requestPermissionLauncher =
         registerForActivityResult(
@@ -42,35 +49,77 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.navHostFragment) as NavHostFragment
-        navController = navHostFragment.findNavController()
+        with(binding) {
+            val navHostFragment = supportFragmentManager
+                .findFragmentById(R.id.navHostFragment) as NavHostFragment
+            navController = navHostFragment.findNavController()
 
-        binding.bottomNavView.setupWithNavController(navController)
+            bottomNavView.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.splashFragment,
-                R.id.authFragment,
-                R.id.webFragment,
-                R.id.playerFragment -> binding.bottomNavView.isVisible = false
-                else -> binding.bottomNavView.isVisible = true
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                bottomNavView.isVisible = when (destination.id) {
+                    R.id.splashFragment,
+                    R.id.authFragment,
+                    R.id.webFragment,
+                    R.id.playerFragment -> false
+                    else -> true
+                }
             }
+
+            layoutPlayerBar.ivToggle.setOnClickListener { playerViewModel.toggle() }
+            layoutPlayerBar.root.setOnClickListener { mainViewModel.onPlayerClick() }
+        }
+
+        with(mainViewModel) {
+            navigationEvent.observe(this@MainActivity) {
+                it.getContentIfNotHandled()?.let {
+                    navController.navigate(R.id.playerFragment)
+                }
+            }
+        }
+
+        with(playerViewModel) {
+            songToPlay.observe(this@MainActivity) { song ->
+                setupPlayerBar(song)
+            }
+
+            isPlaying.observe(this@MainActivity) { isPlaying ->
+                binding.layoutPlayerBar.ivToggle.setImageResource(
+                    if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+                )
+            }
+
+            currentPosition.observe(this@MainActivity) { position ->
+                binding.layoutPlayerBar.progressIndicator.setProgressCompat(position, true)
+            }
+        }
+    }
+
+    private fun setupPlayerBar(song: Song) {
+        binding.layoutPlayerBar.apply {
+            tvTitle.text = song.title
+            tvArtist.text = song.artist
+            progressIndicator.max = song.duration
+
+            Glide.with(this@MainActivity)
+                .load(song.imageUri)
+                .placeholder(R.color.black)
+                .into(ivCover)
         }
     }
 
     override fun onStart() {
         super.onStart()
-        viewModel.connect()
+        mainViewModel.connect()
     }
 
     override fun onStop() {
         super.onStop()
-        viewModel.disconnect()
+        mainViewModel.disconnect()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.unregister()
+        mainViewModel.unregister()
     }
 }

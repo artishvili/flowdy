@@ -4,18 +4,18 @@ import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentPlayerBinding
 import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.ui.utils.convertMillisToTime
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     private val binding by viewBinding(FragmentPlayerBinding::bind)
-    private val viewModel: PlayerViewModel by viewModel()
+    private val viewModel: PlayerViewModel by activityViewModels()
 
     private val seekBarChangeListener = object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -56,7 +56,7 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             }
 
             currentPosition.observe(viewLifecycleOwner) { position ->
-                binding.sPlayer.progress = position.toInt()
+                binding.sPlayer.progress = position
             }
         }
     }
