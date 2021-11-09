@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.os.Build
+import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.annotation.DrawableRes
@@ -17,8 +18,9 @@ import com.devshish.internship.R
 import com.devshish.internship.domain.model.Song
 
 class PlayerNotificationManager(
+    private val mediaBrowserService: MediaBrowserService,
     private val context: Context,
-    mediaSession: MediaSessionCompat
+    private val mediaSession: MediaSessionCompat
 ) {
 
     companion object {
@@ -37,6 +39,7 @@ class PlayerNotificationManager(
         .setContentIntent(mediaSession.controller.sessionActivity)
         .setDeleteIntent(setIntent(PlaybackStateCompat.ACTION_STOP))
         .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+        .setShowWhen(false)
         .setSilent(true)
         .setStyle(
             androidx.media.app.NotificationCompat.MediaStyle()
@@ -63,12 +66,13 @@ class PlayerNotificationManager(
 
     private fun Notification.show() {
         NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, this)
+       // mediaBrowserService.startForeground(NOTIFICATION_ID, this)
     }
 
-    fun onFirstPlay(song: Song?) {
+    fun onFirstPlay() {
         notificationBuilder
-            .setContentTitle(song?.title)
-            .setContentText(song?.artist)
+            .setContentTitle(mediaSession.controller.metadata.getString("SONG_TITLE"))
+            .setContentText(mediaSession.controller.metadata.getString("SONG_TITLE"))
             .clearActions()
             .addAction(setActionAttr(R.drawable.exo_icon_pause))
             .build()
@@ -77,6 +81,8 @@ class PlayerNotificationManager(
 
     fun onPlay() {
         notificationBuilder
+            .setContentTitle(mediaSession.controller.metadata.getString("SONG_TITLE"))
+            .setContentText(mediaSession.controller.metadata.getString("SONG_TITLE"))
             .clearActions()
             .addAction(setActionAttr(R.drawable.exo_icon_pause))
             .build()
@@ -85,6 +91,8 @@ class PlayerNotificationManager(
 
     fun onPause() {
         notificationBuilder
+            .setContentTitle(mediaSession.controller.metadata.getString("SONG_TITLE"))
+            .setContentText(mediaSession.controller.metadata.getString("SONG_TITLE"))
             .clearActions()
             .addAction(setActionAttr(R.drawable.exo_icon_play))
             .build()

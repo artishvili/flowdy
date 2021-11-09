@@ -40,7 +40,7 @@ class MediaSessionCallback(
             stateBuilder = stateBuilder,
             state = PlaybackStateCompat.STATE_PLAYING
         )
-        notificationManager.onFirstPlay(song)
+        notificationManager.onFirstPlay()
         Timber.d("OnPlayFromUri: $uri")
     }
 

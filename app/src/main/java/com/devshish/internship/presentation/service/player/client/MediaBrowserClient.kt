@@ -61,7 +61,11 @@ class MediaBrowserClient(context: Context) {
         mediaController.transportControls.seekTo(position)
     }
 
-    fun connect(): Unit = mediaBrowser.connect()
+    fun connect() {
+        if (!mediaBrowser.isConnected) {
+            mediaBrowser.connect()
+        }
+    }
 
     fun disconnect(): Unit = mediaBrowser.disconnect()
 
