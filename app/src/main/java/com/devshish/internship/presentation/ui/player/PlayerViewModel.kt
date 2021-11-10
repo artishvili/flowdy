@@ -34,7 +34,11 @@ class PlayerViewModel(
         get() = _playbackPosition
     private val _playbackPosition = MutableLiveData<String>()
 
-    val searchSong: LiveData<SearchSong>
+    val isLyricsButtonVisible: LiveData<Boolean>
+        get() = _isLyricsButtonVisible
+    private val _isLyricsButtonVisible = MutableLiveData<Boolean>()
+
+    private val searchSong: LiveData<SearchSong>
         get() = _searchSong
     private val _searchSong = MutableLiveData<SearchSong>()
 
@@ -47,8 +51,10 @@ class PlayerViewModel(
             override fun updateSong(song: Song) {
                 _songToPlay.value = song
 
+                // TODO HARDCODED LOGIC
                 viewModelScope.launch {
                     _searchSong.value = repository.searchSongs(song.title).first()
+                    _isLyricsButtonVisible.value = searchSong.value != null
                 }
             }
 
@@ -74,8 +80,8 @@ class PlayerViewModel(
         _playbackPosition.value = convertMillisToTime(progress)
     }
 
-    fun onLyricsClick(searchSong: SearchSong) {
-        _navigateToLyricsEvent.value = Event(searchSong)
+    fun onLyricsClick() {
+        _navigateToLyricsEvent.value = Event(searchSong.value ?: return)
     }
 
     override fun onCleared() {

@@ -40,6 +40,8 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
             sPlayer.setOnSeekBarChangeListener(seekBarChangeListener)
 
             ivPlay.setOnClickListener { viewModel.toggle() }
+
+            ivLyrics.setOnClickListener { viewModel.onLyricsClick() }
         }
 
         with(viewModel) {
@@ -61,10 +63,8 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
                 binding.sPlayer.progress = position
             }
 
-            searchSong.observe(viewLifecycleOwner) { song ->
-                binding.ivLyrics.isVisible = song != null
-
-                binding.ivLyrics.setOnClickListener { onLyricsClick(song) }
+            isLyricsButtonVisible.observe(viewLifecycleOwner) { isVisible ->
+                binding.ivLyrics.isVisible = isVisible
             }
 
             navigateToLyricsEvent.observe(viewLifecycleOwner) {
