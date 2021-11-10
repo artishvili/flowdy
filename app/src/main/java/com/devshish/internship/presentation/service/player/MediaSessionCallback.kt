@@ -1,5 +1,6 @@
 package com.devshish.internship.presentation.service.player
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.media.session.MediaSessionCompat
@@ -11,6 +12,7 @@ import com.google.android.exoplayer2.MediaItem
 import timber.log.Timber
 
 class MediaSessionCallback(
+    private val mediaService: MediaBrowserService,
     private val mediaSession: MediaSessionCompat,
     private val stateBuilder: PlaybackStateCompat.Builder,
     private val exoPlayer: ExoPlayer,
@@ -41,6 +43,7 @@ class MediaSessionCallback(
             state = PlaybackStateCompat.STATE_PLAYING
         )
         notificationManager.onFirstPlay(song)
+        mediaService.startService(Intent(mediaService.baseContext, MediaBrowserService::class.java))
         Timber.d("OnPlayFromUri: $uri")
     }
 
@@ -73,6 +76,7 @@ class MediaSessionCallback(
             stateBuilder = stateBuilder,
             state = PlaybackStateCompat.STATE_STOPPED
         )
+        mediaService.stopSelf()
         Timber.d("onStop")
     }
 
