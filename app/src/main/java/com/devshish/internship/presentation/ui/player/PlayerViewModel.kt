@@ -3,13 +3,19 @@ package com.devshish.internship.presentation.ui.player
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.model.Song
+import com.devshish.internship.domain.repository.ISearchSongsRepository
 import com.devshish.internship.presentation.service.player.client.MediaBrowserClient
+import com.devshish.internship.presentation.ui.utils.Event
 import com.devshish.internship.presentation.ui.utils.convertMillisToTime
+import kotlinx.coroutines.launch
 
 // TODO CHECK IF MEDIA BROWSER CALLBACK IS NULL TO SHOW/HIDE PLAYER BAR
 class PlayerViewModel(
-    private val mediaBrowser: MediaBrowserClient
+    private val mediaBrowser: MediaBrowserClient,
+    private val repository: ISearchSongsRepository
 ) : ViewModel() {
 
     val songToPlay: LiveData<Song>
@@ -28,10 +34,22 @@ class PlayerViewModel(
         get() = _playbackPosition
     private val _playbackPosition = MutableLiveData<String>()
 
+    val searchSong: LiveData<SearchSong>
+        get() = _searchSong
+    private val _searchSong = MutableLiveData<SearchSong>()
+
+    val navigateToLyricsEvent: LiveData<Event<SearchSong>>
+        get() = _navigateToLyricsEvent
+    private val _navigateToLyricsEvent = MutableLiveData<Event<SearchSong>>()
+
     init {
         mediaBrowser.currentSongCallback = object : MediaBrowserClient.CurrentSongCallback {
             override fun updateSong(song: Song) {
                 _songToPlay.value = song
+
+                viewModelScope.launch {
+                    _searchSong.value = repository.searchSongs(song.title).first()
+                }
             }
 
             override fun getState(isPlaying: Boolean) {
@@ -54,6 +72,10 @@ class PlayerViewModel(
 
     fun onProgressChanged(progress: Int) {
         _playbackPosition.value = convertMillisToTime(progress)
+    }
+
+    fun onLyricsClick(searchSong: SearchSong) {
+        _navigateToLyricsEvent.value = Event(searchSong)
     }
 
     override fun onCleared() {

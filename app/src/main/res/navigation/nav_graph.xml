@@ -121,7 +121,15 @@
         android:id="@+id/playerFragment"
         android:name="com.devshish.internship.presentation.ui.player.PlayerFragment"
         android:label="fragment_player"
-        tools:layout="@layout/fragment_player" />
+        tools:layout="@layout/fragment_player" >
+        <action
+            android:id="@+id/action_playerFragment_to_lyricsFragment"
+            app:destination="@id/lyricsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
     <fragment
         android:id="@+id/authFragment"
         android:name="com.devshish.internship.presentation.ui.auth.AuthFragment"

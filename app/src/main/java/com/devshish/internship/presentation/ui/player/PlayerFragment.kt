@@ -3,8 +3,10 @@ package com.devshish.internship.presentation.ui.player
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentPlayerBinding
@@ -57,6 +59,19 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
             currentPosition.observe(viewLifecycleOwner) { position ->
                 binding.sPlayer.progress = position
+            }
+
+            searchSong.observe(viewLifecycleOwner) { song ->
+                binding.ivLyrics.isVisible = song != null
+
+                binding.ivLyrics.setOnClickListener { onLyricsClick(song) }
+            }
+
+            navigateToLyricsEvent.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { song ->
+                    val action = PlayerFragmentDirections.actionPlayerFragmentToLyricsFragment(song)
+                    findNavController().navigate(action)
+                }
             }
         }
     }

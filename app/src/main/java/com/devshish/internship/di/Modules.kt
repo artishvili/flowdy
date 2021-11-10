@@ -110,7 +110,8 @@ val viewModelModule = module {
     }
     viewModel {
         PlayerViewModel(
-            mediaBrowser = get()
+            mediaBrowser = get(),
+            repository = get()
         )
     }
 
