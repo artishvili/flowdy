@@ -38,13 +38,11 @@ class PlayerViewModel(
         get() = _isLyricsButtonVisible
     private val _isLyricsButtonVisible = MutableLiveData<Boolean>()
 
-    private val searchSong: LiveData<SearchSong>
-        get() = _searchSong
-    private val _searchSong = MutableLiveData<SearchSong>()
-
     val navigateToLyricsEvent: LiveData<Event<SearchSong>>
         get() = _navigateToLyricsEvent
     private val _navigateToLyricsEvent = MutableLiveData<Event<SearchSong>>()
+
+    private val searchSong = MutableLiveData<SearchSong>()
 
     init {
         mediaBrowser.currentSongCallback = object : MediaBrowserClient.CurrentSongCallback {
@@ -53,7 +51,7 @@ class PlayerViewModel(
 
                 // TODO HARDCODED LOGIC
                 viewModelScope.launch {
-                    _searchSong.value = repository.searchSongs(song.title).first()
+                    searchSong.value = repository.searchSongs(song.title).first()
                     _isLyricsButtonVisible.value = searchSong.value != null
                 }
             }
