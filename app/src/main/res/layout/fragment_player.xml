@@ -103,11 +103,11 @@
         app:layout_constraintTop_toTopOf="@id/ivPlay" />
 
     <ImageView
-        android:id="@+id/ivRepeat"
+        android:id="@+id/ivLyrics"
         android:layout_width="@dimen/player_icon_size"
         android:layout_height="@dimen/player_icon_size"
-        android:src="@drawable/ic_repeat"
-        android:visibility="invisible"
+        android:src="@drawable/ic_lyrics"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/ivPlay"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintTop_toTopOf="@id/ivPlay" />
