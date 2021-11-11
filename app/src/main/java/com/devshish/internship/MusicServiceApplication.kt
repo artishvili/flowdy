@@ -2,6 +2,7 @@ package com.devshish.internship
 
 import android.app.Application
 import com.devshish.internship.di.appModule
+import com.devshish.internship.di.dbModule
 import com.devshish.internship.di.networkModule
 import com.devshish.internship.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -18,7 +19,8 @@ class MusicServiceApplication : Application() {
                 listOf(
                     appModule,
                     viewModelModule,
-                    networkModule
+                    networkModule,
+                    dbModule
                 )
             )
         }
