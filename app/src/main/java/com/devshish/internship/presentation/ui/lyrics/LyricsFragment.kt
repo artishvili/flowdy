@@ -21,6 +21,10 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
+            args.lyrics?.let {
+                tvLyrics.text = it.content
+            }
+
             ivSave.setOnClickListener {
                 viewModel.onLikeButtonClick()
                 Snackbar.make(
@@ -32,7 +36,9 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
         }
 
         with(viewModel) {
-            getLyrics(args.searchSong)
+            args.searchSong?.let {
+                getLyrics(it)
+            }
 
             getLyricsEvent.observe(viewLifecycleOwner) { lyrics ->
                 binding.tvLyrics.text = lyrics.content

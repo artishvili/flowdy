@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.ListAdapter
 import com.devshish.internship.databinding.ItemLyricsBinding
 import com.devshish.internship.domain.model.Lyrics
 
-class ItemLyricsAdapter : ListAdapter<Lyrics, LyricsViewHolder>(LyricsItemCallback()) {
+class ItemLyricsAdapter(
+    private val onClick: (Lyrics) -> Unit
+) : ListAdapter<Lyrics, LyricsViewHolder>(LyricsItemCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LyricsViewHolder {
         val binding = ItemLyricsBinding.inflate(
@@ -14,7 +16,7 @@ class ItemLyricsAdapter : ListAdapter<Lyrics, LyricsViewHolder>(LyricsItemCallba
             parent,
             false
         )
-        return LyricsViewHolder(binding)
+        return LyricsViewHolder(binding, onClick)
     }
 
     override fun onBindViewHolder(holder: LyricsViewHolder, position: Int) {

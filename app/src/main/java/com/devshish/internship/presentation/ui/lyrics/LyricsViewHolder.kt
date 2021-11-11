@@ -7,11 +7,16 @@ import com.devshish.internship.databinding.ItemLyricsBinding
 import com.devshish.internship.domain.model.Lyrics
 
 class LyricsViewHolder(
-    private val binding: ItemLyricsBinding
+    private val binding: ItemLyricsBinding,
+    private val onClick: (Lyrics) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(lyrics: Lyrics) {
         binding.apply {
+            root.setOnClickListener {
+                onClick(lyrics)
+            }
+
             tvSongName.text = lyrics.title
             tvArtist.text = lyrics.artist
 

@@ -6,19 +6,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.Lyrics
 import com.devshish.internship.domain.repository.ILyricsRepository
+import com.devshish.internship.presentation.ui.utils.Event
 import kotlinx.coroutines.launch
 
 class SavedLyricsViewModel(
     private val repository: ILyricsRepository
 ) : ViewModel() {
 
-    val likedSongs: LiveData<List<Lyrics>>
-        get() = _likedSongs
-    private val _likedSongs = MutableLiveData<List<Lyrics>>()
+    val savedSongs: LiveData<List<Lyrics>>
+        get() = _savedSongs
+    private val _savedSongs = MutableLiveData<List<Lyrics>>()
+
+    val navigationEvent: LiveData<Event<Lyrics>>
+        get() = _navigationEvent
+    private val _navigationEvent = MutableLiveData<Event<Lyrics>>()
 
     init {
         viewModelScope.launch {
-            _likedSongs.value = repository.getSavedLyrics()
+            _savedSongs.value = repository.getSavedLyrics()
         }
+    }
+
+    fun onLyricsClick(lyrics: Lyrics) {
+        _navigationEvent.value = Event(lyrics)
     }
 }

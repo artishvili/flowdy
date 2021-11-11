@@ -1,6 +1,5 @@
 package com.devshish.internship.data.repository
 
-import androidx.lifecycle.LiveData
 import com.devshish.internship.domain.dao.LyricsDAO
 import com.devshish.internship.domain.model.Lyrics
 import com.devshish.internship.domain.model.SearchSong
