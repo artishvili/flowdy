@@ -8,4 +8,6 @@ interface ILyricsRepository {
     suspend fun getLyrics(song: SearchSong): Lyrics
 
     suspend fun saveLyrics(lyrics: Lyrics)
+
+    suspend fun getSavedLyrics(): List<Lyrics>
 }

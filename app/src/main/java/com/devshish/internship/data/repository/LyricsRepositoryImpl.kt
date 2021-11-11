@@ -1,5 +1,6 @@
 package com.devshish.internship.data.repository
 
+import androidx.lifecycle.LiveData
 import com.devshish.internship.domain.dao.LyricsDAO
 import com.devshish.internship.domain.model.Lyrics
 import com.devshish.internship.domain.model.SearchSong
@@ -26,6 +27,8 @@ class LyricsRepositoryImpl(
         }
 
     override suspend fun saveLyrics(lyrics: Lyrics) {
-        lyricsDAO.insert(lyrics)
+        lyricsDAO.insertLyrics(lyrics)
     }
+
+    override suspend fun getSavedLyrics(): List<Lyrics> = lyricsDAO.getLyrics()
 }

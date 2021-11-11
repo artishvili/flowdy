@@ -18,7 +18,7 @@ import com.devshish.internship.presentation.ui.lyrics.LyricsViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
 import com.devshish.internship.presentation.ui.search.SearchViewModel
-import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
+import com.devshish.internship.presentation.ui.songs.liked.SavedLyricsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
 import com.devshish.internship.presentation.ui.splash.SplashViewModel
 import com.devshish.internship.presentation.ui.web.WebViewModel
@@ -71,7 +71,9 @@ val appModule = module {
     }
 
     // Songs
-    single<ISongsRepository>(named(SONGS_LIKED)) { LikedSongsRepository() }
+    single<ILyricsRepository>(named(SONGS_LIKED)) { LyricsRepositoryImpl(
+        lyricsDAO = get()
+    ) }
     single<ISongsRepository>(named(SONGS_LOCAL)) {
         LocalSongsRepository(applicationContext = get())
     }
@@ -103,7 +105,7 @@ val viewModelModule = module {
     viewModel { AlbumDetailsViewModel(repository = get(named(SONGS_ALBUM))) }
 
     // Songs
-    viewModel { LikedSongsViewModel(repository = get(named(SONGS_LIKED))) }
+    viewModel { SavedLyricsViewModel(repository = get(named(SONGS_LIKED))) }
     viewModel {
         LocalSongsViewModel(
             repository = get(named(SONGS_LOCAL)),

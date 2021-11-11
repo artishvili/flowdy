@@ -22,7 +22,7 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
         with(binding) {
             layoutLikedSongs.setData(
                 playlistCover = R.drawable.liked,
-                playlistTitle = R.string.library_favorites,
+                playlistTitle = R.string.library_saved_lyrics,
                 playlistItemCount = R.string.library_songs_count
             ) {
                 val action = LibraryFragmentDirections.actionLibraryFragmentToLikedSongsFragment()
