@@ -2,16 +2,16 @@ package com.devshish.internship.di
 
 import android.app.Application
 import androidx.room.Room
-import com.devshish.internship.data.db.LyricsDatabase
-import com.devshish.internship.data.db.LyricsDAO
+import com.devshish.internship.data.db.SongDatabase
+import com.devshish.internship.data.db.RoomSongDao
 import org.koin.dsl.module
 
-fun provideDatabase(application: Application): LyricsDatabase =
-    Room.databaseBuilder(application, LyricsDatabase::class.java, "lyrics_db")
+fun provideDatabase(application: Application): SongDatabase =
+    Room.databaseBuilder(application, SongDatabase::class.java, "lyrics_db")
         .fallbackToDestructiveMigration()
         .build()
 
-fun provideDao(db: LyricsDatabase): LyricsDAO = db.getLyricsDao()
+fun provideDao(db: SongDatabase): RoomSongDao = db.getLyricsDao()
 
 val dbModule = module {
     single { provideDatabase(application = get()) }

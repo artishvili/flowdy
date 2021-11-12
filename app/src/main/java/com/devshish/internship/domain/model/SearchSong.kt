@@ -7,6 +7,5 @@ data class SearchSong(
     val title: String,
     val artist: String,
     val imageUri: Uri?,
-    val lyricsUri: String?,
-    val lyrics: String?
+    val lyricsUri: String
 ) : Serializable

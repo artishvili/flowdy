@@ -11,12 +11,13 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class LyricsViewModel(
+    private val searchSong: SearchSong,
     private val repository: ILyricsRepository
 ) : ViewModel() {
 
-    val getLyricsEvent: LiveData<String>
-        get() = _getLyricsEvent
-    private val _getLyricsEvent = MutableLiveData<String>()
+    val lyrics: LiveData<String>
+        get() = _lyrics
+    private val _lyrics = MutableLiveData<String>()
 
     val isProgressLoading: LiveData<Boolean>
         get() = _isProgressLoading
@@ -26,11 +27,15 @@ class LyricsViewModel(
         get() = _isLyricsSaved
     private val _isLyricsSaved = MutableLiveData<Event<Unit>>()
 
-    fun getLyrics(song: SearchSong) {
+    init {
+        getLyrics(searchSong)
+    }
+
+    private fun getLyrics(song: SearchSong) {
         viewModelScope.launch {
             _isProgressLoading.value = true
             try {
-                _getLyricsEvent.value = repository.getLyrics(song)
+                _lyrics.value = repository.getLyrics(song)
             } catch (e: Exception) {
                 Timber.e(e)
             } finally {
@@ -39,10 +44,10 @@ class LyricsViewModel(
         }
     }
 
-    fun onLikeButtonClick(searchSong: SearchSong) {
+    fun onLikeButtonClick() {
         viewModelScope.launch {
             try {
-                _getLyricsEvent.value?.let { repository.storeSong(searchSong, it) }
+                _lyrics.value?.let { repository.storeSong(searchSong, it) }
             } catch (e: Exception) {
                 Timber.e(e)
             } finally {

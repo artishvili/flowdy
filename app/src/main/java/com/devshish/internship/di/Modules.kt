@@ -150,6 +150,7 @@ val viewModelModule = module {
     // Lyrics
     viewModel {
         LyricsViewModel(
+            searchSong = get(),
             repository = get()
         )
     }

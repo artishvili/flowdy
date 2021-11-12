@@ -12,6 +12,7 @@ data class RoomSong(
     val title: String,
     val artist: String,
     val imageUri: String?,
+    val lyricsUri: String,
     val lyrics: String
 ) : Serializable {
     @PrimaryKey(autoGenerate = true)
@@ -23,6 +24,7 @@ data class RoomSong(
                 title = searchSong.title,
                 artist = searchSong.artist,
                 imageUri = searchSong.imageUri.toString(),
+                lyricsUri = searchSong.lyricsUri,
                 lyrics = lyrics
             )
     }
@@ -32,7 +34,6 @@ data class RoomSong(
             title = title,
             artist = artist,
             imageUri = imageUri?.toUri(),
-            lyricsUri = null,
-            lyrics = lyrics
+            lyricsUri = lyricsUri
         )
 }

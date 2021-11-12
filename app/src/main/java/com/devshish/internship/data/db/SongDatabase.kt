@@ -6,9 +6,9 @@ import com.devshish.internship.data.model.room.RoomSong
 
 @Database(
     entities = [RoomSong::class],
-    version = 2
+    version = 3
 )
-abstract class LyricsDatabase : RoomDatabase() {
+abstract class SongDatabase : RoomDatabase() {
 
-    abstract fun getLyricsDao(): LyricsDAO
+    abstract fun getLyricsDao(): RoomSongDao
 }
