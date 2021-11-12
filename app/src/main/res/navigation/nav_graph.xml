@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/savedLyricsFragment"
-        android:name="com.devshish.internship.presentation.ui.songs.liked.SavedLyricsFragment"
+        android:name="com.devshish.internship.presentation.ui.songs.savedlyrics.SavedLyricsFragment"
         android:label="fragment_saved_lyrics"
         tools:layout="@layout/fragment_saved_lyrics">
         <action
@@ -176,13 +176,6 @@
         tools:layout="@layout/fragment_lyrics" >
         <argument
             android:name="searchSong"
-            app:argType="com.devshish.internship.domain.model.SearchSong"
-            app:nullable="true"
-            android:defaultValue="@null" />
-        <argument
-            android:name="lyrics"
-            app:argType="com.devshish.internship.domain.model.Lyrics"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="com.devshish.internship.domain.model.SearchSong" />
     </fragment>
 </navigation>

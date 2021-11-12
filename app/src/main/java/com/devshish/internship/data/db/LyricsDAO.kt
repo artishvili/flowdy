@@ -1,18 +1,17 @@
-package com.devshish.internship.domain.dao
+package com.devshish.internship.data.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.devshish.internship.domain.model.Lyrics
+import com.devshish.internship.data.model.room.RoomSong
 
 @Dao
 interface LyricsDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertLyrics(lyrics: Lyrics)
+    suspend fun insertLyrics(lyrics: RoomSong)
 
     @Query("SELECT * FROM lyrics")
-    suspend fun getLyrics(): List<Lyrics>
+    suspend fun getLyrics(): List<RoomSong>
 }

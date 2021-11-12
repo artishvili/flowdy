@@ -3,7 +3,7 @@ package com.devshish.internship.di
 import android.app.Application
 import androidx.room.Room
 import com.devshish.internship.data.db.LyricsDatabase
-import com.devshish.internship.domain.dao.LyricsDAO
+import com.devshish.internship.data.db.LyricsDAO
 import org.koin.dsl.module
 
 fun provideDatabase(application: Application): LyricsDatabase =

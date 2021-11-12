@@ -18,7 +18,8 @@ class SearchAPIRepository(
                 title = it.result.title,
                 artist = it.result.primaryArtist.name,
                 imageUri = it.result.headerImageUrl.toUri(),
-                lyricsUri = BuildConfig.GENIUS_MAIN_URL + it.result.path
+                lyricsUri = BuildConfig.GENIUS_MAIN_URL + it.result.path,
+                lyrics = null
             )
         }
     }

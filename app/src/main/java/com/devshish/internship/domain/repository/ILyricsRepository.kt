@@ -1,13 +1,12 @@
 package com.devshish.internship.domain.repository
 
-import com.devshish.internship.domain.model.Lyrics
 import com.devshish.internship.domain.model.SearchSong
 
 interface ILyricsRepository {
 
-    suspend fun getLyrics(song: SearchSong): Lyrics
+    suspend fun getLyrics(song: SearchSong): String
 
-    suspend fun saveLyrics(lyrics: Lyrics)
+    suspend fun storeSong(song: SearchSong, lyrics: String)
 
-    suspend fun getSavedLyrics(): List<Lyrics>
+    suspend fun getStoredSongs(): List<SearchSong>
 }

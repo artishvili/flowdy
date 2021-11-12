@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.songs.liked
+package com.devshish.internship.presentation.ui.songs.savedlyrics
 
 import android.os.Bundle
 import android.view.View
@@ -7,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentSavedLyricsBinding
-import com.devshish.internship.presentation.ui.lyrics.ItemLyricsAdapter
+import com.devshish.internship.presentation.ui.search.ItemSearchSongAdapter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -16,8 +16,8 @@ class SavedLyricsFragment : Fragment(R.layout.fragment_saved_lyrics) {
     private val binding by viewBinding(FragmentSavedLyricsBinding::bind)
     private val viewModel: SavedLyricsViewModel by viewModel()
 
-    private val itemLyricsAdapter = ItemLyricsAdapter { lyrics ->
-        viewModel.onLyricsClick(lyrics)
+    private val itemLyricsAdapter = ItemSearchSongAdapter { song ->
+        viewModel.onLyricsClick(song)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,14 +29,14 @@ class SavedLyricsFragment : Fragment(R.layout.fragment_saved_lyrics) {
         }
 
         with(viewModel) {
-            savedSongs.observe(viewLifecycleOwner) {
-                itemLyricsAdapter.submitList(it)
+            savedSongs.observe(viewLifecycleOwner) { songs ->
+                itemLyricsAdapter.submitList(songs)
             }
 
             navigationEvent.observe(viewLifecycleOwner) {
-                it.getContentIfNotHandled()?.let { lyrics ->
+                it.getContentIfNotHandled()?.let { song ->
                     val action = SavedLyricsFragmentDirections
-                        .actionSavedLyricsFragmentToLyricsFragment(lyrics = lyrics)
+                        .actionSavedLyricsFragmentToLyricsFragment(song)
                     findNavController().navigate(action)
                 }
             }

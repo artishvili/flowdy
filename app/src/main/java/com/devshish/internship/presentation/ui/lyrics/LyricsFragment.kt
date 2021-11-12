@@ -21,37 +21,28 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            args.lyrics?.let {
-                tvLyrics.text = it.content
-            }
-
             ivSave.setOnClickListener {
-                viewModel.onLikeButtonClick()
-                Snackbar.make(
-                    requireView(),
-                    "Lyrics successfully saved.",
-                    Snackbar.LENGTH_LONG
-                ).show()
+                viewModel.onLikeButtonClick(args.searchSong)
             }
         }
 
         with(viewModel) {
-            args.searchSong?.let {
-                getLyrics(it)
-            }
+            getLyrics(args.searchSong)
 
             getLyricsEvent.observe(viewLifecycleOwner) { lyrics ->
-                binding.tvLyrics.text = lyrics.content
+                binding.tvLyrics.text = lyrics
             }
 
             isProgressLoading.observe(viewLifecycleOwner) { isLoading ->
                 binding.progressIndicator.isVisible = isLoading
             }
 
-            isLyricsSaved.observe(viewLifecycleOwner) { isSaved ->
-                binding.ivSave.setImageResource(
-                    if (isSaved) R.drawable.ic_favorite else R.drawable.ic_favorite_outlined
-                )
+            isLyricsSaved.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let {
+                    Snackbar.make(requireView(), R.string.lyrics_saved, Snackbar.LENGTH_LONG)
+                        .setAnchorView(R.id.bottomNavView)
+                        .show()
+                }
             }
         }
     }

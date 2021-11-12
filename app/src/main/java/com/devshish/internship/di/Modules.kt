@@ -18,7 +18,7 @@ import com.devshish.internship.presentation.ui.lyrics.LyricsViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
 import com.devshish.internship.presentation.ui.search.SearchViewModel
-import com.devshish.internship.presentation.ui.songs.liked.SavedLyricsViewModel
+import com.devshish.internship.presentation.ui.songs.savedlyrics.SavedLyricsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
 import com.devshish.internship.presentation.ui.splash.SplashViewModel
 import com.devshish.internship.presentation.ui.web.WebViewModel
