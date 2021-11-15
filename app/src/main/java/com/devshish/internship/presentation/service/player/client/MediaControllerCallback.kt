@@ -12,7 +12,8 @@ import timber.log.Timber
 class MediaControllerCallback(
     private val songCallback: (Song) -> Unit,
     private val isPlaying: (Boolean) -> Unit,
-    private val currentPosition: ((Long) -> Unit)
+    private val currentPosition: ((Long) -> Unit),
+    private val playerBarVisibility: (Boolean) -> Unit
 ) : MediaControllerCompat.Callback() {
 
     override fun onMetadataChanged(metadata: MediaMetadataCompat?) {
@@ -28,7 +29,11 @@ class MediaControllerCallback(
         Timber.d("State: $state")
         if (state == null) return
         when (state.state) {
-            PlaybackStateCompat.STATE_PLAYING -> isPlaying(true)
+            PlaybackStateCompat.STATE_PLAYING -> {
+                isPlaying(true)
+                playerBarVisibility(true)
+            }
+            PlaybackStateCompat.STATE_STOPPED -> playerBarVisibility(false)
             else -> isPlaying(false)
         }
     }

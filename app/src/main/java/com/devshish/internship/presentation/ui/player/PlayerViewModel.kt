@@ -67,6 +67,10 @@ class PlayerViewModel(
             override fun getPosition(position: Long) {
                 _currentPosition.value = position.toInt()
             }
+
+            override fun getPlayerBarVisibility(isVisible: Boolean) {
+                _isPlayerBarVisible.value = isVisible
+            }
         }
     }
 
@@ -89,6 +93,5 @@ class PlayerViewModel(
     override fun onCleared() {
         super.onCleared()
         mediaBrowser.currentSongCallback = null
-        _isPlayerBarVisible.value = false
     }
 }
