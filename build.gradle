@@ -11,6 +11,7 @@ buildscript {
         viewBindingDelegateVersion = "1.0.0"
         exoPlayerVersion = "2.15.1"
         jsoupVersion = "1.14.3"
+        roomVersion = "2.3.0"
     }
     repositories {
         google()

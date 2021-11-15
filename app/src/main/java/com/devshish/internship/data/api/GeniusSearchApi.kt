@@ -1,6 +1,6 @@
 package com.devshish.internship.data.api
 
-import com.devshish.internship.data.model.SongDTO
+import com.devshish.internship.data.model.dto.SongDTO
 import retrofit2.http.GET
 import retrofit2.http.Query
 

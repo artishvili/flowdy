@@ -8,6 +8,7 @@ import com.devshish.internship.domain.repository.IAlbumsRepository
 import com.devshish.internship.domain.repository.ILyricsRepository
 import com.devshish.internship.domain.repository.IProfileRepository
 import com.devshish.internship.domain.repository.ISongsRepository
+import com.devshish.internship.presentation.service.player.client.MediaBrowserClient
 import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
@@ -17,8 +18,7 @@ import com.devshish.internship.presentation.ui.lyrics.LyricsViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
 import com.devshish.internship.presentation.ui.search.SearchViewModel
-import com.devshish.internship.presentation.service.player.client.MediaBrowserClient
-import com.devshish.internship.presentation.ui.songs.liked.LikedSongsViewModel
+import com.devshish.internship.presentation.ui.songs.savedlyrics.SavedLyricsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
 import com.devshish.internship.presentation.ui.splash.SplashViewModel
 import com.devshish.internship.presentation.ui.web.WebViewModel
@@ -71,7 +71,9 @@ val appModule = module {
     }
 
     // Songs
-    single<ISongsRepository>(named(SONGS_LIKED)) { LikedSongsRepository() }
+    single<ILyricsRepository>(named(SONGS_LIKED)) { LyricsRepositoryImpl(
+        lyricsDAO = get()
+    ) }
     single<ISongsRepository>(named(SONGS_LOCAL)) {
         LocalSongsRepository(applicationContext = get())
     }
@@ -79,7 +81,9 @@ val appModule = module {
 
     // Lyrics
     single<ILyricsRepository> {
-        LyricsRepositoryImpl()
+        LyricsRepositoryImpl(
+            lyricsDAO = get()
+        )
     }
 }
 
@@ -101,7 +105,7 @@ val viewModelModule = module {
     viewModel { AlbumDetailsViewModel(repository = get(named(SONGS_ALBUM))) }
 
     // Songs
-    viewModel { LikedSongsViewModel(repository = get(named(SONGS_LIKED))) }
+    viewModel { SavedLyricsViewModel(repository = get(named(SONGS_LIKED))) }
     viewModel {
         LocalSongsViewModel(
             repository = get(named(SONGS_LOCAL)),
@@ -146,6 +150,7 @@ val viewModelModule = module {
     // Lyrics
     viewModel {
         LyricsViewModel(
+            searchSong = get(),
             repository = get()
         )
     }

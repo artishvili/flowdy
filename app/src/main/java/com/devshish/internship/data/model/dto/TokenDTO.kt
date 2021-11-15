@@ -1,4 +1,4 @@
-package com.devshish.internship.data.model
+package com.devshish.internship.data.model.dto
 
 import com.google.gson.annotations.SerializedName
 
