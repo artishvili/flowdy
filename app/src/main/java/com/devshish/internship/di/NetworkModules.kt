@@ -2,15 +2,18 @@ package com.devshish.internship.di
 
 import android.content.Context
 import com.devshish.internship.BuildConfig
-import com.devshish.internship.data.api.GeniusAuthApi
-import com.devshish.internship.data.api.GeniusProfileApi
-import com.devshish.internship.data.api.GeniusSearchApi
+import com.devshish.internship.data.api.genius.GeniusAuthApi
+import com.devshish.internship.data.api.genius.GeniusProfileApi
+import com.devshish.internship.data.api.genius.GeniusSearchApi
+import com.devshish.internship.data.api.lastfm.LastFmChartsApi
 import com.devshish.internship.data.repository.AuthUseCase
 import com.devshish.internship.data.repository.SearchAPIRepository
 import com.devshish.internship.data.repository.TokenRepositoryImpl
 import com.devshish.internship.domain.usecase.IAuthUseCase
 import com.devshish.internship.domain.repository.ISearchSongsRepository
 import com.devshish.internship.domain.repository.ITokenRepository
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
@@ -58,8 +61,15 @@ val networkModule = module {
     }
 
     single {
+        provideArtistApiRepository(
+            retrofit = get()
+        )
+    }
+
+    single {
         provideRetrofit(
-            okHttpClient = get()
+            okHttpClient = get(),
+            gson = get()
         )
     }
 
@@ -87,6 +97,12 @@ val networkModule = module {
     }
 
     single {
+        GsonBuilder()
+            .setLenient()
+            .create()
+    }
+
+    single {
         androidApplication().applicationContext
             .getSharedPreferences(
                 "com.devshish.internship.PREFERENCE_FILE_KEY",
@@ -95,11 +111,11 @@ val networkModule = module {
     }
 }
 
-fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
+fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit =
     Retrofit.Builder()
         .baseUrl(BuildConfig.BASE_URL)
         .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
 fun provideSearchApiRepository(retrofit: Retrofit): GeniusSearchApi =
@@ -110,3 +126,6 @@ fun provideAuthApiRepository(retrofit: Retrofit): GeniusAuthApi =
 
 fun provideProfileApiRepository(retrofit: Retrofit): GeniusProfileApi =
     retrofit.create(GeniusProfileApi::class.java)
+
+fun provideArtistApiRepository(retrofit: Retrofit): LastFmChartsApi =
+    retrofit.create(LastFmChartsApi::class.java)

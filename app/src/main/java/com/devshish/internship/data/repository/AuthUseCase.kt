@@ -2,7 +2,7 @@ package com.devshish.internship.data.repository
 
 import android.net.Uri
 import com.devshish.internship.BuildConfig.*
-import com.devshish.internship.data.api.GeniusAuthApi
+import com.devshish.internship.data.api.genius.GeniusAuthApi
 import com.devshish.internship.domain.repository.ITokenRepository
 import com.devshish.internship.domain.usecase.IAuthUseCase
 
