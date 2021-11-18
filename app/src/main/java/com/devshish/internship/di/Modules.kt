@@ -69,9 +69,9 @@ val appModule = module {
     }
 
     // Songs
-    single<ILyricsRepository>(named(SONGS_LIKED)) { LyricsRepositoryImpl(
-        lyricsDAO = get()
-    ) }
+    single<ILyricsRepository>(named(SONGS_LIKED)) {
+        LyricsRepositoryImpl(lyricsDAO = get())
+    }
     single<ISongsRepository>(named(SONGS_LOCAL)) {
         LocalSongsRepository(applicationContext = get())
     }
@@ -85,8 +85,8 @@ val appModule = module {
     }
 
     // Artists
-    single<IArtistRepository> {
-        ArtistRepository(
+    single<IHomeRepository> {
+        HomeRepositoryImpl(
             api = get()
         )
     }
@@ -163,7 +163,7 @@ val viewModelModule = module {
     // Home
     viewModel {
         HomeViewModel(
-            artistRepo = get()
+            repository = get()
         )
     }
 }
