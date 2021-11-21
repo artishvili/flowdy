@@ -1,10 +1,12 @@
 package com.devshish.internship.di
 
+import android.content.Context
 import com.devshish.internship.data.repository.*
 import com.devshish.internship.di.Albums.ALBUMS_LIKED
 import com.devshish.internship.di.Albums.ALBUMS_LOCAL
 import com.devshish.internship.di.Songs.*
 import com.devshish.internship.domain.repository.*
+import com.devshish.internship.domain.usecase.IAuthUseCase
 import com.devshish.internship.presentation.service.player.client.MediaBrowserClient
 import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
@@ -24,6 +26,7 @@ import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -88,6 +91,33 @@ val appModule = module {
     single<IHomeRepository> {
         HomeRepositoryImpl(
             api = get()
+        )
+    }
+
+    single {
+        androidApplication().applicationContext
+            .getSharedPreferences(
+                "com.devshish.internship.PREFERENCE_FILE_KEY",
+                Context.MODE_PRIVATE
+            )
+    }
+
+    single<ITokenRepository> {
+        TokenRepositoryImpl(
+            sharedPref = get()
+        )
+    }
+
+    single<ISearchSongsRepository> {
+        SearchAPIRepository(
+            api = get()
+        )
+    }
+
+    single<IAuthUseCase> {
+        AuthUseCase(
+            api = get(),
+            tokenRepository = get()
         )
     }
 }

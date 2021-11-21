@@ -21,12 +21,11 @@
 
     <TextView
         android:id="@+id/tvTrack"
+        style="@style/TextAppearance.OneLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_default"
         android:layout_marginEnd="@dimen/spacing_small"
-        android:ellipsize="end"
-        android:maxLines="1"
         android:textAppearance="?attr/textAppearanceHeadline6"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,12 +35,11 @@
 
     <TextView
         android:id="@+id/tvArtist"
+        style="@style/TextAppearance.OneLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_default"
         android:layout_marginEnd="@dimen/spacing_small"
-        android:ellipsize="end"
-        android:maxLines="1"
         android:textAppearance="?attr/textAppearanceHeadline6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvPosition"
@@ -50,12 +48,11 @@
 
     <TextView
         android:id="@+id/tvListenersText"
+        style="@style/TextAppearance.OneLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_small"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="Listeners:"
+        android:text="@string/home_chart_listeners"
         android:textAppearance="?attr/textAppearanceBody2"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/tvArtist"
@@ -63,10 +60,9 @@
 
     <TextView
         android:id="@+id/tvListeners"
+        style="@style/TextAppearance.OneLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
         android:textAppearance="?attr/textAppearanceBody2"
         app:layout_constraintStart_toStartOf="@id/tvListenersText"
         app:layout_constraintTop_toBottomOf="@id/tvListenersText"
@@ -74,13 +70,12 @@
 
     <TextView
         android:id="@+id/tvPlayCountText"
+        style="@style/TextAppearance.OneLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_big"
         android:layout_marginTop="@dimen/spacing_small"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="Playcount:"
+        android:text="@string/home_chart_playcount"
         android:textAppearance="?attr/textAppearanceBody2"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/tvListenersText"
@@ -88,10 +83,9 @@
 
     <TextView
         android:id="@+id/tvPlayCount"
+        style="@style/TextAppearance.OneLine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
         android:textAppearance="?attr/textAppearanceBody2"
         app:layout_constraintStart_toStartOf="@id/tvPlayCountText"
         app:layout_constraintTop_toBottomOf="@id/tvPlayCountText"

@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.home.tracks
+package com.devshish.internship.presentation.ui.home.charts.tracks
 
 import androidx.recyclerview.widget.RecyclerView
 import com.devshish.internship.databinding.ItemTrackBinding
@@ -10,7 +10,7 @@ class TrackViewHolder(
 
     fun bind(track: Track, position: Int) {
         with(binding) {
-            tvPosition.text = position.plus(1).toString()
+            tvPosition.text = position.toString()
             tvArtist.text = track.artist
             tvTrack.text = track.name
             tvListeners.text = track.listeners
