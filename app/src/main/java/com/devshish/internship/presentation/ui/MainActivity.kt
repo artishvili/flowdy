@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.devshish.internship.NavGraphDirections
 import com.devshish.internship.R
 import com.devshish.internship.databinding.ActivityMainBinding
 import com.devshish.internship.domain.model.Song
@@ -73,7 +74,8 @@ class MainActivity : AppCompatActivity() {
         with(mainViewModel) {
             navigationEvent.observe(this@MainActivity) {
                 it.getContentIfNotHandled()?.let {
-                    navController.navigate(R.id.playerFragment)
+                    val action = NavGraphDirections.actionGlobalPlayerFragment()
+                    navController.navigate(action)
                 }
             }
         }
