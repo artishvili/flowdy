@@ -1,4 +1,4 @@
-package com.devshish.internship.presentation.ui.home.charts
+package com.devshish.internship.presentation.ui.home.charts.title
 
 import androidx.recyclerview.widget.RecyclerView
 import com.devshish.internship.databinding.ItemListHeaderBinding

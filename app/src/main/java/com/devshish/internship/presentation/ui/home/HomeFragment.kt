@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentHomeBinding
 import com.devshish.internship.presentation.ui.home.charts.artists.ArtistItemAdapter
+import com.devshish.internship.presentation.ui.home.charts.title.ChartTitleAdapter
 import com.devshish.internship.presentation.ui.home.charts.tracks.TrackItemAdapter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -20,9 +21,17 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val artistItemAdapter = ArtistItemAdapter(requireContext())
-        val trackItemAdapter = TrackItemAdapter(requireContext())
-        val concatAdapter = ConcatAdapter(artistItemAdapter, trackItemAdapter)
+        val artistItemAdapter = ArtistItemAdapter()
+        val trackItemAdapter = TrackItemAdapter()
+        val artistsTitleAdapter = ChartTitleAdapter(getString(R.string.home_chart_artists))
+        val tracksTitleAdapter = ChartTitleAdapter(getString(R.string.home_chart_tracks))
+
+        val concatAdapter = ConcatAdapter(
+            artistsTitleAdapter,
+            artistItemAdapter,
+            tracksTitleAdapter,
+            trackItemAdapter
+        )
 
         binding.layoutCharts.rvItems.apply {
             adapter = concatAdapter
@@ -31,11 +40,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         with(viewModel) {
             topArtists.observe(viewLifecycleOwner) { artists ->
-                artistItemAdapter.addHeaderAndSubmitList(artists)
+                artistItemAdapter.submitList(artists)
             }
 
             topTracks.observe(viewLifecycleOwner) { tracks ->
-                trackItemAdapter.addHeaderAndSubmitList(tracks)
+                trackItemAdapter.submitList(tracks)
             }
         }
     }

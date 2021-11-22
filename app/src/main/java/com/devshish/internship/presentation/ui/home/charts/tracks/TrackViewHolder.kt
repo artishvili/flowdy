@@ -10,7 +10,7 @@ class TrackViewHolder(
 
     fun bind(track: Track, position: Int) {
         with(binding) {
-            tvPosition.text = position.toString()
+            tvPosition.text = position.inc().toString()
             tvArtist.text = track.artist
             tvTrack.text = track.name
             tvListeners.text = track.listeners

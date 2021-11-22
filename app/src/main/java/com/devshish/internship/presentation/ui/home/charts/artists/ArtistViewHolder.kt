@@ -10,7 +10,7 @@ class ArtistViewHolder(
 
     fun bind(artist: Artist, position: Int) {
         with(binding) {
-            tvPosition.text = position.toString()
+            tvPosition.text = position.inc().toString()
             tvArtist.text = artist.name
             tvListeners.text = artist.listeners
             tvPlayCount.text = artist.playCount
