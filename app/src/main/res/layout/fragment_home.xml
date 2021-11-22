@@ -5,11 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.home.HomeFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="HOME FRAGMENT"
-        android:textSize="@dimen/text_large" />
+    <include
+        android:id="@+id/layoutCharts"
+        layout="@layout/item_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,7 @@ package com.devshish.internship.data.repository
 
 import androidx.core.net.toUri
 import com.devshish.internship.BuildConfig
-import com.devshish.internship.data.api.GeniusSearchApi
+import com.devshish.internship.data.api.genius.GeniusSearchApi
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ISearchSongsRepository
 

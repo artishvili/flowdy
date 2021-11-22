@@ -1,4 +1,4 @@
-package com.devshish.internship.data.api
+package com.devshish.internship.data.api.genius
 
 import com.devshish.internship.data.model.dto.SongDTO
 import retrofit2.http.GET

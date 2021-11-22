@@ -1,6 +1,6 @@
 package com.devshish.internship.data.repository
 
-import com.devshish.internship.data.api.GeniusProfileApi
+import com.devshish.internship.data.api.genius.GeniusProfileApi
 import com.devshish.internship.domain.model.User
 import com.devshish.internship.domain.repository.IProfileRepository
 

@@ -19,6 +19,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // TODO to move this from code to properties file
+        buildConfigField "String", "LASTFM_BASE_URL", "\"https://ws.audioscrobbler.com/2.0/\""
+        buildConfigField "String", "LASTFM_API_KEY", "\"613e49340910e2988a090185230a3b10\""
         buildConfigField "String", "GENIUS_MAIN_URL", "\"https://genius.com\""
         buildConfigField "String", "BASE_URL", "\"https://api.genius.com\""
         buildConfigField "String", "CLIENT_ID", "\"dhj7OPXTEwXBwXYgw1Lrm3fkZ6MncRCZptfyj_lGaOMaORZ8UWG8esomSkZzfI3P\""
@@ -82,8 +84,8 @@ dependencies {
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.5.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.2'
 
     // Exo Player
     implementation "com.google.android.exoplayer:extension-mediasession:$exoPlayerVersion"

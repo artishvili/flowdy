@@ -1,19 +1,19 @@
 package com.devshish.internship.di
 
+import android.content.Context
 import com.devshish.internship.data.repository.*
 import com.devshish.internship.di.Albums.ALBUMS_LIKED
 import com.devshish.internship.di.Albums.ALBUMS_LOCAL
 import com.devshish.internship.di.Songs.*
-import com.devshish.internship.domain.repository.IAlbumsRepository
-import com.devshish.internship.domain.repository.ILyricsRepository
-import com.devshish.internship.domain.repository.IProfileRepository
-import com.devshish.internship.domain.repository.ISongsRepository
+import com.devshish.internship.domain.repository.*
+import com.devshish.internship.domain.usecase.IAuthUseCase
 import com.devshish.internship.presentation.service.player.client.MediaBrowserClient
 import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
 import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
 import com.devshish.internship.presentation.ui.auth.AuthViewModel
+import com.devshish.internship.presentation.ui.home.HomeViewModel
 import com.devshish.internship.presentation.ui.lyrics.LyricsViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
@@ -26,6 +26,7 @@ import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.audio.AudioAttributes
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -71,9 +72,9 @@ val appModule = module {
     }
 
     // Songs
-    single<ILyricsRepository>(named(SONGS_LIKED)) { LyricsRepositoryImpl(
-        lyricsDAO = get()
-    ) }
+    single<ILyricsRepository>(named(SONGS_LIKED)) {
+        LyricsRepositoryImpl(lyricsDAO = get())
+    }
     single<ISongsRepository>(named(SONGS_LOCAL)) {
         LocalSongsRepository(applicationContext = get())
     }
@@ -83,6 +84,40 @@ val appModule = module {
     single<ILyricsRepository> {
         LyricsRepositoryImpl(
             lyricsDAO = get()
+        )
+    }
+
+    // Artists
+    single<IHomeRepository> {
+        HomeRepositoryImpl(
+            api = get()
+        )
+    }
+
+    single {
+        androidApplication().applicationContext
+            .getSharedPreferences(
+                "com.devshish.internship.PREFERENCE_FILE_KEY",
+                Context.MODE_PRIVATE
+            )
+    }
+
+    single<ITokenRepository> {
+        TokenRepositoryImpl(
+            sharedPref = get()
+        )
+    }
+
+    single<ISearchSongsRepository> {
+        SearchAPIRepository(
+            api = get()
+        )
+    }
+
+    single<IAuthUseCase> {
+        AuthUseCase(
+            api = get(),
+            tokenRepository = get()
         )
     }
 }
@@ -151,6 +186,13 @@ val viewModelModule = module {
     viewModel {
         LyricsViewModel(
             searchSong = get(),
+            repository = get()
+        )
+    }
+
+    // Home
+    viewModel {
+        HomeViewModel(
             repository = get()
         )
     }
