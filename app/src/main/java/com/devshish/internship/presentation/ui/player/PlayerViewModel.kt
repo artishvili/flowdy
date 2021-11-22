@@ -12,7 +12,6 @@ import com.devshish.internship.presentation.ui.utils.Event
 import com.devshish.internship.presentation.ui.utils.convertMillisToTime
 import kotlinx.coroutines.launch
 
-// TODO CHECK IF MEDIA BROWSER CALLBACK IS NULL TO SHOW/HIDE PLAYER BAR
 class PlayerViewModel(
     private val mediaBrowser: MediaBrowserClient,
     private val repository: ISearchSongsRepository
@@ -34,6 +33,10 @@ class PlayerViewModel(
         get() = _playbackPosition
     private val _playbackPosition = MutableLiveData<String>()
 
+    val isPlayerBarVisible: LiveData<Boolean>
+        get() = _isPlayerBarVisible
+    private val _isPlayerBarVisible = MutableLiveData<Boolean>()
+
     val isLyricsButtonVisible: LiveData<Boolean>
         get() = _isLyricsButtonVisible
     private val _isLyricsButtonVisible = MutableLiveData<Boolean>()
@@ -48,6 +51,7 @@ class PlayerViewModel(
         mediaBrowser.currentSongCallback = object : MediaBrowserClient.CurrentSongCallback {
             override fun updateSong(song: Song) {
                 _songToPlay.value = song
+                _isPlayerBarVisible.value = true
 
                 // TODO HARDCODED LOGIC
                 viewModelScope.launch {
@@ -62,6 +66,10 @@ class PlayerViewModel(
 
             override fun getPosition(position: Long) {
                 _currentPosition.value = position.toInt()
+            }
+
+            override fun getPlayerBarVisibility(isVisible: Boolean) {
+                _isPlayerBarVisible.value = isVisible
             }
         }
     }

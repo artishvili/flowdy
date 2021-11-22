@@ -21,7 +21,8 @@ class MediaBrowserClient(context: Context) {
     private val controllerCallback = MediaControllerCallback(
         { song -> currentSongCallback?.updateSong(song)  },
         { state -> currentSongCallback?.getState(state) },
-        { position -> currentSongCallback?.getPosition(position) }
+        { position -> currentSongCallback?.getPosition(position) },
+        { visibility -> currentSongCallback?.getPlayerBarVisibility(visibility) }
     )
 
     init {
@@ -74,5 +75,7 @@ class MediaBrowserClient(context: Context) {
         fun getState(isPlaying: Boolean)
 
         fun getPosition(position: Long)
+
+        fun getPlayerBarVisibility(isVisible: Boolean)
     }
 }
