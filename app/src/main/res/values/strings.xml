@@ -1,6 +1,6 @@
 <resources>
     <!-- App name -->
-    <string name="app_name">Internship</string>
+    <string name="app_name">Flowdy</string>
     <!-- Bottom navigation -->
     <string name="nav_home">Home</string>
     <string name="nav_search">Search</string>
