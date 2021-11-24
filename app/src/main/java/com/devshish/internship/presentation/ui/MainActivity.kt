@@ -51,6 +51,10 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.navHostFragment) as NavHostFragment
+        navController = navHostFragment.navController
+
         with(binding) {
             setSupportActionBar(toolbar)
 
@@ -66,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
 
+        with(binding) {
             toolbar.setupWithNavController(navController, appBarConfiguration)
             bottomNavView.setupWithNavController(navController)
 
@@ -139,6 +144,19 @@ class MainActivity : AppCompatActivity() {
                 .load(song.imageUri)
                 .placeholder(R.color.black)
                 .into(ivCover)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        when (navController.currentDestination?.id) {
+            R.id.searchFragment,
+            R.id.libraryFragment,
+            R.id.profileFragment -> finish()
+            else -> super.onBackPressed()
         }
     }
 
