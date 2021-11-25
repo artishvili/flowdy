@@ -2,7 +2,6 @@ package com.devshish.internship.di
 
 import android.content.Context
 import com.devshish.internship.data.repository.*
-import com.devshish.internship.di.Albums.ALBUMS_LIKED
 import com.devshish.internship.di.Albums.ALBUMS_LOCAL
 import com.devshish.internship.di.Songs.*
 import com.devshish.internship.domain.repository.*
@@ -10,7 +9,6 @@ import com.devshish.internship.domain.usecase.IAuthUseCase
 import com.devshish.internship.presentation.service.player.client.MediaBrowserClient
 import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.albums.details.AlbumDetailsViewModel
-import com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsViewModel
 import com.devshish.internship.presentation.ui.albums.local.LocalAlbumsViewModel
 import com.devshish.internship.presentation.ui.auth.AuthViewModel
 import com.devshish.internship.presentation.ui.home.HomeViewModel
@@ -32,7 +30,6 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 enum class Albums {
-    ALBUMS_LIKED,
     ALBUMS_LOCAL
 }
 
@@ -66,7 +63,6 @@ val appModule = module {
     }
 
     // Albums
-    single<IAlbumsRepository>(named(ALBUMS_LIKED)) { LikedAlbumsRepository() }
     single<IAlbumsRepository>(named(ALBUMS_LOCAL)) {
         LocalAlbumsRepository(applicationContext = get())
     }
@@ -135,7 +131,6 @@ val viewModelModule = module {
     }
 
     // Albums
-    viewModel { LikedAlbumsViewModel(repository = get(named(ALBUMS_LIKED))) }
     viewModel { LocalAlbumsViewModel(repository = get(named(ALBUMS_LOCAL))) }
     viewModel { AlbumDetailsViewModel(repository = get(named(SONGS_ALBUM))) }
 
