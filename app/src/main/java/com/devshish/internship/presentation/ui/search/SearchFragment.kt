@@ -1,6 +1,8 @@
 package com.devshish.internship.presentation.ui.search
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
@@ -24,24 +26,12 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         with(binding) {
             rvSongs.apply {
                 adapter = searchSongAdapter
                 layoutManager = LinearLayoutManager(requireContext())
-            }
-
-            topAppBar.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.actionSearch -> {
-                        val searchView = menuItem.actionView as SearchView
-                        searchView.onQueryTextChanged {
-                            viewModel.searchSongs(it)
-                        }
-                        true
-                    }
-                    else -> false
-                }
             }
         }
 
@@ -68,6 +58,18 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     findNavController().navigate(action)
                 }
             }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        inflater.inflate(R.menu.search_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+
+        val menuItem = menu.findItem(R.id.actionSearch)
+        val searchView = menuItem.actionView as SearchView
+        searchView.onQueryTextChanged {
+            viewModel.searchSongs(it)
         }
     }
 }

@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.devshish.internship.NavGraphDirections
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val binding by viewBinding(ActivityMainBinding::inflate)
 
     private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     private val mainViewModel: MainViewModel by viewModel()
     private val playerViewModel: PlayerViewModel by viewModel()
@@ -50,10 +52,21 @@ class MainActivity : AppCompatActivity() {
         )
 
         with(binding) {
+            setSupportActionBar(toolbar)
+
             val navHostFragment = supportFragmentManager
                 .findFragmentById(R.id.navHostFragment) as NavHostFragment
             navController = navHostFragment.findNavController()
+            appBarConfiguration = AppBarConfiguration(
+                setOf(
+                    R.id.homeFragment,
+                    R.id.searchFragment,
+                    R.id.libraryFragment,
+                    R.id.profileFragment
+                )
+            )
 
+            toolbar.setupWithNavController(navController, appBarConfiguration)
             bottomNavView.setupWithNavController(navController)
 
             navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -64,8 +77,16 @@ class MainActivity : AppCompatActivity() {
                     R.id.playerFragment -> false
                     else -> true
                 }
-            }
 
+                appBarLayout.isVisible = when (destination.id) {
+                    R.id.splashFragment,
+                    R.id.authFragment,
+                    R.id.webFragment,
+                    R.id.playerFragment,
+                    R.id.profileFragment -> false
+                    else -> true
+                }
+            }
 
             layoutPlayerBar.ivToggle.setOnClickListener { playerViewModel.toggle() }
             layoutPlayerBar.root.setOnClickListener { mainViewModel.onPlayerClick() }
@@ -120,6 +141,10 @@ class MainActivity : AppCompatActivity() {
                 .placeholder(R.color.black)
                 .into(ivCover)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
     override fun onStart() {

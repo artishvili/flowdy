@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="text_large">26sp</dimen>
     <dimen name="spacing_big">24dp</dimen>
     <dimen name="large_dp">100dp</dimen>
@@ -23,4 +23,6 @@
     <!-- Player bar sizes -->
     <dimen name="player_bar_cover">48dp</dimen>
     <dimen name="player_bar_toggle">40dp</dimen>
+    <!-- Toolbar -->
+    <dimen name="design_navigation_icon_size" tools:override="true">40dp</dimen>
 </resources>
