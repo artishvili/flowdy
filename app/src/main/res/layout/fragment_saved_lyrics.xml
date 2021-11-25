@@ -6,7 +6,7 @@
     tools:context=".presentation.ui.songs.savedlyrics.SavedLyricsFragment">
 
     <include
-        android:id="@+id/layoutLikedSongs"
+        android:id="@+id/layoutSavedSongs"
         layout="@layout/item_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,7 +23,7 @@ class SavedLyricsFragment : Fragment(R.layout.fragment_saved_lyrics) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.layoutLikedSongs.rvItems.apply {
+        binding.layoutSavedSongs.rvItems.apply {
             adapter = itemLyricsAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }

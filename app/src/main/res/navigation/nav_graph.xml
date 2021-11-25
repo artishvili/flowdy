@@ -32,13 +32,6 @@
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_libraryFragment_to_likedAlbumsFragment"
-            app:destination="@id/likedAlbumsFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-        <action
             android:id="@+id/action_libraryFragment_to_localSongsFragment"
             app:destination="@id/localSongsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
@@ -72,19 +65,6 @@
             app:destination="@id/authFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
-    </fragment>
-    <fragment
-        android:id="@+id/likedAlbumsFragment"
-        android:name="com.devshish.internship.presentation.ui.albums.liked.LikedAlbumsFragment"
-        android:label="fragment_liked_albums"
-        tools:layout="@layout/fragment_liked_albums" >
-        <action
-            android:id="@+id/action_likedAlbumsFragment_to_albumDetailsFragment"
-            app:destination="@id/albumDetailsFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"

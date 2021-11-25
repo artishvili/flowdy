@@ -7,7 +7,7 @@
     tools:context=".presentation.ui.library.LibraryFragment">
 
     <include
-        android:id="@+id/layoutLikedSongs"
+        android:id="@+id/layoutSavedSongs"
         layout="@layout/item_playlist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -16,22 +16,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/layoutLikedAlbums"
-        layout="@layout/item_playlist"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutLikedSongs" />
-
-    <include
         android:id="@+id/layoutLocalSongs"
         layout="@layout/item_playlist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutLikedAlbums" />
+        app:layout_constraintTop_toBottomOf="@id/layoutSavedSongs" />
 
     <include
         android:id="@+id/layoutLocalAlbums"

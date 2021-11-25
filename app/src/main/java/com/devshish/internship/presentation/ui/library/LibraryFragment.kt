@@ -20,7 +20,7 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
         super.onViewCreated(view, savedInstanceState)
 
         with(binding) {
-            layoutLikedSongs.setData(
+            layoutSavedSongs.setData(
                 playlistCover = R.drawable.liked,
                 playlistTitle = R.string.library_saved_lyrics,
                 playlistItemCount = R.string.library_songs_count
@@ -35,15 +35,6 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
                 playlistItemCount = R.string.library_local_songs_count
             ) {
                 val action = LibraryFragmentDirections.actionLibraryFragmentToLocalSongsFragment()
-                findNavController().navigate(action)
-            }
-
-            layoutLikedAlbums.setData(
-                playlistCover = R.drawable.album,
-                playlistTitle = R.string.library_albums,
-                playlistItemCount = R.string.library_albums_count
-            ) {
-                val action = LibraryFragmentDirections.actionLibraryFragmentToLikedAlbumsFragment()
                 findNavController().navigate(action)
             }
 
