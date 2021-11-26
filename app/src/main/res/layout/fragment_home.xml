@@ -19,11 +19,6 @@
             android:id="@+id/layoutCharts"
             layout="@layout/item_list" />
 
-        <!--<androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvItems"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />-->
-
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
