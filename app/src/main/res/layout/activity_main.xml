@@ -6,6 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ui.MainActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:title="@string/nav_home"
+            app:titleMargin="@dimen/spacing_small" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/navHostFragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -15,7 +34,7 @@
         app:layout_constraintBottom_toBottomOf="@id/barrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
         app:navGraph="@navigation/nav_graph" />
 
     <include

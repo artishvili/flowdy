@@ -1,7 +1,7 @@
 <resources>
     <!-- App name -->
     <string name="app_name">Flowdy</string>
-    <!-- Bottom navigation -->
+    <!-- Navigation -->
     <string name="nav_home">Home</string>
     <string name="nav_search">Search</string>
     <string name="nav_library">Library</string>
@@ -12,9 +12,9 @@
     <string name="library_albums">Liked Albums</string>
     <string name="library_albums_count">3 albums</string>
     <string name="library_local_songs">Local Songs</string>
-    <string name="library_local_songs_count">Your local songs</string>
+    <string name="library_your_local_songs">Your local songs</string>
     <string name="library_local_albums">Local Albums</string>
-    <string name="library_local_albums_count">Your local albums</string>
+    <string name="library_your_local_albums">Your local albums</string>
     <string name="library_details_album_title">Album Title</string>
     <string name="library_details_album_artist">by Artist</string>
     <!-- Profile -->
@@ -45,10 +45,13 @@
     <!-- Dialog -->
     <string name="dialog_positive_button">Yes</string>
     <string name="dialog_negative_button">No</string>
-    <string name="lyrics_saved">Successfully saved lyrics.</string>
     <!-- Home screen -->
     <string name="home_chart_artists">Top Artists</string>
     <string name="home_chart_tracks">Top Tracks</string>
     <string name="home_chart_listeners">Listeners:</string>
     <string name="home_chart_playcount">Playcount:</string>
+    <!-- Lyrics -->
+    <string name="lyrics_you_saved">Your saved lyrics</string>
+    <string name="lyrics_saved">Successfully saved lyrics.</string>
+    <string name="lyrics">Lyrics</string>
 </resources>
