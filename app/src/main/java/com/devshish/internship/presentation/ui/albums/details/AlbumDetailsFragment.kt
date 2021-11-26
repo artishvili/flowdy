@@ -10,7 +10,7 @@ import com.devshish.internship.databinding.FragmentAlbumDetailsBinding
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-@Deprecated("FOR NOW")
+@Deprecated("")
 class AlbumDetailsFragment : Fragment(R.layout.fragment_album_details) {
 
     private val binding by viewBinding(FragmentAlbumDetailsBinding::bind)

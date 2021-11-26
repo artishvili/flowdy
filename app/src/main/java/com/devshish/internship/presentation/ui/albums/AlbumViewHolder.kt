@@ -6,7 +6,7 @@ import com.devshish.internship.R
 import com.devshish.internship.databinding.ItemAlbumBinding
 import com.devshish.internship.domain.model.Album
 
-@Deprecated("FOR NOW")
+@Deprecated("")
 class AlbumViewHolder(
     private val binding: ItemAlbumBinding,
     private val onClick: (Album) -> Unit

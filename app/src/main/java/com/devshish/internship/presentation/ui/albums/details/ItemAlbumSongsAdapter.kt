@@ -7,7 +7,7 @@ import com.devshish.internship.databinding.ItemAlbumSongBinding
 import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.model.SongItemCallback
 
-@Deprecated("FOR NOW")
+@Deprecated("")
 class ItemAlbumSongsAdapter : ListAdapter<Song, AlbumDetailsViewHolder>(SongItemCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumDetailsViewHolder {

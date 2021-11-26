@@ -7,7 +7,7 @@ import com.devshish.internship.databinding.ItemAlbumBinding
 import com.devshish.internship.domain.model.Album
 import com.devshish.internship.presentation.model.AlbumItemCallback
 
-@Deprecated("FOR NOW")
+@Deprecated("")
 class ItemAlbumAdapter(
     private val onClick: (Album) -> Unit
 ) : ListAdapter<Album, AlbumViewHolder>(AlbumItemCallback()) {
