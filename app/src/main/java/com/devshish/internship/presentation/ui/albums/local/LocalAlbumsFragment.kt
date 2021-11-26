@@ -11,6 +11,7 @@ import com.devshish.internship.presentation.ui.albums.ItemAlbumAdapter
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@Deprecated("FOR NOW")
 class LocalAlbumsFragment : Fragment(R.layout.fragment_local_albums) {
 
     private val binding by viewBinding(FragmentLocalAlbumsBinding::bind)

@@ -5,6 +5,7 @@ import com.devshish.internship.databinding.ItemAlbumSongBinding
 import com.devshish.internship.domain.model.Song
 import com.devshish.internship.presentation.ui.utils.convertMillisToTime
 
+@Deprecated("FOR NOW")
 class AlbumDetailsViewHolder(
     private val binding: ItemAlbumSongBinding
 ) : RecyclerView.ViewHolder(binding.root) {
