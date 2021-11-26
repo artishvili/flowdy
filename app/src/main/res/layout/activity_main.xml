@@ -41,7 +41,7 @@
         android:id="@+id/layoutPlayerBar"
         layout="@layout/player_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         app:layout_constraintBottom_toTopOf="@id/bottomNavView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
