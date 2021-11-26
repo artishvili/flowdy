@@ -6,11 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.Artist
 import com.devshish.internship.domain.model.Track
-import com.devshish.internship.domain.repository.IHomeRepository
+import com.devshish.internship.domain.repository.IChartsRepository
+import com.devshish.internship.presentation.ui.utils.Event
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val repository: IHomeRepository
+    private val repository: IChartsRepository
 ) : ViewModel() {
 
     val topArtists: LiveData<List<Artist>>
@@ -25,6 +26,10 @@ class HomeViewModel(
         get() = _isLayoutRefreshing
     private val _isLayoutRefreshing = MutableLiveData<Boolean>()
 
+    val navigationEvent: LiveData<Event<String>>
+        get() = _navigationEvent
+    private val _navigationEvent = MutableLiveData<Event<String>>()
+
     init {
         refreshCharts()
     }
@@ -36,5 +41,9 @@ class HomeViewModel(
             _topTracks.value = repository.getTopTracks()
             _isLayoutRefreshing.value = false
         }
+    }
+
+    fun onArtistOrTrackClick(url: String) {
+        _navigationEvent.value = Event(url)
     }
 }

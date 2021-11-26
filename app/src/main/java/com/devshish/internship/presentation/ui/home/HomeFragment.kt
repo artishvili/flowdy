@@ -3,6 +3,7 @@ package com.devshish.internship.presentation.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
@@ -21,8 +22,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val artistItemAdapter = ArtistItemAdapter()
-        val trackItemAdapter = TrackItemAdapter()
+        val artistItemAdapter = ArtistItemAdapter { viewModel.onArtistOrTrackClick(it.url) }
+        val trackItemAdapter = TrackItemAdapter { viewModel.onArtistOrTrackClick(it.url) }
         val artistsTitleAdapter = ChartTitleAdapter(getString(R.string.home_chart_artists))
         val tracksTitleAdapter = ChartTitleAdapter(getString(R.string.home_chart_tracks))
 
@@ -49,6 +50,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             topTracks.observe(viewLifecycleOwner) { tracks ->
                 trackItemAdapter.submitList(tracks)
+            }
+
+            navigationEvent.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { url ->
+                    val action = HomeFragmentDirections.actionHomeFragmentToWebFragment(url)
+                    findNavController().navigate(action)
+                }
             }
 
             isLayoutRefreshing.observe(viewLifecycleOwner) { isRefreshing ->

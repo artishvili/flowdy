@@ -4,5 +4,6 @@ data class Track(
     val name: String,
     val artist: String,
     val listeners: String,
-    val playCount: String
+    val playCount: String,
+    val url: String
 )

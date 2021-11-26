@@ -14,7 +14,8 @@ data class TrackInfoDTO(
     val artist: TrackArtistDTO,
     val listeners: String,
     val name: String,
-    @SerializedName("playcount") val playCount: String
+    @SerializedName("playcount") val playCount: String,
+    val url: String
 )
 
 data class TrackArtistDTO(

@@ -7,7 +7,9 @@ import com.devshish.internship.databinding.ItemArtistBinding
 import com.devshish.internship.domain.model.Artist
 import com.devshish.internship.presentation.model.ArtistItemCallback
 
-class ArtistItemAdapter : ListAdapter<Artist, ArtistViewHolder>(ArtistItemCallback()) {
+class ArtistItemAdapter(
+    private val onClick: (Artist) -> Unit
+) : ListAdapter<Artist, ArtistViewHolder>(ArtistItemCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         val binding = ItemArtistBinding.inflate(
@@ -15,7 +17,7 @@ class ArtistItemAdapter : ListAdapter<Artist, ArtistViewHolder>(ArtistItemCallba
             parent,
             false
         )
-        return ArtistViewHolder(binding)
+        return ArtistViewHolder(binding, onClick)
     }
 
     override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
