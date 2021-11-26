@@ -2,6 +2,7 @@ package com.devshish.internship.presentation.ui.home
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,9 +34,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             trackItemAdapter
         )
 
-        binding.layoutCharts.rvItems.apply {
-            adapter = concatAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+        with(binding) {
+            layoutCharts.rvItems.apply {
+                adapter = concatAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+            }
+
+            layoutSwipeRefresh.setOnRefreshListener { viewModel.refreshCharts() }
         }
 
         with(viewModel) {
@@ -45,6 +50,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             topTracks.observe(viewLifecycleOwner) { tracks ->
                 trackItemAdapter.submitList(tracks)
+            }
+
+            isLayoutRefreshing.observe(viewLifecycleOwner) { isRefreshing ->
+                binding.layoutCharts.root.isVisible = !isRefreshing
+                binding.layoutSwipeRefresh.isRefreshing = isRefreshing
             }
         }
     }
