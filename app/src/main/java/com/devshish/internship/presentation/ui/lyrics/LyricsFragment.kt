@@ -3,6 +3,7 @@ package com.devshish.internship.presentation.ui.lyrics
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -44,14 +45,17 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
         inflater.inflate(R.menu.lyrics_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
 
-        val menuItem = menu.findItem(R.id.actionSave)
-        menuItem.setOnMenuItemClickListener {
-            viewModel.onLikeButtonClick()
-            true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.actionSave -> {
+                viewModel.onLikeButtonClick()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

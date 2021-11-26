@@ -3,6 +3,7 @@ package com.devshish.internship.presentation.ui.search
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
@@ -62,14 +63,20 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
         inflater.inflate(R.menu.search_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
 
-        val menuItem = menu.findItem(R.id.actionSearch)
-        val searchView = menuItem.actionView as SearchView
-        searchView.onQueryTextChanged {
-            viewModel.searchSongs(it)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.actionSearch -> {
+                val searchView = item.actionView as SearchView
+                searchView.onQueryTextChanged {
+                    viewModel.searchSongs(it)
+                }
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
