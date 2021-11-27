@@ -162,5 +162,7 @@
         android:id="@+id/action_global_playerFragment"
         app:destination="@id/playerFragment"
         app:enterAnim="@anim/slide_in_bottom"
+        app:exitAnim="@anim/slide_out_bottom"
+        app:popEnterAnim="@anim/slide_in_bottom"
         app:popExitAnim="@anim/slide_out_bottom" />
 </navigation>

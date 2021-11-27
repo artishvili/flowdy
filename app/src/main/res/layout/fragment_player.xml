@@ -22,10 +22,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_big"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:fontFamily="@font/rubik_medium"
         android:textAppearance="?attr/textAppearanceHeadline5"
-        app:layout_constraintEnd_toStartOf="@id/ivFavorite"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@id/ivSongCover"
         tools:text="Pure Souls" />
@@ -35,32 +34,22 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_micro"
-        android:layout_marginEnd="@dimen/spacing_small"
-        app:layout_constraintEnd_toStartOf="@id/ivFavorite"
+        app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@id/tvSong"
         tools:text="Kanye West" />
 
-    <ImageView
-        android:id="@+id/ivFavorite"
-        android:layout_width="@dimen/player_icon_size"
-        android:layout_height="@dimen/player_icon_size"
-        android:src="@drawable/ic_favorite"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/tvArtist"
-        app:layout_constraintEnd_toEndOf="@id/glEnd"
-        app:layout_constraintTop_toTopOf="@id/tvSong" />
-
-    <SeekBar
-        android:id="@+id/sPlayer"
+    <com.google.android.material.slider.Slider
+        android:id="@+id/slider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/spacing_default"
-        android:layout_marginTop="@dimen/spacing_default"
+        android:layout_marginTop="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/spacing_default"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvArtist" />
+        app:layout_constraintTop_toBottomOf="@id/tvArtist"
+        app:thumbColor="@color/white" />
 
     <TextView
         android:id="@+id/tvDurationStart"
@@ -68,41 +57,21 @@
         android:layout_height="wrap_content"
         android:text="@string/player_duration_start"
         app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toBottomOf="@id/sPlayer" />
+        app:layout_constraintTop_toBottomOf="@id/slider" />
 
     <TextView
         android:id="@+id/tvDurationEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
-        app:layout_constraintTop_toBottomOf="@id/sPlayer"
+        app:layout_constraintTop_toBottomOf="@id/slider"
         tools:text="3:40" />
-
-    <ImageView
-        android:id="@+id/ivLyrics"
-        android:layout_width="@dimen/player_icon_size"
-        android:layout_height="@dimen/player_icon_size"
-        android:src="@drawable/ic_lyrics"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/ivPlay"
-        app:layout_constraintEnd_toEndOf="@id/glEnd"
-        app:layout_constraintTop_toTopOf="@id/ivPlay" />
 
     <ImageView
         android:id="@+id/ivPlay"
         android:layout_width="@dimen/player_play_icon_size"
         android:layout_height="@dimen/player_play_icon_size"
         android:src="@drawable/ic_pause_filled"
-        app:layout_constraintEnd_toEndOf="@id/glEnd"
-        app:layout_constraintStart_toStartOf="@id/glStart"
-        app:layout_constraintTop_toBottomOf="@id/tvDurationStart" />
-
-    <ImageView
-        android:id="@+id/ivPause"
-        android:layout_width="@dimen/player_play_icon_size"
-        android:layout_height="@dimen/player_play_icon_size"
-        android:src="@drawable/ic_pause_filled"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/glEnd"
         app:layout_constraintStart_toStartOf="@id/glStart"
         app:layout_constraintTop_toBottomOf="@id/tvDurationStart" />
