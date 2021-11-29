@@ -21,6 +21,5 @@
     <!-- Lyrics font size -->
     <dimen name="lyrics_font_size">18sp</dimen>
     <!-- Player bar sizes -->
-    <dimen name="player_bar_cover">52dp</dimen>
     <dimen name="player_bar_toggle">40dp</dimen>
 </resources>
