@@ -1,5 +1,7 @@
 package com.devshish.internship.data.repository
 
+import androidx.core.text.HtmlCompat
+import androidx.core.text.toSpanned
 import com.devshish.internship.data.db.RoomSongDao
 import com.devshish.internship.data.model.room.RoomSong
 import com.devshish.internship.domain.model.SearchSong
@@ -17,10 +19,21 @@ class LyricsRepositoryImpl(
         withContext(Dispatchers.IO) {
             val roomSong = lyricsDAO.getStoredSong(song.title, song.artist)
             if (roomSong != null) {
-                roomSong.lyrics
+                val html = HtmlCompat.toHtml(
+                    roomSong.lyrics.toSpanned(),
+                    HtmlCompat.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL
+                )
+                HtmlCompat.fromHtml(
+                    html,
+                    HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH
+                ).toString()
             } else {
                 val doc = Jsoup.connect(song.lyricsUri).get()
-                doc.getElementsByClass("lyrics").text()
+                val html = doc.getElementsByClass("lyrics").html()
+                HtmlCompat.fromHtml(
+                    html,
+                    HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH
+                ).toString()
             }
         }
 
