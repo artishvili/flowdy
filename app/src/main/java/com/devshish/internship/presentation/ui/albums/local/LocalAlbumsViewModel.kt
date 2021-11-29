@@ -8,6 +8,7 @@ import com.devshish.internship.domain.model.Album
 import com.devshish.internship.domain.repository.IAlbumsRepository
 import kotlinx.coroutines.launch
 
+@Deprecated("")
 class LocalAlbumsViewModel(
     private val repository: IAlbumsRepository
 ) : ViewModel() {

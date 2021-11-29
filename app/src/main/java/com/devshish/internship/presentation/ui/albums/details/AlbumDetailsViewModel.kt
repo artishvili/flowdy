@@ -8,6 +8,7 @@ import com.devshish.internship.domain.model.Song
 import com.devshish.internship.domain.repository.ISongsRepository
 import kotlinx.coroutines.launch
 
+@Deprecated("")
 class AlbumDetailsViewModel(
     private val repository: ISongsRepository
 ) : ViewModel() {
