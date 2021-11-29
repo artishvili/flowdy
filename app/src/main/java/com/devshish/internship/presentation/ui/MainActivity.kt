@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
@@ -57,10 +56,6 @@ class MainActivity : AppCompatActivity() {
 
         with(binding) {
             setSupportActionBar(toolbar)
-
-            val navHostFragment = supportFragmentManager
-                .findFragmentById(R.id.navHostFragment) as NavHostFragment
-            navController = navHostFragment.findNavController()
             appBarConfiguration = AppBarConfiguration(
                 setOf(
                     R.id.homeFragment,
@@ -70,18 +65,18 @@ class MainActivity : AppCompatActivity() {
                 )
             )
 
-        with(binding) {
-            toolbar.setupWithNavController(navController, appBarConfiguration)
-            bottomNavView.setupWithNavController(navController)
+            with(binding) {
+                toolbar.setupWithNavController(navController, appBarConfiguration)
+                bottomNavView.setupWithNavController(navController)
 
-            navController.addOnDestinationChangedListener { _, destination, _ ->
-                bottomNavView.isVisible = when (destination.id) {
-                    R.id.splashFragment,
-                    R.id.authFragment,
-                    R.id.webFragment,
-                    R.id.playerFragment -> false
-                    else -> true
-                }
+                navController.addOnDestinationChangedListener { _, destination, _ ->
+                    bottomNavView.isVisible = when (destination.id) {
+                        R.id.splashFragment,
+                        R.id.authFragment,
+                        R.id.webFragment,
+                        R.id.playerFragment -> false
+                        else -> true
+                    }
 
                 appBarLayout.isVisible = when (destination.id) {
                     R.id.splashFragment,
@@ -91,45 +86,54 @@ class MainActivity : AppCompatActivity() {
                     else -> true
                 }
             }
-
-            layoutPlayerBar.ivToggle.setOnClickListener { playerViewModel.toggle() }
-            layoutPlayerBar.root.setOnClickListener { mainViewModel.onPlayerClick() }
-        }
-
-        with(mainViewModel) {
-            navigationEvent.observe(this@MainActivity) {
-                it.getContentIfNotHandled()?.let {
-                    val action = NavGraphDirections.actionGlobalPlayerFragment()
-                    navController.navigate(action)
-                }
-            }
-        }
-
-        with(playerViewModel) {
-            isPlayerBarVisible.observe(this@MainActivity) { isVisible ->
-                navController.addOnDestinationChangedListener { _, destination, _ ->
-                    binding.layoutPlayerBar.root.isVisible = when (destination.id) {
+                    appBarLayout.isVisible = when (destination.id) {
                         R.id.splashFragment,
                         R.id.authFragment,
                         R.id.webFragment,
-                        R.id.playerFragment -> false
-                        else -> isVisible
+                        R.id.profileFragment -> false
+                        else -> true
+                    }
+                }
+
+                layoutPlayerBar.ivToggle.setOnClickListener { playerViewModel.toggle() }
+                layoutPlayerBar.root.setOnClickListener { mainViewModel.onPlayerClick() }
+            }
+
+            with(mainViewModel) {
+                navigationEvent.observe(this@MainActivity) {
+                    it.getContentIfNotHandled()?.let {
+                        val action = NavGraphDirections.actionGlobalPlayerFragment()
+                        navController.navigate(action)
                     }
                 }
             }
 
-            songToPlay.observe(this@MainActivity) { song ->
-                setupPlayerBar(song)
-            }
+            with(playerViewModel) {
+                isPlayerBarVisible.observe(this@MainActivity) { isVisible ->
+                    navController.addOnDestinationChangedListener { _, destination, _ ->
+                        binding.layoutPlayerBar.root.isVisible = when (destination.id) {
+                            R.id.splashFragment,
+                            R.id.authFragment,
+                            R.id.webFragment,
+                            R.id.playerFragment -> false
+                            else -> isVisible
+                        }
+                    }
+                }
 
-            isPlaying.observe(this@MainActivity) { isPlaying ->
-                binding.layoutPlayerBar.ivToggle.setImageResource(
-                    if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
-                )
-            }
+                songToPlay.observe(this@MainActivity) { song ->
+                    setupPlayerBar(song)
+                }
 
-            currentPosition.observe(this@MainActivity) { position ->
-                binding.layoutPlayerBar.progressIndicator.setProgressCompat(position, true)
+                isPlaying.observe(this@MainActivity) { isPlaying ->
+                    binding.layoutPlayerBar.ivToggle.setImageResource(
+                        if (isPlaying) R.drawable.ic_pause else R.drawable.ic_play
+                    )
+                }
+
+                currentPosition.observe(this@MainActivity) { position ->
+                    binding.layoutPlayerBar.progressIndicator.setProgressCompat(position, true)
+                }
             }
         }
     }
@@ -158,10 +162,6 @@ class MainActivity : AppCompatActivity() {
             R.id.profileFragment -> finish()
             else -> super.onBackPressed()
         }
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
     override fun onStart() {
