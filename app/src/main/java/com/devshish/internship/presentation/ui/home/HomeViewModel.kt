@@ -21,10 +21,20 @@ class HomeViewModel(
         get() = _topTracks
     private val _topTracks = MutableLiveData<List<Track>>()
 
+    val isLayoutRefreshing: LiveData<Boolean>
+        get() = _isLayoutRefreshing
+    private val _isLayoutRefreshing = MutableLiveData<Boolean>()
+
     init {
+        refreshCharts()
+    }
+
+    fun refreshCharts() {
         viewModelScope.launch {
+            _isLayoutRefreshing.value = true
             _topArtists.value = repository.getTopArtists()
             _topTracks.value = repository.getTopTracks()
+            _isLayoutRefreshing.value = false
         }
     }
 }

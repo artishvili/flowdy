@@ -33,9 +33,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             trackItemAdapter
         )
 
-        binding.layoutCharts.rvItems.apply {
-            adapter = concatAdapter
-            layoutManager = LinearLayoutManager(requireContext())
+        with(binding) {
+            layoutCharts.rvItems.apply {
+                adapter = concatAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+            }
+
+            layoutSwipeRefresh.setOnRefreshListener { viewModel.refreshCharts() }
         }
 
         with(viewModel) {
@@ -45,6 +49,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             topTracks.observe(viewLifecycleOwner) { tracks ->
                 trackItemAdapter.submitList(tracks)
+            }
+
+            isLayoutRefreshing.observe(viewLifecycleOwner) { isRefreshing ->
+                binding.layoutSwipeRefresh.isRefreshing = isRefreshing
             }
         }
     }
