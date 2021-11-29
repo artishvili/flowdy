@@ -97,13 +97,11 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         viewModel.isLyricsButtonVisible.observe(viewLifecycleOwner) { isVisible ->
-            when (isVisible) {
-                true -> {
-                    menu.clear()
-                    inflater.inflate(R.menu.player_menu, menu)
-                }
-                else -> super.onCreateOptionsMenu(menu, inflater)
-            }
+            inflater.inflate(R.menu.player_menu, menu)
+            super.onCreateOptionsMenu(menu, inflater)
+
+            val item = menu.findItem(R.id.actionOpenLyrics)
+            item.isVisible = isVisible
         }
     }
 
