@@ -53,9 +53,10 @@ class PlayerViewModel(
                 _songToPlay.value = song
                 _isPlayerBarVisible.value = true
 
-                // TODO HARDCODED LOGIC
                 viewModelScope.launch {
-                    searchSong.value = repository.searchSongs(song.title).first()
+                    searchSong.value = repository.searchSongs(song.title).firstOrNull {
+                        it.title.contains(song.title) && it.artist.contains(song.artist)
+                    }
                     _isLyricsButtonVisible.value = searchSong.value != null
                 }
             }
