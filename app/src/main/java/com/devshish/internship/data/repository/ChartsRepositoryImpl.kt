@@ -3,18 +3,19 @@ package com.devshish.internship.data.repository
 import com.devshish.internship.data.api.lastfm.LastFmChartsApi
 import com.devshish.internship.domain.model.Artist
 import com.devshish.internship.domain.model.Track
-import com.devshish.internship.domain.repository.IHomeRepository
+import com.devshish.internship.domain.repository.IChartsRepository
 
-class HomeRepositoryImpl(
+class ChartsRepositoryImpl(
     private val api: LastFmChartsApi
-) : IHomeRepository {
+) : IChartsRepository {
 
     override suspend fun getTopArtists(): List<Artist> =
         api.getTopArtists().artists.artist.map { artist ->
             Artist(
                 listeners = artist.listeners,
                 name = artist.name,
-                playCount = artist.playcount
+                playCount = artist.playcount,
+                url = artist.url
             )
         }
 
@@ -24,7 +25,8 @@ class HomeRepositoryImpl(
                 name = track.name,
                 artist = track.artist.name,
                 listeners = track.listeners,
-                playCount = track.playCount
+                playCount = track.playCount,
+                url = track.url
             )
         }
 }

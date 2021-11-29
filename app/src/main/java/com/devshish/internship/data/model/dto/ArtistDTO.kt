@@ -11,5 +11,6 @@ data class ArtistDTO(
 data class ArtistInfoDTO(
     val listeners: String,
     val name: String,
-    val playcount: String
+    val playcount: String,
+    val url: String
 )

@@ -1,7 +1,9 @@
 package com.devshish.internship.presentation.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,8 +23,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val artistItemAdapter = ArtistItemAdapter()
-        val trackItemAdapter = TrackItemAdapter()
+        val artistItemAdapter = ArtistItemAdapter { viewModel.onArtistOrTrackClick(it.url) }
+        val trackItemAdapter = TrackItemAdapter { viewModel.onArtistOrTrackClick(it.url) }
         val artistsTitleAdapter = ChartTitleAdapter(getString(R.string.home_chart_artists))
         val tracksTitleAdapter = ChartTitleAdapter(getString(R.string.home_chart_tracks))
 
@@ -49,6 +51,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             topTracks.observe(viewLifecycleOwner) { tracks ->
                 trackItemAdapter.submitList(tracks)
+            }
+
+            navigationEvent.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { url ->
+                    val browserIntent = Intent(Intent.ACTION_VIEW, url.toUri())
+                    startActivity(browserIntent)
+                }
             }
 
             isLayoutRefreshing.observe(viewLifecycleOwner) { isRefreshing ->

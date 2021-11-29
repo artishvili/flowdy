@@ -84,8 +84,8 @@ val appModule = module {
     }
 
     // Artists
-    single<IHomeRepository> {
-        HomeRepositoryImpl(
+    single<IChartsRepository> {
+        ChartsRepositoryImpl(
             api = get()
         )
     }
