@@ -1,9 +1,10 @@
 package com.devshish.internship.presentation.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
@@ -54,8 +55,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
             navigationEvent.observe(viewLifecycleOwner) {
                 it.getContentIfNotHandled()?.let { url ->
-                    val action = HomeFragmentDirections.actionHomeFragmentToWebFragment(url)
-                    findNavController().navigate(action)
+                    val browserIntent = Intent(Intent.ACTION_VIEW, url.toUri())
+                    startActivity(browserIntent)
                 }
             }
 
