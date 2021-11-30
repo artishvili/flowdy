@@ -52,13 +52,6 @@ class PlayerViewModel(
             override fun updateSong(song: Song) {
                 _songToPlay.value = song
                 _isPlayerBarVisible.value = true
-
-                viewModelScope.launch {
-                    searchSong.value = repository.searchSongs(song.artist + song.title).firstOrNull {
-                        it.title.contains(song.title) && it.artist.contains(song.artist)
-                    }
-                    _isLyricsButtonVisible.value = searchSong.value != null
-                }
             }
 
             override fun getState(isPlaying: Boolean) {
@@ -71,6 +64,18 @@ class PlayerViewModel(
 
             override fun getPlayerBarVisibility(isVisible: Boolean) {
                 _isPlayerBarVisible.value = isVisible
+            }
+        }
+    }
+
+    fun checkLyricsAvailability() {
+        _songToPlay.value?.let { song ->
+            viewModelScope.launch {
+                searchSong.value = repository.searchSongs(song.artist + song.title)
+                    .firstOrNull {
+                        it.title.contains(song.title) && it.artist.contains(song.artist)
+                    }
+                _isLyricsButtonVisible.value = searchSong.value != null
             }
         }
     }
