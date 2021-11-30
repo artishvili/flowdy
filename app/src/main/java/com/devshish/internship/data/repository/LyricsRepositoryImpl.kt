@@ -19,14 +19,7 @@ class LyricsRepositoryImpl(
         withContext(Dispatchers.IO) {
             val roomSong = lyricsDAO.getStoredSong(song.title, song.artist)
             if (roomSong != null) {
-                val html = HtmlCompat.toHtml(
-                    roomSong.lyrics.toSpanned(),
-                    HtmlCompat.TO_HTML_PARAGRAPH_LINES_INDIVIDUAL
-                )
-                HtmlCompat.fromHtml(
-                    html,
-                    HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH
-                ).toString()
+                roomSong.lyrics
             } else {
                 val doc = Jsoup.connect(song.lyricsUri).get()
                 val html = doc.getElementsByClass("lyrics").html()
