@@ -53,9 +53,9 @@ class PlayerViewModel(
                 _songToPlay.value = song
                 _isPlayerBarVisible.value = true
 
-                // TODO HARDCODED LOGIC
                 viewModelScope.launch {
-                    searchSong.value = repository.searchSongs(song.title).first()
+                    searchSong.value = repository.searchSongs(song.title + song.artist)
+                        .findConcreteSong(song)
                     _isLyricsButtonVisible.value = searchSong.value != null
                 }
             }
@@ -71,6 +71,12 @@ class PlayerViewModel(
             override fun getPlayerBarVisibility(isVisible: Boolean) {
                 _isPlayerBarVisible.value = isVisible
             }
+        }
+    }
+
+    private fun List<SearchSong>.findConcreteSong(song: Song): SearchSong? {
+        return firstOrNull {
+            it.title.contains(song.title) && it.artist.contains(song.artist)
         }
     }
 
