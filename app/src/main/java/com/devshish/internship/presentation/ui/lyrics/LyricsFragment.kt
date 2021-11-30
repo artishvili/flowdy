@@ -28,22 +28,23 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        with(binding) {
-            topAppBar.apply {
-                setupWithNavController(findNavController())
-                title = args.searchSong.title
-                subtitle = args.searchSong.artist
-            }
-
-            Glide.with(this@LyricsFragment)
-                .load(args.searchSong.imageUri)
-                .placeholder(R.color.black)
-                .into(binding.ivSongCover)
-        }
+        binding.topAppBar.setupWithNavController(findNavController())
 
         with(viewModel) {
             lyrics.observe(viewLifecycleOwner) { lyrics ->
                 binding.tvLyrics.text = lyrics
+            }
+
+            song.observe(viewLifecycleOwner) { song ->
+                binding.topAppBar.apply {
+                    title = song.title
+                    subtitle = song.artist
+                }
+
+                Glide.with(this@LyricsFragment)
+                    .load(song.imageUri)
+                    .placeholder(R.color.black)
+                    .into(binding.ivSongCover)
             }
 
             isProgressLoading.observe(viewLifecycleOwner) { isLoading ->

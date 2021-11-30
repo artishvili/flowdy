@@ -27,6 +27,8 @@ class LyricsViewModel(
         get() = _isLyricsSaved
     private val _isLyricsSaved = MutableLiveData<Event<Unit>>()
 
+    val song = MutableLiveData(searchSong)
+
     init {
         getLyrics(searchSong)
     }
