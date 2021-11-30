@@ -45,13 +45,18 @@ class PlayerViewModel(
         get() = _navigateToLyricsEvent
     private val _navigateToLyricsEvent = MutableLiveData<Event<SearchSong>>()
 
-    private val searchSong = MutableLiveData<SearchSong>()
+    private val searchSong = MutableLiveData<SearchSong?>()
 
     init {
         mediaBrowser.currentSongCallback = object : MediaBrowserClient.CurrentSongCallback {
             override fun updateSong(song: Song) {
                 _songToPlay.value = song
                 _isPlayerBarVisible.value = true
+
+                viewModelScope.launch {
+                    searchSong.value = checkLyricsAvailability(song)
+                    _isLyricsButtonVisible.value = searchSong.value != null
+                }
             }
 
             override fun getState(isPlaying: Boolean) {
@@ -68,16 +73,11 @@ class PlayerViewModel(
         }
     }
 
-    fun checkLyricsAvailability() {
-        _songToPlay.value?.let { song ->
-            viewModelScope.launch {
-                searchSong.value = repository.searchSongs(song.artist + song.title)
-                    .firstOrNull {
-                        it.title.contains(song.title) && it.artist.contains(song.artist)
-                    }
-                _isLyricsButtonVisible.value = searchSong.value != null
+    suspend fun checkLyricsAvailability(song: Song): SearchSong? {
+        return repository.searchSongs(song.artist + song.title)
+            .firstOrNull {
+                it.title.contains(song.title) && it.artist.contains(song.artist)
             }
-        }
     }
 
     fun toggle() {

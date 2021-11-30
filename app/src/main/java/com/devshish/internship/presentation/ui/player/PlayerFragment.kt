@@ -53,8 +53,6 @@ class PlayerFragment : Fragment(R.layout.fragment_player) {
         }
 
         with(viewModel) {
-            checkLyricsAvailability()
-
             songToPlay.observe(viewLifecycleOwner) { song ->
                 setSong(song)
             }
