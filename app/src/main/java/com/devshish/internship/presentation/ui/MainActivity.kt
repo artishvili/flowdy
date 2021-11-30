@@ -82,7 +82,8 @@ class MainActivity : AppCompatActivity() {
                     R.id.splashFragment,
                     R.id.authFragment,
                     R.id.webFragment,
-                    R.id.profileFragment -> false
+                    R.id.profileFragment,
+                    R.id.lyricsFragment -> false
                     else -> true
                 }
             }
