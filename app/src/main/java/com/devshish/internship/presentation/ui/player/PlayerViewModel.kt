@@ -45,7 +45,7 @@ class PlayerViewModel(
         get() = _navigateToLyricsEvent
     private val _navigateToLyricsEvent = MutableLiveData<Event<SearchSong>>()
 
-    private val searchSong = MutableLiveData<SearchSong?>()
+    private val searchSong = MutableLiveData<SearchSong>()
 
     init {
         mediaBrowser.currentSongCallback = object : MediaBrowserClient.CurrentSongCallback {
