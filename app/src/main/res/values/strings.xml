@@ -54,4 +54,5 @@
     <string name="lyrics_you_saved">Your saved lyrics</string>
     <string name="lyrics_saved">Successfully saved lyrics.</string>
     <string name="lyrics">Lyrics</string>
+    <string name="lyrics_action_save">Save</string>
 </resources>

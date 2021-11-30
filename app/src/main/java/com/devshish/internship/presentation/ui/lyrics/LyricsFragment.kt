@@ -7,7 +7,10 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentLyricsBinding
 import com.google.android.material.snackbar.Snackbar
@@ -24,6 +27,19 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+
+        with(binding) {
+            topAppBar.apply {
+                setupWithNavController(findNavController())
+                title = args.searchSong.title
+                subtitle = args.searchSong.artist
+            }
+
+            Glide.with(this@LyricsFragment)
+                .load(args.searchSong.imageUri)
+                .placeholder(R.color.black)
+                .into(binding.ivSongCover)
+        }
 
         with(viewModel) {
             lyrics.observe(viewLifecycleOwner) { lyrics ->
