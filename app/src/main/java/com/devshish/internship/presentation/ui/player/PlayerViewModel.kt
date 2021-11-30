@@ -54,7 +54,8 @@ class PlayerViewModel(
                 _isPlayerBarVisible.value = true
 
                 viewModelScope.launch {
-                    searchSong.value = checkLyricsAvailability(song)
+                    searchSong.value = repository.searchSongs(song.title + song.artist)
+                        .findConcreteSong(song)
                     _isLyricsButtonVisible.value = searchSong.value != null
                 }
             }
@@ -73,11 +74,10 @@ class PlayerViewModel(
         }
     }
 
-    suspend fun checkLyricsAvailability(song: Song): SearchSong? {
-        return repository.searchSongs(song.artist + song.title)
-            .firstOrNull {
-                it.title.contains(song.title) && it.artist.contains(song.artist)
-            }
+    private fun List<SearchSong>.findConcreteSong(song: Song): SearchSong? {
+        return firstOrNull {
+            it.title.contains(song.title) && it.artist.contains(song.artist)
+        }
     }
 
     fun toggle() {
