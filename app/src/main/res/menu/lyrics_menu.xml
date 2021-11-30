@@ -6,7 +6,6 @@
         android:id="@+id/actionSave"
         android:icon="@drawable/ic_save"
         android:title="@string/lyrics_action_save"
-        android:visible="false"
         app:showAsAction="ifRoom|collapseActionView" />
 
 </menu>
