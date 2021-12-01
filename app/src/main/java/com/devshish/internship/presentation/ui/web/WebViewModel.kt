@@ -20,9 +20,10 @@ class WebViewModel(
         viewModelScope.launch {
             try {
                 useCase.authorize(code)
-                _navigateForward.value = Unit
             } catch (e: Exception) {
                 Timber.d(e)
+            } finally {
+                _navigateForward.value = Unit
             }
         }
     }

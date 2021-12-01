@@ -2,6 +2,8 @@ package com.devshish.internship.presentation.ui.web
 
 import android.os.Bundle
 import android.view.View
+import android.webkit.CookieManager
+import androidx.core.content.ContextCompat.getDrawable
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -24,11 +26,23 @@ class WebFragment : Fragment(R.layout.fragment_web) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        CookieManager.getInstance().removeAllCookies(null)
+        CookieManager.getInstance().flush()
+
         with(binding) {
             webView.apply {
+                loadUrl(args.link)
                 settings.javaScriptEnabled = true
                 webViewClient = client
-                loadUrl(args.link)
+            }
+
+            topAppBar.apply {
+                title = getString(R.string.auth_sign_in_with_genius)
+                navigationIcon = getDrawable(requireContext(), R.drawable.ic_close)
+            }
+
+            topAppBar.setNavigationOnClickListener {
+                findNavController().navigateUp()
             }
         }
 

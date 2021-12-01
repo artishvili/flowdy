@@ -13,13 +13,19 @@ class GeniusAuthWebViewClient(
     override fun shouldOverrideUrlLoading(
         view: WebView?,
         request: WebResourceRequest?
-    ): Boolean = isRequestValid(request?.url)
+    ): Boolean {
+        return isRequestValid(request?.url)
+    }
 
-    private fun isRequestValid(uri: Uri?): Boolean =
-        if (uri?.getQueryParameter("state") == BuildConfig.GENIUS_REQUEST_STATE) {
-            uri.getQueryParameter("code")?.let(onCodeExtracted)
+    private fun isRequestValid(uri: Uri?): Boolean {
+        val state = uri?.getQueryParameter("state")
+        val code = uri?.getQueryParameter("code")
+
+        return if (state ==  BuildConfig.GENIUS_REQUEST_STATE && code != null) {
+            onCodeExtracted(code)
             true
         } else {
             false
         }
+    }
 }

@@ -40,6 +40,7 @@
     <string name="auth_sign_in">Sign in with Genius</string>
     <string name="auth_sign_out">Sign out</string>
     <string name="auth_sign_out_confirmation">Do you really want to sign out?</string>
+    <string name="auth_sign_in_with_genius">Authorize with Genius</string>
     <!-- Player -->
     <string name="player_duration_start">0:00</string>
     <!-- Dialog -->
