@@ -5,6 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.os.Build
 import android.provider.MediaStore
@@ -68,24 +69,27 @@ class PlayerNotificationManager(
         NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, this)
     }
 
-    fun onFirstPlay(song: Song?) {
-        if (song?.imageUri == null) return
-        val songImageUri = song.imageUri.toUri()
-        val bitmapImage = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+    private fun String.toBitmap(): Bitmap? {
+        val uri = this.toUri()
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             ImageDecoder.decodeBitmap(
                 ImageDecoder.createSource(
                     context.contentResolver,
-                    songImageUri
+                    uri
                 )
             )
         } else {
-            MediaStore.Images.Media.getBitmap(context.contentResolver, songImageUri)
+            MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
         }
+    }
+
+    fun onFirstPlay(song: Song?) {
+        if (song?.imageUri == null) return
 
         notificationBuilder
             .setContentTitle(song.title)
             .setContentText(song.artist)
-            .setLargeIcon(bitmapImage)
+            .setLargeIcon(song.imageUri.toBitmap())
             .clearActions()
             .addAction(setActionAttr(R.drawable.exo_icon_pause))
             .build()
