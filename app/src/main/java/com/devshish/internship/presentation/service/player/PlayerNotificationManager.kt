@@ -83,13 +83,11 @@ class PlayerNotificationManager(
         }
     }
 
-    fun onFirstPlay(song: Song?) {
-        if (song?.imageUri == null) return
-
+    fun onFirstPlay(song: Song) {
         notificationBuilder
             .setContentTitle(song.title)
             .setContentText(song.artist)
-            .setLargeIcon(song.imageUri.toBitmap())
+            .setLargeIcon(song.imageUri?.toBitmap())
             .clearActions()
             .addAction(setActionAttr(R.drawable.exo_icon_pause))
             .build()

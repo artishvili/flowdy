@@ -34,10 +34,10 @@ class MediaSessionCallback(
 
     override fun onPlayFromUri(uri: Uri?, extras: Bundle?) {
         super.onPlayFromUri(uri, extras)
-        if (uri == null || extras == null) return
+        val song = extras?.song
+        if (uri == null || song == null) return
         exoPlayer.setAndPlaySong(uri)
-        val song = extras.song
-        mediaSession.setMetadata(song?.toMediaMetadata())
+        mediaSession.setMetadata(song.toMediaMetadata())
         mediaSession.updateState(
             stateBuilder = stateBuilder,
             state = PlaybackStateCompat.STATE_PLAYING
