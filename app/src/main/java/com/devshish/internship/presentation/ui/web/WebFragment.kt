@@ -2,6 +2,8 @@ package com.devshish.internship.presentation.ui.web
 
 import android.os.Bundle
 import android.view.View
+import android.webkit.CookieManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -24,19 +26,30 @@ class WebFragment : Fragment(R.layout.fragment_web) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding) {
-            webView.apply {
-                settings.javaScriptEnabled = true
-                webViewClient = client
-                loadUrl(args.link)
-            }
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            setTitle(R.string.auth_sign_in_with_genius)
+            setHomeAsUpIndicator(R.drawable.ic_close)
+            setDisplayHomeAsUpEnabled(true)
         }
+
+        setupWebView()
 
         with(viewModel) {
             navigateForward.observe(viewLifecycleOwner) {
                 val action = WebFragmentDirections.actionWebFragmentToHomeFragment()
                 findNavController().navigate(action)
             }
+        }
+    }
+
+    private fun setupWebView() {
+        binding.webView.apply {
+            CookieManager.getInstance().removeAllCookies(null)
+            CookieManager.getInstance().flush()
+
+            settings.javaScriptEnabled = true
+            webViewClient = client
+            loadUrl(args.link)
         }
     }
 }
