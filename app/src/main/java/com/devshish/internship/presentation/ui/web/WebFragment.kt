@@ -32,7 +32,6 @@ class WebFragment : Fragment(R.layout.fragment_web) {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        removeCookies()
         setupWebView()
 
         with(viewModel) {
@@ -45,14 +44,12 @@ class WebFragment : Fragment(R.layout.fragment_web) {
 
     private fun setupWebView() {
         binding.webView.apply {
+            CookieManager.getInstance().removeAllCookies(null)
+            CookieManager.getInstance().flush()
+
             settings.javaScriptEnabled = true
             webViewClient = client
             loadUrl(args.link)
         }
-    }
-
-    private fun removeCookies() {
-        CookieManager.getInstance().removeAllCookies(null)
-        CookieManager.getInstance().flush()
     }
 }
