@@ -7,7 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ILyricsRepository
 import com.devshish.internship.presentation.ui.utils.Event
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -16,57 +18,67 @@ class LyricsViewModel(
     private val repository: ILyricsRepository
 ) : ViewModel() {
 
-    val lyrics: LiveData<String>
-        get() = _lyrics
-    private val _lyrics = MutableLiveData<String>()
-
-    val isProgressLoading: LiveData<Boolean>
-        get() = _isProgressLoading
-    private val _isProgressLoading = MutableLiveData<Boolean>()
-
     val isLyricsSaved: LiveData<Event<Unit>>
         get() = _isLyricsSaved
     private val _isLyricsSaved = MutableLiveData<Event<Unit>>()
 
-    val isSongStored: LiveData<Boolean>
-        get() = _isSongStored
-    private val _isSongStored = MutableLiveData<Boolean>()
+    private val lyricsFlow = MutableStateFlow<String?>(null)
+    private val isStoredFlow = MutableStateFlow<Boolean?>(null)
 
-    val song: LiveData<SearchSong> = MutableLiveData(searchSong)
+    val uiState: LiveData<UIState>
+        get() = _uiState
+    private val _uiState = MutableLiveData<UIState>(UIState.IsLoading(searchSong))
 
     init {
-        getSongLyrics(searchSong)
-    }
-
-    private fun getSongLyrics(song: SearchSong) {
         viewModelScope.launch {
-            _isProgressLoading.value = true
             try {
-                _lyrics.value = repository.getLyrics(song)
+                lyricsFlow.value = repository.getLyrics(searchSong)
             } catch (e: Exception) {
                 Timber.e(e)
-            } finally {
-                _isProgressLoading.value = false
-                isSongStored()
             }
         }
+
+        viewModelScope.launch {
+            repository.isSongStored(searchSong).collect { isStored ->
+                isStoredFlow.value = isStored
+            }
+        }
+
+        viewModelScope.launch {
+            lyricsFlow.combine(isStoredFlow) { lyrics, isStored ->
+                Timber.d("UI STATE: Lyrics: ${lyrics?.take(5)} IsStored: $isStored")
+                if (lyrics == null || isStored == null) {
+                    UIState.IsLoading(searchSong)
+                } else {
+                    UIState.Loaded(searchSong, lyrics, isStored)
+                }
+            }.collect {
+                _uiState.value = it
+            }
+        }
+    }
+
+    sealed class UIState {
+        abstract val song: SearchSong
+
+        data class IsLoading(override val song: SearchSong) : UIState()
+
+        data class Loaded(
+            override val song: SearchSong,
+            val lyrics: String,
+            val isStored: Boolean
+        ) : UIState()
     }
 
     fun onStoreSongClick() {
         viewModelScope.launch {
             try {
-                _lyrics.value?.let { repository.storeSong(searchSong, it) }
+                lyricsFlow.value?.let { repository.storeSong(searchSong, it) }
             } catch (e: Exception) {
                 Timber.e(e)
             } finally {
                 _isLyricsSaved.value = Event(Unit)
             }
-        }
-    }
-
-    private suspend fun isSongStored() {
-        repository.isSongStored(searchSong).collect { isStored ->
-            _isSongStored.value = isStored
         }
     }
 }
