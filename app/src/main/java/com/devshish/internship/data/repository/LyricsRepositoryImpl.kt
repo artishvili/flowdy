@@ -1,7 +1,6 @@
 package com.devshish.internship.data.repository
 
 import androidx.core.text.HtmlCompat
-import androidx.core.text.toSpanned
 import com.devshish.internship.data.db.RoomSongDao
 import com.devshish.internship.data.model.room.RoomSong
 import com.devshish.internship.domain.model.SearchSong
@@ -37,4 +36,10 @@ class LyricsRepositoryImpl(
 
     override suspend fun getStoredSongs(): List<SearchSong> =
         lyricsDAO.getLyrics().map { it.toSearchSong() }
+
+    override suspend fun isSongStored(song: SearchSong): Boolean {
+        return withContext(Dispatchers.IO) {
+            lyricsDAO.isSongStored(song.title, song.artist)
+        }
+    }
 }

@@ -9,4 +9,6 @@ interface ILyricsRepository {
     suspend fun storeSong(song: SearchSong, lyrics: String)
 
     suspend fun getStoredSongs(): List<SearchSong>
+
+    suspend fun isSongStored(song: SearchSong): Boolean
 }

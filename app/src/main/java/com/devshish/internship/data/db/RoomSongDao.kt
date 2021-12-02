@@ -17,4 +17,7 @@ interface RoomSongDao {
 
     @Query("SELECT * FROM lyrics WHERE title = :title AND artist = :artist")
     suspend fun getStoredSong(title: String, artist: String): RoomSong?
+
+    @Query("SELECT EXISTS(SELECT * FROM lyrics WHERE title = :title AND artist = :artist)")
+    suspend fun isSongStored(title: String, artist: String): Boolean
 }

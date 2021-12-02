@@ -27,13 +27,17 @@ class LyricsViewModel(
         get() = _isLyricsSaved
     private val _isLyricsSaved = MutableLiveData<Event<Unit>>()
 
+    val isSongStored: LiveData<Boolean>
+        get() = _isSongStored
+    private val _isSongStored = MutableLiveData<Boolean>()
+
     val song: LiveData<SearchSong> = MutableLiveData(searchSong)
 
     init {
-        getLyrics(searchSong)
+        getSongLyrics(searchSong)
     }
 
-    private fun getLyrics(song: SearchSong) {
+    private fun getSongLyrics(song: SearchSong) {
         viewModelScope.launch {
             _isProgressLoading.value = true
             try {
@@ -42,11 +46,12 @@ class LyricsViewModel(
                 Timber.e(e)
             } finally {
                 _isProgressLoading.value = false
+                isSongStored()
             }
         }
     }
 
-    fun onLikeButtonClick() {
+    fun onStoreSongClick() {
         viewModelScope.launch {
             try {
                 _lyrics.value?.let { repository.storeSong(searchSong, it) }
@@ -54,7 +59,14 @@ class LyricsViewModel(
                 Timber.e(e)
             } finally {
                 _isLyricsSaved.value = Event(Unit)
+                isSongStored()
             }
+        }
+    }
+
+    private fun isSongStored() {
+        viewModelScope.launch {
+            _isSongStored.value = repository.isSongStored(searchSong)
         }
     }
 }

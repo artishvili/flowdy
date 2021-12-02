@@ -29,8 +29,8 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
 
             setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.actionSave -> {
-                        viewModel.onLikeButtonClick()
+                    R.id.actionSaveSong -> {
+                        viewModel.onStoreSongClick()
                         true
                     }
                     else -> false
@@ -65,6 +65,14 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
                         .setAnchorView(R.id.bottomNavView)
                         .show()
                 }
+            }
+
+            isSongStored.observe(viewLifecycleOwner) { isStored ->
+                val storeSongItem = binding.topAppBar.menu.findItem(R.id.actionSaveSong)
+                val deleteSongItem = binding.topAppBar.menu.findItem(R.id.actionDeleteSong)
+
+                storeSongItem.isVisible = !isStored
+                deleteSongItem.isVisible = isStored
             }
         }
     }
