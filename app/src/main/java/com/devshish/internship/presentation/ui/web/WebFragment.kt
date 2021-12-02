@@ -3,7 +3,7 @@ package com.devshish.internship.presentation.ui.web
 import android.os.Bundle
 import android.view.View
 import android.webkit.CookieManager
-import androidx.core.content.ContextCompat.getDrawable
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -26,25 +26,14 @@ class WebFragment : Fragment(R.layout.fragment_web) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        CookieManager.getInstance().removeAllCookies(null)
-        CookieManager.getInstance().flush()
-
-        with(binding) {
-            webView.apply {
-                loadUrl(args.link)
-                settings.javaScriptEnabled = true
-                webViewClient = client
-            }
-
-            topAppBar.apply {
-                title = getString(R.string.auth_sign_in_with_genius)
-                navigationIcon = getDrawable(requireContext(), R.drawable.ic_close)
-            }
-
-            topAppBar.setNavigationOnClickListener {
-                findNavController().navigateUp()
-            }
+        (activity as AppCompatActivity).supportActionBar?.apply {
+            setTitle(R.string.auth_sign_in_with_genius)
+            setHomeAsUpIndicator(R.drawable.ic_close)
+            setDisplayHomeAsUpEnabled(true)
         }
+
+        removeCookies()
+        setupWebView()
 
         with(viewModel) {
             navigateForward.observe(viewLifecycleOwner) {
@@ -52,5 +41,18 @@ class WebFragment : Fragment(R.layout.fragment_web) {
                 findNavController().navigate(action)
             }
         }
+    }
+
+    private fun setupWebView() {
+        binding.webView.apply {
+            settings.javaScriptEnabled = true
+            webViewClient = client
+            loadUrl(args.link)
+        }
+    }
+
+    private fun removeCookies() {
+        CookieManager.getInstance().removeAllCookies(null)
+        CookieManager.getInstance().flush()
     }
 }
