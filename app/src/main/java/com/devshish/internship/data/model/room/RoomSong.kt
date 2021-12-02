@@ -2,12 +2,15 @@ package com.devshish.internship.data.model.room
 
 import androidx.core.net.toUri
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.devshish.internship.domain.model.SearchSong
 import java.io.Serializable
 
-// TODO SET UNIQUE FIELDS
-@Entity(tableName = "lyrics")
+@Entity(
+    tableName = "lyrics",
+    indices = [Index(value = ["title", "artist"], unique = true)]
+)
 data class RoomSong(
     val title: String,
     val artist: String,

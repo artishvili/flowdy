@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ILyricsRepository
 import com.devshish.internship.presentation.ui.utils.Event
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -59,14 +60,13 @@ class LyricsViewModel(
                 Timber.e(e)
             } finally {
                 _isLyricsSaved.value = Event(Unit)
-                isSongStored()
             }
         }
     }
 
-    private fun isSongStored() {
-        viewModelScope.launch {
-            _isSongStored.value = repository.isSongStored(searchSong)
+    private suspend fun isSongStored() {
+        repository.isSongStored(searchSong).collect { isStored ->
+            _isSongStored.value = isStored
         }
     }
 }

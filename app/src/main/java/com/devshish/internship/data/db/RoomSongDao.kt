@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.devshish.internship.data.model.room.RoomSong
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface RoomSongDao {
@@ -19,5 +20,5 @@ interface RoomSongDao {
     suspend fun getStoredSong(title: String, artist: String): RoomSong?
 
     @Query("SELECT EXISTS(SELECT * FROM lyrics WHERE title = :title AND artist = :artist)")
-    suspend fun isSongStored(title: String, artist: String): Boolean
+    fun isSongStored(title: String, artist: String): Flow<Boolean>
 }
