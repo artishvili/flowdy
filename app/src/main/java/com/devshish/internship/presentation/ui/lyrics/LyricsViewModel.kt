@@ -22,6 +22,10 @@ class LyricsViewModel(
         get() = _isLyricsSaved
     private val _isLyricsSaved = MutableLiveData<Event<Unit>>()
 
+    val isLyricsDeleted: LiveData<Event<Unit>>
+        get() = _isLyricsDeleted
+    private val _isLyricsDeleted = MutableLiveData<Event<Unit>>()
+
     private val lyricsFlow = MutableStateFlow<String?>(null)
     private val isStoredFlow = MutableStateFlow<Boolean?>(null)
 
@@ -78,6 +82,18 @@ class LyricsViewModel(
                 Timber.e(e)
             } finally {
                 _isLyricsSaved.value = Event(Unit)
+            }
+        }
+    }
+
+    fun onDeleteSongClick() {
+        viewModelScope.launch {
+            try {
+                repository.deleteSong(searchSong)
+            } catch (e: Exception) {
+                Timber.e(e)
+            } finally {
+                _isLyricsDeleted.value = Event(Unit)
             }
         }
     }

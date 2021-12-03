@@ -7,6 +7,7 @@ import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ILyricsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 
@@ -35,10 +36,21 @@ class LyricsRepositoryImpl(
         lyricsDAO.storeSong(roomSong)
     }
 
-    override suspend fun getStoredSongs(): List<SearchSong> =
-        lyricsDAO.getLyrics().map { it.toSearchSong() }
+    override fun getStoredSongs(): Flow<List<SearchSong>> =
+        lyricsDAO.getStoredSongs().map { roomSongList ->
+            roomSongList.map { roomSong ->
+                roomSong.toSearchSong()
+            }
+        }
 
     override fun isSongStored(song: SearchSong): Flow<Boolean> {
         return lyricsDAO.isSongStored(song.title, song.artist)
+    }
+
+    override suspend fun deleteSong(song: SearchSong) {
+        val roomSong = lyricsDAO.getStoredSong(song.title, song.artist)
+        roomSong?.let {
+            lyricsDAO.deleteSong(it)
+        }
     }
 }
