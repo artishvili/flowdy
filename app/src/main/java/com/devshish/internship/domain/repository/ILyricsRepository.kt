@@ -1,6 +1,7 @@
 package com.devshish.internship.domain.repository
 
 import com.devshish.internship.domain.model.SearchSong
+import kotlinx.coroutines.flow.Flow
 
 interface ILyricsRepository {
 
@@ -9,4 +10,6 @@ interface ILyricsRepository {
     suspend fun storeSong(song: SearchSong, lyrics: String)
 
     suspend fun getStoredSongs(): List<SearchSong>
+
+    fun isSongStored(song: SearchSong): Flow<Boolean>
 }

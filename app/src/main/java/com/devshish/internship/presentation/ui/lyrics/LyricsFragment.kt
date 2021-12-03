@@ -10,10 +10,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentLyricsBinding
+import com.devshish.internship.domain.model.SearchSong
 import com.google.android.material.snackbar.Snackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import timber.log.Timber
 
 class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
 
@@ -29,8 +31,8 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
 
             setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.actionSave -> {
-                        viewModel.onLikeButtonClick()
+                    R.id.actionSaveSong -> {
+                        viewModel.onStoreSongClick()
                         true
                     }
                     else -> false
@@ -39,26 +41,6 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
         }
 
         with(viewModel) {
-            lyrics.observe(viewLifecycleOwner) { lyrics ->
-                binding.tvLyrics.text = lyrics
-            }
-
-            song.observe(viewLifecycleOwner) { song ->
-                binding.topAppBar.apply {
-                    title = song.title
-                    subtitle = song.artist
-                }
-
-                Glide.with(this@LyricsFragment)
-                    .load(song.imageUri)
-                    .placeholder(R.color.black)
-                    .into(binding.ivSongCover)
-            }
-
-            isProgressLoading.observe(viewLifecycleOwner) { isLoading ->
-                binding.progressIndicator.isVisible = isLoading
-            }
-
             isLyricsSaved.observe(viewLifecycleOwner) {
                 it.getContentIfNotHandled()?.let {
                     Snackbar.make(requireView(), R.string.lyrics_saved, Snackbar.LENGTH_LONG)
@@ -66,6 +48,42 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
                         .show()
                 }
             }
+
+            uiState.observe(viewLifecycleOwner) { state ->
+                Timber.d("UI STATE: ${state.javaClass.simpleName}")
+
+                val storeSongItem = binding.topAppBar.menu.findItem(R.id.actionSaveSong)
+                val deleteSongItem = binding.topAppBar.menu.findItem(R.id.actionDeleteSong)
+
+                when (state) {
+                    is LyricsViewModel.UIState.IsLoading -> {
+                        setupLayout(state.song)
+                        binding.progressIndicator.isVisible = true
+                        storeSongItem.isVisible = false
+                        deleteSongItem.isVisible = false
+                    }
+                    is LyricsViewModel.UIState.Loaded -> {
+                        binding.progressIndicator.isVisible = false
+                        binding.tvLyrics.text = state.lyrics
+                        storeSongItem.isVisible = !state.isStored
+                        deleteSongItem.isVisible = state.isStored
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setupLayout(song: SearchSong) {
+        binding.apply {
+            topAppBar.apply {
+                title = song.title
+                subtitle = song.artist
+            }
+
+            Glide.with(this@LyricsFragment)
+                .load(song.imageUri)
+                .placeholder(R.color.black)
+                .into(ivSongCover)
         }
     }
 }

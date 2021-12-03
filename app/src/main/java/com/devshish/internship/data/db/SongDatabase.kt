@@ -6,7 +6,7 @@ import com.devshish.internship.data.model.room.RoomSong
 
 @Database(
     entities = [RoomSong::class],
-    version = 3
+    version = 4
 )
 abstract class SongDatabase : RoomDatabase() {
 

@@ -1,12 +1,12 @@
 package com.devshish.internship.data.repository
 
 import androidx.core.text.HtmlCompat
-import androidx.core.text.toSpanned
 import com.devshish.internship.data.db.RoomSongDao
 import com.devshish.internship.data.model.room.RoomSong
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ILyricsRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 
@@ -37,4 +37,8 @@ class LyricsRepositoryImpl(
 
     override suspend fun getStoredSongs(): List<SearchSong> =
         lyricsDAO.getLyrics().map { it.toSearchSong() }
+
+    override fun isSongStored(song: SearchSong): Flow<Boolean> {
+        return lyricsDAO.isSongStored(song.title, song.artist)
+    }
 }
