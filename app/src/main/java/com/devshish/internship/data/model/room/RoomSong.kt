@@ -3,13 +3,13 @@ package com.devshish.internship.data.model.room
 import androidx.core.net.toUri
 import androidx.room.Entity
 import androidx.room.Index
-import androidx.room.PrimaryKey
 import com.devshish.internship.domain.model.SearchSong
 import java.io.Serializable
 
 @Entity(
     tableName = "lyrics",
-    indices = [Index(value = ["title", "artist"], unique = true)]
+    indices = [Index(value = ["title", "artist"], unique = true)],
+    primaryKeys = ["title", "artist"]
 )
 data class RoomSong(
     val title: String,
@@ -18,8 +18,6 @@ data class RoomSong(
     val lyricsUri: String,
     val lyrics: String
 ) : Serializable {
-    @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
 
     companion object {
         fun toRoomSearchSong(searchSong: SearchSong, lyrics: String): RoomSong =

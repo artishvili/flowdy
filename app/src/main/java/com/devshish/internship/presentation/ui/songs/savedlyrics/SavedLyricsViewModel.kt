@@ -24,7 +24,7 @@ class SavedLyricsViewModel(
 
     init {
         viewModelScope.launch {
-            repository.getStoredSongs().collect { songList ->
+            repository.observeStoredSongs().collect { songList ->
                 _savedSongs.value = songList
             }
         }

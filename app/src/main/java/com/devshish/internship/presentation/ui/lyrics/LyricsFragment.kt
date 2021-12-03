@@ -45,17 +45,9 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
         }
 
         with(viewModel) {
-            isLyricsSaved.observe(viewLifecycleOwner) {
-                it.getContentIfNotHandled()?.let {
-                    Snackbar.make(requireView(), R.string.lyrics_saved, Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.bottomNavView)
-                        .show()
-                }
-            }
-
-            isLyricsDeleted.observe(viewLifecycleOwner) {
-                it.getContentIfNotHandled()?.let {
-                    Snackbar.make(requireView(), R.string.lyrics_deleted, Snackbar.LENGTH_LONG)
+            isLyricsStored.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { messageRes ->
+                    Snackbar.make(requireView(), messageRes, Snackbar.LENGTH_LONG)
                         .setAnchorView(R.id.bottomNavView)
                         .show()
                 }
@@ -80,6 +72,7 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
                         storeSongItem.isVisible = !state.isStored
                         deleteSongItem.isVisible = state.isStored
                     }
+                    else -> Unit
                 }
             }
         }

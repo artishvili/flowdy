@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
+import timber.log.Timber
 
 class LyricsRepositoryImpl(
     private val lyricsDAO: RoomSongDao
@@ -36,7 +37,7 @@ class LyricsRepositoryImpl(
         lyricsDAO.storeSong(roomSong)
     }
 
-    override fun getStoredSongs(): Flow<List<SearchSong>> =
+    override fun observeStoredSongs(): Flow<List<SearchSong>> =
         lyricsDAO.getStoredSongs().map { roomSongList ->
             roomSongList.map { roomSong ->
                 roomSong.toSearchSong()
@@ -47,10 +48,9 @@ class LyricsRepositoryImpl(
         return lyricsDAO.isSongStored(song.title, song.artist)
     }
 
-    override suspend fun deleteSong(song: SearchSong) {
-        val roomSong = lyricsDAO.getStoredSong(song.title, song.artist)
-        roomSong?.let {
-            lyricsDAO.deleteSong(it)
-        }
+    override suspend fun deleteSong(song: SearchSong, lyrics: String) {
+        val roomSong = RoomSong.toRoomSearchSong(song, lyrics)
+        Timber.d("$roomSong")
+        lyricsDAO.deleteSong(roomSong)
     }
 }
