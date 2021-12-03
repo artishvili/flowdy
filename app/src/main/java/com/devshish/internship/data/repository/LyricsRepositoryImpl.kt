@@ -14,19 +14,22 @@ class LyricsRepositoryImpl(
     private val lyricsDAO: RoomSongDao
 ) : ILyricsRepository {
 
-    // TODO BUG! PAGE IS NOT ALWAYS RENDERED ENOUGH
     override suspend fun getLyrics(song: SearchSong): String =
         withContext(Dispatchers.IO) {
             val roomSong = lyricsDAO.getStoredSong(song.title, song.artist)
             if (roomSong != null) {
                 roomSong.lyrics
             } else {
-                val doc = Jsoup.connect(song.lyricsUri).get()
-                val html = doc.getElementsByClass("lyrics").html()
-                HtmlCompat.fromHtml(
-                    html,
-                    HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH
-                ).toString()
+                var lyrics = ""
+                while (lyrics.isEmpty()) {
+                    val doc = Jsoup.connect(song.lyricsUri).get()
+                    val html = doc.getElementsByClass("lyrics").html()
+                    lyrics = HtmlCompat.fromHtml(
+                        html,
+                        HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH
+                    ).toString()
+                }
+                lyrics
             }
         }
 
