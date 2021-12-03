@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devshish.internship.R
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ILyricsRepository
 import com.devshish.internship.presentation.ui.utils.Event
@@ -13,14 +14,15 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+// TODO process exceptions normally
 class LyricsViewModel(
     private val searchSong: SearchSong,
     private val repository: ILyricsRepository
 ) : ViewModel() {
 
-    val isLyricsSaved: LiveData<Event<Unit>>
-        get() = _isLyricsSaved
-    private val _isLyricsSaved = MutableLiveData<Event<Unit>>()
+    val isLyricsStored: LiveData<Event<Int>>
+        get() = _isLyricsStored
+    private val _isLyricsStored = MutableLiveData<Event<Int>>()
 
     private val lyricsFlow = MutableStateFlow<String?>(null)
     private val isStoredFlow = MutableStateFlow<Boolean?>(null)
@@ -77,7 +79,19 @@ class LyricsViewModel(
             } catch (e: Exception) {
                 Timber.e(e)
             } finally {
-                _isLyricsSaved.value = Event(Unit)
+                _isLyricsStored.value = Event(R.string.lyrics_saved)
+            }
+        }
+    }
+
+    fun onDeleteSongClick() {
+        viewModelScope.launch {
+            try {
+                lyricsFlow.value?.let { repository.deleteSong(searchSong, it) }
+            } catch (e: Exception) {
+                Timber.e(e)
+            } finally {
+                _isLyricsStored.value = Event(R.string.lyrics_deleted)
             }
         }
     }

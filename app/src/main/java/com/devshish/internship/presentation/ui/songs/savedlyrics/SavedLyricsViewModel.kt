@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ILyricsRepository
 import com.devshish.internship.presentation.ui.utils.Event
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SavedLyricsViewModel(
@@ -23,7 +24,9 @@ class SavedLyricsViewModel(
 
     init {
         viewModelScope.launch {
-            _savedSongs.value = repository.getStoredSongs()
+            repository.observeStoredSongs().collect { songList ->
+                _savedSongs.value = songList
+            }
         }
     }
 
