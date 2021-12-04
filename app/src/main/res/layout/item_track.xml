@@ -1,95 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CardAppearance.App"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
-    android:paddingStart="@dimen/spacing_default"
-    android:paddingTop="@dimen/spacing_small"
-    android:paddingEnd="@dimen/spacing_default"
-    android:paddingBottom="@dimen/spacing_small">
+    android:layout_marginStart="@dimen/spacing_default"
+    android:layout_marginTop="@dimen/spacing_small"
+    android:layout_marginEnd="@dimen/spacing_default"
+    android:layout_marginBottom="@dimen/spacing_small">
 
-    <TextView
-        android:id="@+id/tvPosition"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceBody1"
-        app:layout_constraintBottom_toBottomOf="@id/tvTrack"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvTrack"
-        tools:text="1" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/spacing_default">
 
-    <TextView
-        android:id="@+id/tvTrack"
-        style="@style/TextAppearance.OneLine"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_default"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvPosition"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="HUMBLE." />
+        <TextView
+            android:id="@+id/tvPosition"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintBottom_toBottomOf="@id/tvTrack"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvTrack"
+            tools:text="1" />
 
-    <TextView
-        android:id="@+id/tvArtist"
-        style="@style/TextAppearance.OneLine"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_default"
-        android:layout_marginEnd="@dimen/spacing_small"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tvPosition"
-        app:layout_constraintTop_toBottomOf="@id/tvTrack"
-        tools:text="Kendrick Lamar" />
+        <TextView
+            android:id="@+id/tvTrack"
+            style="@style/TextAppearance.OneLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_default"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvPosition"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="HUMBLE." />
 
-    <TextView
-        android:id="@+id/tvListenersText"
-        style="@style/TextAppearance.OneLine"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:text="@string/home_chart_listeners"
-        android:textAppearance="?attr/textAppearanceBody2"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/tvArtist"
-        app:layout_constraintTop_toBottomOf="@id/tvArtist" />
+        <TextView
+            android:id="@+id/tvArtist"
+            style="@style/TextAppearance.OneLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTrack"
+            tools:text="by Kendrick Lamar" />
 
-    <TextView
-        android:id="@+id/tvListeners"
-        style="@style/TextAppearance.OneLine"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceBody2"
-        app:layout_constraintStart_toStartOf="@id/tvListenersText"
-        app:layout_constraintTop_toBottomOf="@id/tvListenersText"
-        tools:text="123123" />
+        <TextView
+            android:id="@+id/tvListenersText"
+            style="@style/TextAppearance.OneLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="@string/home_chart_listeners"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/tvArtist"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvArtist"
+            tools:text="That much listeners this artist has:" />
 
-    <TextView
-        android:id="@+id/tvPlayCountText"
-        style="@style/TextAppearance.OneLine"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_big"
-        android:layout_marginTop="@dimen/spacing_small"
-        android:text="@string/home_chart_playcount"
-        android:textAppearance="?attr/textAppearanceBody2"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tvListenersText"
-        app:layout_constraintTop_toBottomOf="@id/tvArtist" />
+        <TextView
+            android:id="@+id/tvListeners"
+            style="@style/TextAppearance.OneLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="@id/tvListenersText"
+            app:layout_constraintStart_toStartOf="@id/tvListenersText"
+            app:layout_constraintTop_toBottomOf="@id/tvListenersText"
+            tools:text="123123" />
 
-    <TextView
-        android:id="@+id/tvPlayCount"
-        style="@style/TextAppearance.OneLine"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceBody2"
-        app:layout_constraintStart_toStartOf="@id/tvPlayCountText"
-        app:layout_constraintTop_toBottomOf="@id/tvPlayCountText"
-        tools:text="1000000" />
+        <TextView
+            android:id="@+id/tvPlayCountText"
+            style="@style/TextAppearance.OneLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:text="@string/home_chart_playcount"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/tvListeners"
+            app:layout_constraintStart_toStartOf="@id/tvListeners"
+            app:layout_constraintTop_toBottomOf="@id/tvListeners" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvPlayCount"
+            style="@style/TextAppearance.OneLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:textAppearance="?attr/textAppearanceBody2"
+            app:layout_constraintEnd_toEndOf="@id/tvPlayCountText"
+            app:layout_constraintStart_toStartOf="@id/tvPlayCountText"
+            app:layout_constraintTop_toBottomOf="@id/tvPlayCountText"
+            tools:text="1000000" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

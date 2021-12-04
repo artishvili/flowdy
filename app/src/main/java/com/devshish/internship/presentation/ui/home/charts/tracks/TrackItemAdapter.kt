@@ -1,5 +1,6 @@
 package com.devshish.internship.presentation.ui.home.charts.tracks
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -8,6 +9,7 @@ import com.devshish.internship.domain.model.Track
 import com.devshish.internship.presentation.model.TrackItemCallback
 
 class TrackItemAdapter(
+    private val context: Context,
     private val onClick: (Track) -> Unit
 ) : ListAdapter<Track, TrackViewHolder>(TrackItemCallback()) {
 
@@ -17,7 +19,7 @@ class TrackItemAdapter(
             parent,
             false
         )
-        return TrackViewHolder(binding, onClick)
+        return TrackViewHolder(context, binding, onClick)
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {

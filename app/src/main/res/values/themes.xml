@@ -23,4 +23,10 @@
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
     </style>
+
+    <style name="CardAppearance.App" parent="Widget.MaterialComponents.CardView">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:backgroundTint">@color/gray</item>
+        <item name="cardCornerRadius">@dimen/spacing_small</item>
+    </style>
 </resources>
