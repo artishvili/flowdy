@@ -7,12 +7,12 @@
     <string name="nav_library">Library</string>
     <string name="nav_profile">Profile</string>
     <!-- Music library -->
-    <string name="library_saved_lyrics">Saved Lyrics</string>
-    <string name="library_songs_count">12 songs</string>
+    <string name="library_saved_lyrics_title">Saved Lyrics</string>
+    <string name="library_saved_lyrics_subtitle">All your stored lyrics in one place. Look, manage and enjoy!</string>
     <string name="library_albums">Liked Albums</string>
     <string name="library_albums_count">3 albums</string>
-    <string name="library_local_songs">Local Songs</string>
-    <string name="library_your_local_songs">Your local songs</string>
+    <string name="library_local_songs_title">Local Songs</string>
+    <string name="library_local_songs_subtitle">Want to listen to some music? We\'ve got a library of all songs stored in your device. Check it out!</string>
     <string name="library_local_albums">Local Albums</string>
     <string name="library_your_local_albums">Your local albums</string>
     <string name="library_details_album_title">Album Title</string>

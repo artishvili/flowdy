@@ -21,46 +21,37 @@ class LibraryFragment : Fragment(R.layout.fragment_library) {
 
         with(binding) {
             layoutSavedSongs.setData(
-                playlistCover = R.drawable.liked,
-                playlistTitle = R.string.library_saved_lyrics,
-                playlistItemCount = R.string.library_songs_count
+                playlistCover = R.drawable.lyrics,
+                playlistTitle = R.string.library_saved_lyrics_title,
+                playlistItemSubTitle = R.string.library_saved_lyrics_subtitle
             ) {
                 val action = LibraryFragmentDirections.actionLibraryFragmentToLikedSongsFragment()
                 findNavController().navigate(action)
             }
 
             layoutLocalSongs.setData(
-                playlistCover = R.drawable.ic_folder,
-                playlistTitle = R.string.library_local_songs,
-                playlistItemCount = R.string.library_your_local_songs
+                playlistCover = R.drawable.album,
+                playlistTitle = R.string.library_local_songs_title,
+                playlistItemSubTitle = R.string.library_local_songs_subtitle
             ) {
                 val action = LibraryFragmentDirections.actionLibraryFragmentToLocalSongsFragment()
-                findNavController().navigate(action)
-            }
-
-            layoutLocalAlbums.setData(
-                playlistCover = R.drawable.ic_folder,
-                playlistTitle = R.string.library_local_albums,
-                playlistItemCount = R.string.library_your_local_albums
-            ) {
-                val action = LibraryFragmentDirections.actionLibraryFragmentToLocalAlbumsFragment()
                 findNavController().navigate(action)
             }
         }
     }
 
     private fun ItemPlaylistBinding.setData(
-        @DrawableRes playlistCover: Int,
+        @DrawableRes playlistCover: Int?,
         @StringRes playlistTitle: Int,
-        @StringRes playlistItemCount: Int,
+        @StringRes playlistItemSubTitle: Int,
         navigateToPlaylist: () -> Unit
     ) {
         Glide.with(this@LibraryFragment)
             .load(playlistCover)
-            .placeholder(playlistCover)
+            .placeholder(R.color.purple_200)
             .into(ivPlaylistCover)
         tvPlaylistTitle.text = getString(playlistTitle)
-        tvPlaylistItemCount.text = getString(playlistItemCount)
+        tvPlaylistSubTitle.text = getString(playlistItemSubTitle)
         root.setOnClickListener { navigateToPlaylist() }
     }
 }
