@@ -66,11 +66,7 @@ class PlayerViewModel(
 
             override fun getPosition(position: Long) {
                 _songToPlay.value?.duration?.let {
-                    if (it > position.toInt()) {
-                        _currentPosition.value = position.toInt()
-                    } else {
-                        _currentPosition.value = _songToPlay.value?.duration
-                    }
+                    _currentPosition.value = position.toInt().coerceAtMost(it)
                 }
             }
 
