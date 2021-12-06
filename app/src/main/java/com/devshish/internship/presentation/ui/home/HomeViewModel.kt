@@ -7,10 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.Artist
 import com.devshish.internship.domain.model.Track
 import com.devshish.internship.domain.repository.IChartsRepository
+import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.utils.Event
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
+    private val mainViewModel: MainViewModel,
     private val repository: IChartsRepository
 ) : ViewModel() {
 
@@ -26,6 +28,10 @@ class HomeViewModel(
         get() = _isLayoutRefreshing
     private val _isLayoutRefreshing = MutableLiveData<Boolean>()
 
+    val noInternetConnection: LiveData<Unit>
+        get() = _noInternetConnection
+    private val _noInternetConnection = MutableLiveData<Unit>()
+
     val navigationEvent: LiveData<Event<String>>
         get() = _navigationEvent
     private val _navigationEvent = MutableLiveData<Event<String>>()
@@ -35,11 +41,15 @@ class HomeViewModel(
     }
 
     fun refreshCharts() {
-        viewModelScope.launch {
-            _isLayoutRefreshing.value = true
-            _topArtists.value = repository.getTopArtists()
-            _topTracks.value = repository.getTopTracks()
-            _isLayoutRefreshing.value = false
+        if (mainViewModel.checkInternetConnection()) {
+            viewModelScope.launch {
+                _isLayoutRefreshing.value = true
+                _topArtists.value = repository.getTopArtists()
+                _topTracks.value = repository.getTopTracks()
+                _isLayoutRefreshing.value = false
+            }
+        } else {
+            _noInternetConnection.value = Unit
         }
     }
 

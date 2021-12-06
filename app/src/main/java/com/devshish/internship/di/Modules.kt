@@ -120,13 +120,19 @@ val appModule = module {
 
 val viewModelModule = module {
     // Main
-    viewModel { MainViewModel(mediaBrowser = get()) }
+    viewModel {
+        MainViewModel(
+            app = get(),
+            mediaBrowser = get()
+        )
+    }
 
     // Profile
     viewModel {
         ProfileViewModel(
             repository = get(),
-            tokenRepository = get()
+            tokenRepository = get(),
+            mainViewModel = get()
         )
     }
 
@@ -152,6 +158,7 @@ val viewModelModule = module {
     // Search
     viewModel {
         SearchViewModel(
+            mainViewModel = get(),
             repository = get()
         )
     }
@@ -181,13 +188,15 @@ val viewModelModule = module {
     viewModel {
         LyricsViewModel(
             searchSong = get(),
-            repository = get()
+            repository = get(),
+            mainViewModel = get()
         )
     }
 
     // Home
     viewModel {
         HomeViewModel(
+            mainViewModel = get(),
             repository = get()
         )
     }

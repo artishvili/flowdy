@@ -12,6 +12,7 @@ import com.devshish.internship.databinding.FragmentHomeBinding
 import com.devshish.internship.presentation.ui.home.charts.artists.ArtistItemAdapter
 import com.devshish.internship.presentation.ui.home.charts.title.ChartTitleAdapter
 import com.devshish.internship.presentation.ui.home.charts.tracks.TrackItemAdapter
+import com.google.android.material.snackbar.Snackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -45,6 +46,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         with(viewModel) {
+            noInternetConnection.observe(viewLifecycleOwner) {
+                Snackbar.make(requireView(), R.string.internet_connection_absent, Snackbar.LENGTH_INDEFINITE)
+                    .setAnchorView(R.id.bottomNavView)
+                    .setAction(R.string.internet_connection_retry) {
+                        refreshCharts()
+                    }
+                    .show()
+            }
+
             topArtists.observe(viewLifecycleOwner) { artists ->
                 artistItemAdapter.submitList(artists)
             }

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.devshish.internship.R
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ILyricsRepository
+import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.utils.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
@@ -17,12 +18,17 @@ import timber.log.Timber
 // TODO process exceptions normally
 class LyricsViewModel(
     private val searchSong: SearchSong,
-    private val repository: ILyricsRepository
+    private val repository: ILyricsRepository,
+    private val mainViewModel: MainViewModel
 ) : ViewModel() {
 
     val isLyricsStored: LiveData<Event<Int>>
         get() = _isLyricsStored
     private val _isLyricsStored = MutableLiveData<Event<Int>>()
+
+    val noInternetConnection: LiveData<Unit>
+        get() = _noInternetConnection
+    private val _noInternetConnection = MutableLiveData<Unit>()
 
     private val lyricsFlow = MutableStateFlow<String?>(null)
     private val isStoredFlow = MutableStateFlow<Boolean?>(null)
@@ -32,13 +38,7 @@ class LyricsViewModel(
     private val _uiState = MutableLiveData<UIState>(UIState.IsLoading(searchSong))
 
     init {
-        viewModelScope.launch {
-            try {
-                lyricsFlow.value = repository.getLyrics(searchSong)
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
-        }
+        getLyrics()
 
         viewModelScope.launch {
             repository.isSongStored(searchSong).collect { isStored ->
@@ -57,6 +57,20 @@ class LyricsViewModel(
             }.collect {
                 _uiState.value = it
             }
+        }
+    }
+
+    fun getLyrics() {
+        if (mainViewModel.checkInternetConnection()) {
+            viewModelScope.launch {
+                try {
+                    lyricsFlow.value = repository.getLyrics(searchSong)
+                } catch (e: Exception) {
+                    Timber.e(e)
+                }
+            }
+        } else {
+            _noInternetConnection.value = Unit
         }
     }
 

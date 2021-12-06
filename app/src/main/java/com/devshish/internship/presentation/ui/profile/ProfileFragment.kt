@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentProfileBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,6 +37,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         with(viewModel) {
+            noInternetConnection.observe(viewLifecycleOwner) {
+                Snackbar.make(requireView(), R.string.internet_connection_absent, Snackbar.LENGTH_INDEFINITE)
+                    .setAnchorView(R.id.bottomNavView)
+                    .setAction(R.string.internet_connection_retry) {
+                        loadUser()
+                    }
+                    .show()
+            }
+
             userData.observe(viewLifecycleOwner) {
                 binding.apply {
                     Glide.with(this@ProfileFragment)

@@ -45,6 +45,15 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
         }
 
         with(viewModel) {
+            noInternetConnection.observe(viewLifecycleOwner) {
+                Snackbar.make(requireView(), R.string.internet_connection_absent, Snackbar.LENGTH_INDEFINITE)
+                    .setAnchorView(R.id.bottomNavView)
+                    .setAction(R.string.internet_connection_retry) {
+                        getLyrics()
+                    }
+                    .show()
+            }
+
             isLyricsStored.observe(viewLifecycleOwner) {
                 it.getContentIfNotHandled()?.let { messageRes ->
                     Snackbar.make(requireView(), messageRes, Snackbar.LENGTH_LONG)

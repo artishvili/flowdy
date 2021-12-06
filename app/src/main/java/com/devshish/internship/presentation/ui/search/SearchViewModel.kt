@@ -6,11 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ISearchSongsRepository
+import com.devshish.internship.presentation.ui.MainViewModel
 import com.devshish.internship.presentation.ui.utils.Event
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class SearchViewModel(
+    private val mainViewModel: MainViewModel,
     private val repository: ISearchSongsRepository
 ) : ViewModel() {
 
@@ -26,6 +28,10 @@ class SearchViewModel(
         get() = _songsList
     private val _songsList = MutableLiveData<List<SearchSong>>()
 
+    val noInternetConnection: LiveData<Boolean>
+        get() = _noInternetConnection
+    private val _noInternetConnection = MutableLiveData(false)
+
     val navigateToLyricsEvent: LiveData<Event<SearchSong>>
         get() = _navigateToLyricsEvent
     private val _navigateToLyricsEvent = MutableLiveData<Event<SearchSong>>()
@@ -36,17 +42,22 @@ class SearchViewModel(
     }
 
     fun searchSongs(query: String) {
-        viewModelScope.launch {
-            _isProgressLoading.value = true
-            _isDescriptionVisible.value = false
-            try {
-                _songsList.value = repository.searchSongs(query)
-            } catch (e: Exception) {
-                _isDescriptionVisible.value = true
-                Timber.e(e)
-            } finally {
-                _isProgressLoading.value = false
+        if (mainViewModel.checkInternetConnection()) {
+            _noInternetConnection.value = false
+            viewModelScope.launch {
+                _isProgressLoading.value = true
+                _isDescriptionVisible.value = false
+                try {
+                    _songsList.value = repository.searchSongs(query)
+                } catch (e: Exception) {
+                    _isDescriptionVisible.value = true
+                    Timber.e(e)
+                } finally {
+                    _isProgressLoading.value = false
+                }
             }
+        } else {
+            _noInternetConnection.value = true
         }
     }
 }

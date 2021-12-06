@@ -7,11 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.User
 import com.devshish.internship.domain.repository.IProfileRepository
 import com.devshish.internship.domain.repository.ITokenRepository
+import com.devshish.internship.presentation.ui.MainViewModel
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(
-    repository: IProfileRepository,
-    private val tokenRepository: ITokenRepository
+    private val repository: IProfileRepository,
+    private val tokenRepository: ITokenRepository,
+    private val mainViewModel: MainViewModel
 ) : ViewModel() {
 
     val userData: LiveData<User>
@@ -22,9 +24,21 @@ class ProfileViewModel(
         get() = _navigationEvent
     private val _navigationEvent = MutableLiveData<Unit>()
 
+    val noInternetConnection: LiveData<Unit>
+        get() = _noInternetConnection
+    private val _noInternetConnection = MutableLiveData<Unit>()
+
     init {
-        viewModelScope.launch {
-            _userData.value = repository.getUser()
+        loadUser()
+    }
+
+    fun loadUser() {
+        if (mainViewModel.checkInternetConnection()) {
+            viewModelScope.launch {
+                _userData.value = repository.getUser()
+            }
+        } else {
+            _noInternetConnection.value = Unit
         }
     }
 
