@@ -58,7 +58,7 @@
     <string name="lyrics">Lyrics</string>
     <string name="lyrics_action_save">Save</string>
     <string name="lyrics_action_delete">Delete</string>
-    <!-- Internet connection -->
-    <string name="internet_connection_absent">Something went wrong…</string>
-    <string name="internet_connection_retry">Retry</string>
+    <!-- Snackbar -->
+    <string name="snackbar_something_went_wrong">Something went wrong…</string>
+    <string name="snackbar_retry">Retry</string>
 </resources>

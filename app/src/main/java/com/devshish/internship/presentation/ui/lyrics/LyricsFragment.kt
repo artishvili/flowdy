@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentLyricsBinding
 import com.devshish.internship.domain.model.SearchSong
-import com.devshish.internship.presentation.ui.utils.set
+import com.devshish.internship.presentation.ui.utils.caseSmthWentWrong
 import com.google.android.material.snackbar.Snackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,9 +46,11 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
         }
 
         with(viewModel) {
-            noInternetConnection.observe(viewLifecycleOwner) {
-                Snackbar.make(requireView(), R.string.internet_connection_absent, Snackbar.LENGTH_INDEFINITE)
-                    .set { getLyrics() }
+            exception.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { messageRes ->
+                    Snackbar.make(requireView(), messageRes, Snackbar.LENGTH_LONG)
+                        .caseSmthWentWrong { getLyrics() }
+                }
             }
 
             isLyricsStored.observe(viewLifecycleOwner) {

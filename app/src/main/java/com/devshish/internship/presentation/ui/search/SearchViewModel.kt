@@ -1,9 +1,11 @@
 package com.devshish.internship.presentation.ui.search
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devshish.internship.R
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ISearchSongsRepository
 import com.devshish.internship.presentation.ui.utils.Event
@@ -13,6 +15,11 @@ import timber.log.Timber
 class SearchViewModel(
     private val repository: ISearchSongsRepository
 ) : ViewModel() {
+
+    sealed class UIState {
+        data class Exception(@StringRes val messageRes: Int) : UIState()
+        data class Navigate(val searchSong: SearchSong) : UIState()
+    }
 
     val isDescriptionVisible: LiveData<Boolean>
         get() = _isDescriptionVisible
@@ -26,17 +33,12 @@ class SearchViewModel(
         get() = _songsList
     private val _songsList = MutableLiveData<List<SearchSong>>()
 
-    val noInternetConnection: LiveData<Event<Unit>>
-        get() = _noInternetConnection
-    private val _noInternetConnection = MutableLiveData<Event<Unit>>()
-
-    val navigateToLyricsEvent: LiveData<Event<SearchSong>>
-        get() = _navigateToLyricsEvent
-    private val _navigateToLyricsEvent = MutableLiveData<Event<SearchSong>>()
+    val uiState: LiveData<Event<UIState>>
+        get() = _uiState
+    private val _uiState = MutableLiveData<Event<UIState>>()
 
     fun onSearchSongClick(song: SearchSong) {
-        val event = Event(song)
-        _navigateToLyricsEvent.value = event
+        _uiState.value = Event(UIState.Navigate(song))
     }
 
     fun searchSongs(query: String) {
@@ -46,7 +48,7 @@ class SearchViewModel(
             try {
                 _songsList.value = repository.searchSongs(query)
             } catch (e: Exception) {
-                _noInternetConnection.value = Event(Unit)
+                _uiState.value = Event(UIState.Exception(R.string.snackbar_something_went_wrong))
                 _isDescriptionVisible.value = true
                 Timber.e(e)
             } finally {

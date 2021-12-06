@@ -7,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentProfileBinding
-import com.devshish.internship.presentation.ui.utils.set
+import com.devshish.internship.presentation.ui.utils.caseSmthWentWrong
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -55,17 +55,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 }
             }
 
-            event.observe(viewLifecycleOwner) {
-                it.getContentIfNotHandled()?.let { navigation ->
-                    if (navigation) {
-                        val action = ProfileFragmentDirections.actionProfileFragmentToAuthFragment()
-                        findNavController().navigate(action)
-                    } else {
-                        Snackbar.make(
-                            requireView(),
-                            R.string.internet_connection_absent,
-                            Snackbar.LENGTH_INDEFINITE
-                        ).set { loadUser() }
+            uiState.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { state ->
+                    when (state) {
+                        ProfileViewModel.UIState.NoException -> {
+                            val action =
+                                ProfileFragmentDirections.actionProfileFragmentToAuthFragment()
+                            findNavController().navigate(action)
+                        }
+                        is ProfileViewModel.UIState.Exception -> {
+                            Snackbar.make(requireView(), state.messageRes, Snackbar.LENGTH_LONG)
+                                .caseSmthWentWrong { loadUser() }
+                        }
                     }
                 }
             }

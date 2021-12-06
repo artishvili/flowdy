@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentSearchBinding
 import com.devshish.internship.presentation.ui.utils.onQueryTextChanged
-import com.devshish.internship.presentation.ui.utils.set
+import com.devshish.internship.presentation.ui.utils.caseSmthWentWrong
 import com.google.android.material.snackbar.Snackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -55,19 +55,20 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 binding.tvDescription.isVisible = isVisible
             }
 
-            navigateToLyricsEvent.observe(viewLifecycleOwner) {
-                it.getContentIfNotHandled()?.let { song ->
-                    val action = SearchFragmentDirections.actionSearchFragmentToLyricsFragment(song)
-                    findNavController().navigate(action)
+            uiState.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { state ->
+                    when (state) {
+                        is SearchViewModel.UIState.Navigate -> {
+                            val action = SearchFragmentDirections
+                                .actionSearchFragmentToLyricsFragment(state.searchSong)
+                            findNavController().navigate(action)
+                        }
+                        is SearchViewModel.UIState.Exception -> {
+                            Snackbar.make(requireView(), state.messageRes, Snackbar.LENGTH_LONG)
+                                .caseSmthWentWrong(action = null)
+                        }
+                    }
                 }
-            }
-
-            noInternetConnection.observe(viewLifecycleOwner) {
-                Snackbar.make(
-                    requireView(),
-                    R.string.internet_connection_absent,
-                    Snackbar.LENGTH_LONG
-                ).set(null)
             }
         }
     }

@@ -1,9 +1,11 @@
 package com.devshish.internship.presentation.ui.profile
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devshish.internship.R
 import com.devshish.internship.domain.model.User
 import com.devshish.internship.domain.repository.IProfileRepository
 import com.devshish.internship.domain.repository.ITokenRepository
@@ -16,13 +18,18 @@ class ProfileViewModel(
     private val tokenRepository: ITokenRepository
 ) : ViewModel() {
 
+    sealed class UIState {
+        data class Exception(@StringRes val messageRes: Int) : UIState()
+        object NoException : UIState()
+    }
+
     val userData: LiveData<User>
         get() = _userData
     private val _userData = MutableLiveData<User>()
 
-    val event: LiveData<Event<Boolean>>
-        get() = _event
-    private val _event = MutableLiveData<Event<Boolean>>()
+    val uiState: LiveData<Event<UIState>>
+        get() = _uiState
+    private val _uiState = MutableLiveData<Event<UIState>>()
 
     init {
         loadUser()
@@ -33,7 +40,7 @@ class ProfileViewModel(
             try {
                 _userData.value = repository.getUser()
             } catch (e: Exception) {
-                _event.value = Event(false)
+                _uiState.value = Event(UIState.Exception(R.string.snackbar_something_went_wrong))
                 Timber.e(e)
             }
         }
@@ -42,7 +49,7 @@ class ProfileViewModel(
     fun logout() {
         viewModelScope.launch {
             tokenRepository.clear()
-            _event.value = Event(true)
+            _uiState.value = Event(UIState.NoException)
         }
     }
 }

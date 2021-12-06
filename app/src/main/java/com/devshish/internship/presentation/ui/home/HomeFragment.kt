@@ -12,7 +12,7 @@ import com.devshish.internship.databinding.FragmentHomeBinding
 import com.devshish.internship.presentation.ui.home.charts.artists.ArtistItemAdapter
 import com.devshish.internship.presentation.ui.home.charts.title.ChartTitleAdapter
 import com.devshish.internship.presentation.ui.home.charts.tracks.TrackItemAdapter
-import com.devshish.internship.presentation.ui.utils.set
+import com.devshish.internship.presentation.ui.utils.caseSmthWentWrong
 import com.google.android.material.snackbar.Snackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,12 +47,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         with(viewModel) {
-            noInternetConnection.observe(viewLifecycleOwner) {
-                Snackbar.make(
-                    requireView(),
-                    R.string.internet_connection_absent,
-                    Snackbar.LENGTH_LONG
-                ).set { refreshCharts() }
+            exception.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { messageRes ->
+                    Snackbar.make(requireView(), messageRes, Snackbar.LENGTH_LONG)
+                        .caseSmthWentWrong { refreshCharts() }
+                }
             }
 
             topArtists.observe(viewLifecycleOwner) { artists ->

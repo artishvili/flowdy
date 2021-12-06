@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devshish.internship.R
 import com.devshish.internship.domain.model.Artist
 import com.devshish.internship.domain.model.Track
 import com.devshish.internship.domain.repository.IChartsRepository
@@ -27,9 +28,9 @@ class HomeViewModel(
         get() = _isLayoutRefreshing
     private val _isLayoutRefreshing = MutableLiveData<Boolean>()
 
-    val noInternetConnection: LiveData<Event<Unit>>
-        get() = _noInternetConnection
-    private val _noInternetConnection = MutableLiveData<Event<Unit>>()
+    val exception: LiveData<Event<Int>>
+        get() = _exception
+    private val _exception = MutableLiveData<Event<Int>>()
 
     val navigationEvent: LiveData<Event<String>>
         get() = _navigationEvent
@@ -46,7 +47,7 @@ class HomeViewModel(
                 _topArtists.value = repository.getTopArtists()
                 _topTracks.value = repository.getTopTracks()
             } catch (e: Exception) {
-                _noInternetConnection.value = Event(Unit)
+                _exception.value = Event(R.string.snackbar_something_went_wrong)
                 Timber.e(e)
             } finally {
                 _isLayoutRefreshing.value = false
