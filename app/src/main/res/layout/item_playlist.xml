@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="@dimen/spacing_default"
-    android:paddingTop="@dimen/spacing_default"
-    android:paddingEnd="@dimen/spacing_default">
+    app:cardCornerRadius="@dimen/spacing_small">
 
-    <ImageView
-        android:id="@+id/ivPlaylistCover"
-        android:layout_width="@dimen/library_image_size"
-        android:layout_height="@dimen/library_image_size"
-        android:scaleType="centerCrop"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@color/purple_200" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
 
-    <TextView
-        android:id="@+id/tvPlaylistTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_default"
-        android:textAppearance="?attr/textAppearanceBody2"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tvPlaylistItemCount"
-        app:layout_constraintStart_toEndOf="@id/ivPlaylistCover"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Playlist Title" />
+        <ImageView
+            android:id="@+id/ivPlaylistCover"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.25"
+            android:scaleType="centerCrop"
+            android:src="@drawable/album"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@color/purple_200" />
 
-    <TextView
-        android:id="@+id/tvPlaylistItemCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/spacing_default"
-        android:layout_marginTop="@dimen/spacing_micro"
-        app:layout_constraintBottom_toBottomOf="@id/ivPlaylistCover"
-        app:layout_constraintStart_toEndOf="@id/ivPlaylistCover"
-        app:layout_constraintTop_toBottomOf="@+id/tvPlaylistTitle"
-        tools:text="1234 Items" />
+        <TextView
+            android:id="@+id/tvPlaylistTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/spacing_default"
+            android:paddingTop="@dimen/spacing_default"
+            android:paddingEnd="@dimen/spacing_default"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Playlist Title" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvPlaylistSubTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/spacing_default"
+            android:paddingTop="@dimen/spacing_small"
+            android:paddingEnd="@dimen/spacing_default"
+            android:textAppearance="?attr/textAppearanceBody1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPlaylistTitle"
+            tools:text="Playlist Subtitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
