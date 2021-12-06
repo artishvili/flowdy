@@ -9,6 +9,7 @@ import com.devshish.internship.presentation.ui.utils.song
 import com.devshish.internship.presentation.ui.utils.toMediaMetadata
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
+import com.google.android.exoplayer2.Player
 import timber.log.Timber
 
 class MediaSessionCallback(
@@ -18,6 +19,24 @@ class MediaSessionCallback(
     private val exoPlayer: ExoPlayer,
     private val notificationManager: PlayerNotificationManager
 ) : MediaSessionCompat.Callback() {
+
+    init {
+        exoPlayer.addListener(object : Player.Listener {
+            override fun onPlaybackStateChanged(playbackState: Int) {
+                super.onPlaybackStateChanged(playbackState)
+                if (playbackState == Player.STATE_ENDED) {
+                    mediaSession.updateState(
+                        stateBuilder = stateBuilder,
+                        state = PlaybackStateCompat.STATE_STOPPED
+                    )
+                    notificationManager.onStop()
+                    exoPlayer.stop()
+                    mediaService.stopSelf()
+                    Timber.d("onStop")
+                }
+            }
+        })
+    }
 
     private fun MediaSessionCompat.updateState(
         stateBuilder: PlaybackStateCompat.Builder,
@@ -67,17 +86,6 @@ class MediaSessionCallback(
         exoPlayer.pause()
         notificationManager.onPause()
         Timber.d("onPause")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        exoPlayer.stop()
-        mediaSession.updateState(
-            stateBuilder = stateBuilder,
-            state = PlaybackStateCompat.STATE_STOPPED
-        )
-        mediaService.stopSelf()
-        Timber.d("onStop")
     }
 
     override fun onSeekTo(pos: Long) {

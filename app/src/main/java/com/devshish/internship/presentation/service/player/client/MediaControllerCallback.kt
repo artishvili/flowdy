@@ -33,7 +33,10 @@ class MediaControllerCallback(
                 isPlaying(true)
                 playerBarVisibility(true)
             }
-            PlaybackStateCompat.STATE_STOPPED -> playerBarVisibility(false)
+            PlaybackStateCompat.STATE_STOPPED -> {
+                isPlaying(false)
+                playerBarVisibility(false)
+            }
             else -> isPlaying(false)
         }
     }

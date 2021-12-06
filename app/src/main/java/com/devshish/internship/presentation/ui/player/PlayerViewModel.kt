@@ -65,7 +65,9 @@ class PlayerViewModel(
             }
 
             override fun getPosition(position: Long) {
-                _currentPosition.value = position.toInt()
+                _songToPlay.value?.duration?.let {
+                    _currentPosition.value = position.toInt().coerceAtMost(it)
+                }
             }
 
             override fun getPlayerBarVisibility(isVisible: Boolean) {

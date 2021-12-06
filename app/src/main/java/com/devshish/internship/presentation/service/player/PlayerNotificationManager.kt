@@ -110,6 +110,10 @@ class PlayerNotificationManager(
             .show()
     }
 
+    fun onStop() {
+        NotificationManagerCompat.from(context).cancel(NOTIFICATION_ID)
+    }
+
     private fun setIntent(action: Long): PendingIntent =
         MediaButtonReceiver.buildMediaButtonPendingIntent(
             context,
