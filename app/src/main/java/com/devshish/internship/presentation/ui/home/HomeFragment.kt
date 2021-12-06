@@ -24,7 +24,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         val artistItemAdapter = ArtistItemAdapter { viewModel.onArtistOrTrackClick(it.url) }
-        val trackItemAdapter = TrackItemAdapter(requireContext()) {
+        val trackItemAdapter = TrackItemAdapter {
             viewModel.onArtistOrTrackClick(it.url)
         }
         val artistsTitleAdapter = ChartTitleAdapter(getString(R.string.home_chart_artists))
