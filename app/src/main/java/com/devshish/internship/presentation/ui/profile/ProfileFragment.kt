@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentProfileBinding
+import com.devshish.internship.presentation.ui.utils.set
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
@@ -37,15 +38,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         with(viewModel) {
-            noInternetConnection.observe(viewLifecycleOwner) {
-                Snackbar.make(requireView(), R.string.internet_connection_absent, Snackbar.LENGTH_INDEFINITE)
-                    .setAnchorView(R.id.bottomNavView)
-                    .setAction(R.string.internet_connection_retry) {
-                        loadUser()
-                    }
-                    .show()
-            }
-
             userData.observe(viewLifecycleOwner) {
                 binding.apply {
                     Glide.with(this@ProfileFragment)
@@ -63,9 +55,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 }
             }
 
-            navigationEvent.observe(viewLifecycleOwner) {
-                val action = ProfileFragmentDirections.actionProfileFragmentToAuthFragment()
-                findNavController().navigate(action)
+            event.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { navigation ->
+                    if (navigation) {
+                        val action = ProfileFragmentDirections.actionProfileFragmentToAuthFragment()
+                        findNavController().navigate(action)
+                    } else {
+                        Snackbar.make(
+                            requireView(),
+                            R.string.internet_connection_absent,
+                            Snackbar.LENGTH_INDEFINITE
+                        ).set { loadUser() }
+                    }
+                }
             }
         }
     }

@@ -7,45 +7,42 @@ import androidx.lifecycle.viewModelScope
 import com.devshish.internship.domain.model.User
 import com.devshish.internship.domain.repository.IProfileRepository
 import com.devshish.internship.domain.repository.ITokenRepository
-import com.devshish.internship.presentation.ui.MainViewModel
+import com.devshish.internship.presentation.ui.utils.Event
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class ProfileViewModel(
     private val repository: IProfileRepository,
-    private val tokenRepository: ITokenRepository,
-    private val mainViewModel: MainViewModel
+    private val tokenRepository: ITokenRepository
 ) : ViewModel() {
 
     val userData: LiveData<User>
         get() = _userData
     private val _userData = MutableLiveData<User>()
 
-    val navigationEvent: LiveData<Unit>
-        get() = _navigationEvent
-    private val _navigationEvent = MutableLiveData<Unit>()
-
-    val noInternetConnection: LiveData<Unit>
-        get() = _noInternetConnection
-    private val _noInternetConnection = MutableLiveData<Unit>()
+    val event: LiveData<Event<Boolean>>
+        get() = _event
+    private val _event = MutableLiveData<Event<Boolean>>()
 
     init {
         loadUser()
     }
 
     fun loadUser() {
-        if (mainViewModel.checkInternetConnection()) {
-            viewModelScope.launch {
+        viewModelScope.launch {
+            try {
                 _userData.value = repository.getUser()
+            } catch (e: Exception) {
+                _event.value = Event(false)
+                Timber.e(e)
             }
-        } else {
-            _noInternetConnection.value = Unit
         }
     }
 
     fun logout() {
         viewModelScope.launch {
             tokenRepository.clear()
-            _navigationEvent.value = Unit
+            _event.value = Event(true)
         }
     }
 }

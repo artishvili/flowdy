@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentSearchBinding
 import com.devshish.internship.presentation.ui.utils.onQueryTextChanged
+import com.devshish.internship.presentation.ui.utils.set
 import com.google.android.material.snackbar.Snackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -60,6 +61,14 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     findNavController().navigate(action)
                 }
             }
+
+            noInternetConnection.observe(viewLifecycleOwner) {
+                Snackbar.make(
+                    requireView(),
+                    R.string.internet_connection_absent,
+                    Snackbar.LENGTH_LONG
+                ).set(null)
+            }
         }
     }
 
@@ -71,24 +80,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.actionSearch -> {
-                viewModel.noInternetConnection.observe(viewLifecycleOwner) { noConnection ->
-                    val searchView = item.actionView as SearchView
-                    searchView.onQueryTextChanged { query ->
-                        if (noConnection) {
-                            Snackbar.make(
-                                requireView(),
-                                R.string.internet_connection_absent,
-                                Snackbar.LENGTH_INDEFINITE
-                            )
-                                .setAnchorView(R.id.bottomNavView)
-                                .setAction(R.string.internet_connection_retry) {
-                                    viewModel.searchSongs(query)
-                                }
-                                .show()
-                        } else {
-                            viewModel.searchSongs(query)
-                        }
-                    }
+                val searchView = item.actionView as SearchView
+                searchView.onQueryTextChanged { query ->
+                    viewModel.searchSongs(query)
                 }
                 true
             }

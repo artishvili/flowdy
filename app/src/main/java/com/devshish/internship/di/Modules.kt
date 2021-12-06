@@ -16,8 +16,8 @@ import com.devshish.internship.presentation.ui.lyrics.LyricsViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
 import com.devshish.internship.presentation.ui.search.SearchViewModel
-import com.devshish.internship.presentation.ui.songs.savedlyrics.SavedLyricsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
+import com.devshish.internship.presentation.ui.songs.savedlyrics.SavedLyricsViewModel
 import com.devshish.internship.presentation.ui.splash.SplashViewModel
 import com.devshish.internship.presentation.ui.web.WebViewModel
 import com.google.android.exoplayer2.C
@@ -122,7 +122,6 @@ val viewModelModule = module {
     // Main
     viewModel {
         MainViewModel(
-            app = get(),
             mediaBrowser = get()
         )
     }
@@ -131,8 +130,7 @@ val viewModelModule = module {
     viewModel {
         ProfileViewModel(
             repository = get(),
-            tokenRepository = get(),
-            mainViewModel = get()
+            tokenRepository = get()
         )
     }
 
@@ -158,7 +156,6 @@ val viewModelModule = module {
     // Search
     viewModel {
         SearchViewModel(
-            mainViewModel = get(),
             repository = get()
         )
     }
@@ -188,15 +185,13 @@ val viewModelModule = module {
     viewModel {
         LyricsViewModel(
             searchSong = get(),
-            repository = get(),
-            mainViewModel = get()
+            repository = get()
         )
     }
 
     // Home
     viewModel {
         HomeViewModel(
-            mainViewModel = get(),
             repository = get()
         )
     }
