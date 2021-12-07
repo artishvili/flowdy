@@ -23,12 +23,12 @@
     <fragment
         android:id="@+id/localSongsFragment"
         android:name="com.devshish.internship.presentation.ui.songs.local.LocalSongsFragment"
-        android:label="@string/library_local_songs"
+        android:label="@string/library_local_songs_title"
         tools:layout="@layout/fragment_local_songs" />
     <fragment
         android:id="@+id/savedLyricsFragment"
         android:name="com.devshish.internship.presentation.ui.songs.savedlyrics.SavedLyricsFragment"
-        android:label="@string/library_saved_lyrics"
+        android:label="@string/library_saved_lyrics_title"
         tools:layout="@layout/fragment_saved_lyrics">
         <action
             android:id="@+id/action_savedLyricsFragment_to_lyricsFragment"

@@ -19,7 +19,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             navigationEvent.observe(viewLifecycleOwner) {
                 when (it) {
                     NAVIGATE_TO_AUTH -> {
-                        val action = SplashFragmentDirections.actionSplashFragmentToAuthFragment()
+                        val action = SplashFragmentDirections.actionSplashFragmentToNavGraphAuth()
                         findNavController().navigate(action)
                     }
                     NAVIGATE_TO_APP -> {

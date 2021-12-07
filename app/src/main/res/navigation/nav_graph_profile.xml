@@ -10,8 +10,12 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_profileFragment_to_nav_graph_home"
-            app:destination="@id/nav_graph_home" />
+            android:id="@+id/action_profileFragment_to_authFragment"
+            app:destination="@id/authFragment" />
     </fragment>
-    <include app:graph="@navigation/nav_graph_home" />
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.devshish.internship.presentation.ui.auth.AuthFragment"
+        android:label="fragment_auth"
+        tools:layout="@layout/fragment_auth" />
 </navigation>

@@ -54,9 +54,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 }
             }
 
-            navigationEvent.observe(viewLifecycleOwner) {
-                val action = ProfileFragmentDirections.actionProfileFragmentToNavGraphHome()
-                findNavController().navigate(action)
             uiEvent.observe(viewLifecycleOwner) {
                 it.getContentIfNotHandled()?.let { state ->
                     when (state) {

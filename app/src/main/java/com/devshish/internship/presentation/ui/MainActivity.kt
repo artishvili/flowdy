@@ -86,14 +86,6 @@ class MainActivity : AppCompatActivity() {
                     else -> true
                 }
             }
-                    appBarLayout.isVisible = when (destination.id) {
-                        R.id.splashFragment,
-                        R.id.authFragment,
-                        R.id.webFragment,
-                        R.id.profileFragment -> false
-                        else -> true
-                    }
-                }
 
                 layoutPlayerBar.ivToggle.setOnClickListener { playerViewModel.toggle() }
                 layoutPlayerBar.root.setOnClickListener { mainViewModel.onPlayerClick() }
