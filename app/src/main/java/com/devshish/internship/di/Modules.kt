@@ -16,8 +16,8 @@ import com.devshish.internship.presentation.ui.lyrics.LyricsViewModel
 import com.devshish.internship.presentation.ui.player.PlayerViewModel
 import com.devshish.internship.presentation.ui.profile.ProfileViewModel
 import com.devshish.internship.presentation.ui.search.SearchViewModel
-import com.devshish.internship.presentation.ui.songs.savedlyrics.SavedLyricsViewModel
 import com.devshish.internship.presentation.ui.songs.local.LocalSongsViewModel
+import com.devshish.internship.presentation.ui.songs.savedlyrics.SavedLyricsViewModel
 import com.devshish.internship.presentation.ui.splash.SplashViewModel
 import com.devshish.internship.presentation.ui.web.WebViewModel
 import com.google.android.exoplayer2.C
@@ -120,7 +120,11 @@ val appModule = module {
 
 val viewModelModule = module {
     // Main
-    viewModel { MainViewModel(mediaBrowser = get()) }
+    viewModel {
+        MainViewModel(
+            mediaBrowser = get()
+        )
+    }
 
     // Profile
     viewModel {

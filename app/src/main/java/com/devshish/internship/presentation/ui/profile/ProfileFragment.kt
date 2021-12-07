@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentProfileBinding
+import com.devshish.internship.presentation.ui.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -53,9 +54,22 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 }
             }
 
-            navigationEvent.observe(viewLifecycleOwner) {
-                val action = ProfileFragmentDirections.actionProfileFragmentToAuthFragment()
-                findNavController().navigate(action)
+            uiEvent.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { state ->
+                    when (state) {
+                        ProfileViewModel.UIEvent.NavigateToAuth -> {
+                            val action =
+                                ProfileFragmentDirections.actionProfileFragmentToAuthFragment()
+                            findNavController().navigate(action)
+                        }
+                        is ProfileViewModel.UIEvent.NetworkError -> {
+                            requireView().showSnackbar(
+                                messageRes = R.string.snackbar_something_went_wrong,
+                                action = Pair(R.string.snackbar_retry) { loadUser() }
+                            )
+                        }
+                    }
+                }
             }
         }
     }

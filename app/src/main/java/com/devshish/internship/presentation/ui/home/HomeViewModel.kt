@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devshish.internship.R
 import com.devshish.internship.domain.model.Artist
 import com.devshish.internship.domain.model.Track
 import com.devshish.internship.domain.repository.IChartsRepository
 import com.devshish.internship.presentation.ui.utils.Event
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class HomeViewModel(
     private val repository: IChartsRepository
@@ -26,6 +28,10 @@ class HomeViewModel(
         get() = _isLayoutRefreshing
     private val _isLayoutRefreshing = MutableLiveData<Boolean>()
 
+    val messageRes: LiveData<Event<Int>>
+        get() = _messageRes
+    private val _messageRes = MutableLiveData<Event<Int>>()
+
     val navigationEvent: LiveData<Event<String>>
         get() = _navigationEvent
     private val _navigationEvent = MutableLiveData<Event<String>>()
@@ -36,10 +42,16 @@ class HomeViewModel(
 
     fun refreshCharts() {
         viewModelScope.launch {
-            _isLayoutRefreshing.value = true
-            _topArtists.value = repository.getTopArtists()
-            _topTracks.value = repository.getTopTracks()
-            _isLayoutRefreshing.value = false
+            try {
+                _isLayoutRefreshing.value = true
+                _topArtists.value = repository.getTopArtists()
+                _topTracks.value = repository.getTopTracks()
+            } catch (e: Exception) {
+                _messageRes.value = Event(R.string.snackbar_something_went_wrong)
+                Timber.e(e)
+            } finally {
+                _isLayoutRefreshing.value = false
+            }
         }
     }
 

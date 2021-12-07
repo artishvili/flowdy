@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentSearchBinding
 import com.devshish.internship.presentation.ui.utils.onQueryTextChanged
+import com.devshish.internship.presentation.ui.utils.showSnackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -53,10 +54,18 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 binding.tvDescription.isVisible = isVisible
             }
 
-            navigateToLyricsEvent.observe(viewLifecycleOwner) {
-                it.getContentIfNotHandled()?.let { song ->
-                    val action = SearchFragmentDirections.actionSearchFragmentToLyricsFragment(song)
-                    findNavController().navigate(action)
+            uiEvent.observe(viewLifecycleOwner) {
+                it.getContentIfNotHandled()?.let { state ->
+                    when (state) {
+                        is SearchViewModel.UIEvent.NavigateToSong -> {
+                            val action = SearchFragmentDirections
+                                .actionSearchFragmentToLyricsFragment(state.searchSong)
+                            findNavController().navigate(action)
+                        }
+                        is SearchViewModel.UIEvent.NetworkError -> {
+                            requireView().showSnackbar(messageRes = state.messageRes)
+                        }
+                    }
                 }
             }
         }
@@ -71,8 +80,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         return when (item.itemId) {
             R.id.actionSearch -> {
                 val searchView = item.actionView as SearchView
-                searchView.onQueryTextChanged {
-                    viewModel.searchSongs(it)
+                searchView.onQueryTextChanged { query ->
+                    viewModel.searchSongs(query)
                 }
                 true
             }

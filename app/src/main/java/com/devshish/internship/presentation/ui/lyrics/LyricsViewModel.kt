@@ -24,6 +24,10 @@ class LyricsViewModel(
         get() = _isLyricsStored
     private val _isLyricsStored = MutableLiveData<Event<Int>>()
 
+    val messageRes: LiveData<Event<Int>>
+        get() = _messageRes
+    private val _messageRes = MutableLiveData<Event<Int>>()
+
     private val lyricsFlow = MutableStateFlow<String?>(null)
     private val isStoredFlow = MutableStateFlow<Boolean?>(null)
 
@@ -32,13 +36,7 @@ class LyricsViewModel(
     private val _uiState = MutableLiveData<UIState>(UIState.IsLoading(searchSong))
 
     init {
-        viewModelScope.launch {
-            try {
-                lyricsFlow.value = repository.getLyrics(searchSong)
-            } catch (e: Exception) {
-                Timber.e(e)
-            }
-        }
+        getLyrics()
 
         viewModelScope.launch {
             repository.isSongStored(searchSong).collect { isStored ->
@@ -56,6 +54,17 @@ class LyricsViewModel(
                 }
             }.collect {
                 _uiState.value = it
+            }
+        }
+    }
+
+    fun getLyrics() {
+        viewModelScope.launch {
+            try {
+                lyricsFlow.value = repository.getLyrics(searchSong)
+            } catch (e: Exception) {
+                _messageRes.value = Event(R.string.snackbar_something_went_wrong)
+                Timber.e(e)
             }
         }
     }

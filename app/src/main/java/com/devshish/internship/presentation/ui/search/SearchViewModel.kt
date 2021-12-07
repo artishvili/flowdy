@@ -1,9 +1,11 @@
 package com.devshish.internship.presentation.ui.search
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.devshish.internship.R
 import com.devshish.internship.domain.model.SearchSong
 import com.devshish.internship.domain.repository.ISearchSongsRepository
 import com.devshish.internship.presentation.ui.utils.Event
@@ -13,6 +15,11 @@ import timber.log.Timber
 class SearchViewModel(
     private val repository: ISearchSongsRepository
 ) : ViewModel() {
+
+    sealed class UIEvent {
+        data class NetworkError(@StringRes val messageRes: Int) : UIEvent()
+        data class NavigateToSong(val searchSong: SearchSong) : UIEvent()
+    }
 
     val isDescriptionVisible: LiveData<Boolean>
         get() = _isDescriptionVisible
@@ -26,13 +33,12 @@ class SearchViewModel(
         get() = _songsList
     private val _songsList = MutableLiveData<List<SearchSong>>()
 
-    val navigateToLyricsEvent: LiveData<Event<SearchSong>>
-        get() = _navigateToLyricsEvent
-    private val _navigateToLyricsEvent = MutableLiveData<Event<SearchSong>>()
+    val uiEvent: LiveData<Event<UIEvent>>
+        get() = _uiEvent
+    private val _uiEvent = MutableLiveData<Event<UIEvent>>()
 
     fun onSearchSongClick(song: SearchSong) {
-        val event = Event(song)
-        _navigateToLyricsEvent.value = event
+        _uiEvent.value = Event(UIEvent.NavigateToSong(song))
     }
 
     fun searchSongs(query: String) {
@@ -42,6 +48,7 @@ class SearchViewModel(
             try {
                 _songsList.value = repository.searchSongs(query)
             } catch (e: Exception) {
+                _uiEvent.value = Event(UIEvent.NetworkError(R.string.snackbar_something_went_wrong))
                 _isDescriptionVisible.value = true
                 Timber.e(e)
             } finally {
