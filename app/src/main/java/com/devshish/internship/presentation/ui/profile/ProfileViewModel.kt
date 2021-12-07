@@ -18,18 +18,18 @@ class ProfileViewModel(
     private val tokenRepository: ITokenRepository
 ) : ViewModel() {
 
-    sealed class UIState {
-        data class Exception(@StringRes val messageRes: Int) : UIState()
-        object NoException : UIState()
+    sealed class UIEvent {
+        data class NetworkError(@StringRes val messageRes: Int) : UIEvent()
+        object NavigateToAuth : UIEvent()
     }
 
     val userData: LiveData<User>
         get() = _userData
     private val _userData = MutableLiveData<User>()
 
-    val uiState: LiveData<Event<UIState>>
-        get() = _uiState
-    private val _uiState = MutableLiveData<Event<UIState>>()
+    val uiEvent: LiveData<Event<UIEvent>>
+        get() = _uiEvent
+    private val _uiEvent = MutableLiveData<Event<UIEvent>>()
 
     init {
         loadUser()
@@ -40,7 +40,7 @@ class ProfileViewModel(
             try {
                 _userData.value = repository.getUser()
             } catch (e: Exception) {
-                _uiState.value = Event(UIState.Exception(R.string.snackbar_something_went_wrong))
+                _uiEvent.value = Event(UIEvent.NetworkError(R.string.snackbar_something_went_wrong))
                 Timber.e(e)
             }
         }
@@ -49,7 +49,7 @@ class ProfileViewModel(
     fun logout() {
         viewModelScope.launch {
             tokenRepository.clear()
-            _uiState.value = Event(UIState.NoException)
+            _uiEvent.value = Event(UIEvent.NavigateToAuth)
         }
     }
 }

@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentLyricsBinding
 import com.devshish.internship.domain.model.SearchSong
-import com.devshish.internship.presentation.ui.utils.caseSmthWentWrong
+import com.devshish.internship.presentation.ui.utils.showSnackbar
 import com.google.android.material.snackbar.Snackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -46,10 +46,12 @@ class LyricsFragment : Fragment(R.layout.fragment_lyrics) {
         }
 
         with(viewModel) {
-            exception.observe(viewLifecycleOwner) {
+            messageRes.observe(viewLifecycleOwner) {
                 it.getContentIfNotHandled()?.let { messageRes ->
-                    Snackbar.make(requireView(), messageRes, Snackbar.LENGTH_LONG)
-                        .caseSmthWentWrong { getLyrics() }
+                    requireView().showSnackbar(
+                        messageRes = messageRes,
+                        action = Pair(R.string.snackbar_retry) { getLyrics() }
+                    )
                 }
             }
 

@@ -16,9 +16,9 @@ class SearchViewModel(
     private val repository: ISearchSongsRepository
 ) : ViewModel() {
 
-    sealed class UIState {
-        data class Exception(@StringRes val messageRes: Int) : UIState()
-        data class Navigate(val searchSong: SearchSong) : UIState()
+    sealed class UIEvent {
+        data class NetworkError(@StringRes val messageRes: Int) : UIEvent()
+        data class NavigateToSong(val searchSong: SearchSong) : UIEvent()
     }
 
     val isDescriptionVisible: LiveData<Boolean>
@@ -33,12 +33,12 @@ class SearchViewModel(
         get() = _songsList
     private val _songsList = MutableLiveData<List<SearchSong>>()
 
-    val uiState: LiveData<Event<UIState>>
-        get() = _uiState
-    private val _uiState = MutableLiveData<Event<UIState>>()
+    val uiEvent: LiveData<Event<UIEvent>>
+        get() = _uiEvent
+    private val _uiEvent = MutableLiveData<Event<UIEvent>>()
 
     fun onSearchSongClick(song: SearchSong) {
-        _uiState.value = Event(UIState.Navigate(song))
+        _uiEvent.value = Event(UIEvent.NavigateToSong(song))
     }
 
     fun searchSongs(query: String) {
@@ -48,7 +48,7 @@ class SearchViewModel(
             try {
                 _songsList.value = repository.searchSongs(query)
             } catch (e: Exception) {
-                _uiState.value = Event(UIState.Exception(R.string.snackbar_something_went_wrong))
+                _uiEvent.value = Event(UIEvent.NetworkError(R.string.snackbar_something_went_wrong))
                 _isDescriptionVisible.value = true
                 Timber.e(e)
             } finally {

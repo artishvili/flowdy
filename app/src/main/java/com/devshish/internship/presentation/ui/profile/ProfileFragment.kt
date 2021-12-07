@@ -7,9 +7,8 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.devshish.internship.R
 import com.devshish.internship.databinding.FragmentProfileBinding
-import com.devshish.internship.presentation.ui.utils.caseSmthWentWrong
+import com.devshish.internship.presentation.ui.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -55,17 +54,19 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 }
             }
 
-            uiState.observe(viewLifecycleOwner) {
+            uiEvent.observe(viewLifecycleOwner) {
                 it.getContentIfNotHandled()?.let { state ->
                     when (state) {
-                        ProfileViewModel.UIState.NoException -> {
+                        ProfileViewModel.UIEvent.NavigateToAuth -> {
                             val action =
                                 ProfileFragmentDirections.actionProfileFragmentToAuthFragment()
                             findNavController().navigate(action)
                         }
-                        is ProfileViewModel.UIState.Exception -> {
-                            Snackbar.make(requireView(), state.messageRes, Snackbar.LENGTH_LONG)
-                                .caseSmthWentWrong { loadUser() }
+                        is ProfileViewModel.UIEvent.NetworkError -> {
+                            requireView().showSnackbar(
+                                messageRes = R.string.snackbar_something_went_wrong,
+                                action = Pair(R.string.snackbar_retry) { loadUser() }
+                            )
                         }
                     }
                 }

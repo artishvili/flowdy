@@ -12,8 +12,7 @@ import com.devshish.internship.databinding.FragmentHomeBinding
 import com.devshish.internship.presentation.ui.home.charts.artists.ArtistItemAdapter
 import com.devshish.internship.presentation.ui.home.charts.title.ChartTitleAdapter
 import com.devshish.internship.presentation.ui.home.charts.tracks.TrackItemAdapter
-import com.devshish.internship.presentation.ui.utils.caseSmthWentWrong
-import com.google.android.material.snackbar.Snackbar
+import com.devshish.internship.presentation.ui.utils.showSnackbar
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -47,10 +46,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
         with(viewModel) {
-            exception.observe(viewLifecycleOwner) {
+            messageRes.observe(viewLifecycleOwner) {
                 it.getContentIfNotHandled()?.let { messageRes ->
-                    Snackbar.make(requireView(), messageRes, Snackbar.LENGTH_LONG)
-                        .caseSmthWentWrong { refreshCharts() }
+                    requireView().showSnackbar(
+                        messageRes = messageRes,
+                        action = Pair(R.string.snackbar_retry) { refreshCharts() }
+                    )
                 }
             }
 

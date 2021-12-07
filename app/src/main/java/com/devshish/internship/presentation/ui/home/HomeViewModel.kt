@@ -28,9 +28,9 @@ class HomeViewModel(
         get() = _isLayoutRefreshing
     private val _isLayoutRefreshing = MutableLiveData<Boolean>()
 
-    val exception: LiveData<Event<Int>>
-        get() = _exception
-    private val _exception = MutableLiveData<Event<Int>>()
+    val messageRes: LiveData<Event<Int>>
+        get() = _messageRes
+    private val _messageRes = MutableLiveData<Event<Int>>()
 
     val navigationEvent: LiveData<Event<String>>
         get() = _navigationEvent
@@ -47,7 +47,7 @@ class HomeViewModel(
                 _topArtists.value = repository.getTopArtists()
                 _topTracks.value = repository.getTopTracks()
             } catch (e: Exception) {
-                _exception.value = Event(R.string.snackbar_something_went_wrong)
+                _messageRes.value = Event(R.string.snackbar_something_went_wrong)
                 Timber.e(e)
             } finally {
                 _isLayoutRefreshing.value = false
