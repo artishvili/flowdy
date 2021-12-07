@@ -25,11 +25,12 @@ class LyricsRepositoryImpl(
                 var lyrics = ""
                 while (lyrics.isEmpty()) {
                     val doc = Jsoup.connect(song.lyricsUri).get()
-                    val html = doc.getElementsByClass("lyrics").html()
-                    lyrics = HtmlCompat.fromHtml(
-                        html,
-                        HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH
-                    ).toString()
+                    doc.getElementById("lyrics-root")?.html()?.let { html ->
+                        lyrics = HtmlCompat.fromHtml(
+                            html,
+                            HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_PARAGRAPH
+                        ).toString()
+                    }
                 }
                 lyrics
             }
