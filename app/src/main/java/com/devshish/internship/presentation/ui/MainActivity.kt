@@ -142,6 +142,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        when (navController.currentDestination?.id) {
+            R.id.searchFragment,
+            R.id.libraryFragment,
+            R.id.profileFragment -> finish()
+            else -> super.onBackPressed()
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
