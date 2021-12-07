@@ -5,11 +5,25 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/splashFragment">
 
+    <action
+        android:id="@+id/action_global_playerFragment"
+        app:destination="@id/playerFragment"
+        app:enterAnim="@anim/slide_in_bottom"
+        app:popExitAnim="@anim/slide_out_bottom" />
+    <fragment
+        android:id="@+id/lyricsFragment"
+        android:name="com.devshish.internship.presentation.ui.lyrics.LyricsFragment"
+        android:label="fragment_lyrics"
+        tools:layout="@layout/fragment_lyrics">
+        <argument
+            android:name="searchSong"
+            app:argType="com.devshish.internship.domain.model.SearchSong" />
+    </fragment>
     <fragment
         android:id="@+id/playerFragment"
         android:name="com.devshish.internship.presentation.ui.player.PlayerFragment"
-        android:label="fragment_player"
-        tools:layout="@layout/fragment_player" >
+        android:label="@string/library_local_songs"
+        tools:layout="@layout/fragment_player">
         <action
             android:id="@+id/action_playerFragment_to_lyricsFragment"
             app:destination="@id/lyricsFragment"
@@ -56,20 +70,6 @@
             android:id="@+id/action_splashFragment_to_nav_graph_home"
             app:destination="@id/nav_graph_home" />
     </fragment>
-    <fragment
-        android:id="@+id/lyricsFragment"
-        android:name="com.devshish.internship.presentation.ui.lyrics.LyricsFragment"
-        android:label="fragment_lyrics"
-        tools:layout="@layout/fragment_lyrics" >
-        <argument
-            android:name="searchSong"
-            app:argType="com.devshish.internship.domain.model.SearchSong" />
-    </fragment>
-    <action
-        android:id="@+id/action_global_playerFragment"
-        app:destination="@id/playerFragment"
-        app:enterAnim="@anim/slide_in_bottom"
-        app:popExitAnim="@anim/slide_out_bottom" />
     <include app:graph="@navigation/nav_graph_home" />
     <include app:graph="@navigation/nav_graph_search" />
     <include app:graph="@navigation/nav_graph_library" />

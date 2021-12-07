@@ -155,15 +155,6 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 
-    override fun onBackPressed() {
-        when (navController.currentDestination?.id) {
-            R.id.searchFragment,
-            R.id.libraryFragment,
-            R.id.profileFragment -> finish()
-            else -> super.onBackPressed()
-        }
-    }
-
     override fun onStart() {
         super.onStart()
         mainViewModel.connect()

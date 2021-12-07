@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/libraryFragment"
         android:name="com.devshish.internship.presentation.ui.library.LibraryFragment"
-        android:label="fragment_library"
-        tools:layout="@layout/fragment_library" >
+        android:label="@string/nav_library"
+        tools:layout="@layout/fragment_library">
         <action
             android:id="@+id/action_libraryFragment_to_localSongsFragment"
             app:destination="@id/localSongsFragment" />
@@ -23,13 +23,13 @@
     <fragment
         android:id="@+id/localSongsFragment"
         android:name="com.devshish.internship.presentation.ui.songs.local.LocalSongsFragment"
-        android:label="fragment_local_songs"
+        android:label="@string/library_local_songs"
         tools:layout="@layout/fragment_local_songs" />
     <fragment
         android:id="@+id/savedLyricsFragment"
         android:name="com.devshish.internship.presentation.ui.songs.savedlyrics.SavedLyricsFragment"
-        android:label="fragment_saved_lyrics"
-        tools:layout="@layout/fragment_saved_lyrics" >
+        android:label="@string/library_saved_lyrics"
+        tools:layout="@layout/fragment_saved_lyrics">
         <action
             android:id="@+id/action_savedLyricsFragment_to_lyricsFragment"
             app:destination="@id/lyricsFragment" />
@@ -37,8 +37,7 @@
     <fragment
         android:id="@+id/lyricsFragment"
         android:name="com.devshish.internship.presentation.ui.lyrics.LyricsFragment"
-        android:label="fragment_lyrics"
-        tools:layout="@layout/fragment_lyrics" >
+        tools:layout="@layout/fragment_lyrics">
         <argument
             android:name="searchSong"
             app:argType="com.devshish.internship.domain.model.SearchSong" />
